@@ -1,1 +1,31 @@
-<p>user-booking works!</p>
+<div class="row">   
+    <h4>Letovi</h4>     
+    <table class="table table-hover" title="Letovi">
+        <thead>
+            <tr>
+                <th scope="col">Poletanje</th>
+                <th scope="col">Sletanje</th>
+                <th scope="col">Duzina leta</th>
+                <th scope="col">Razdaljina (km)</th>
+                <th scope="col">Cena karte(din)</th>
+                <th scope="col">Presedanja</th>
+                <th scope="col">Broj presedanja</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let flight of availableFlights">
+                <td>{{flight.Departure}}</td>
+                <td>{{flight.TravelTime}}</td>   
+                <td>{{flight.TravelLength}}</td>
+                <td>{{flight.TicketPrice}}</td>                            
+                <td *ngFor="let changeoverDest of flight.ChangevoerDests">
+                     {{changeoverDest}}
+                </td>
+                <td>{{flight.NumberOfChangeovers}}</td>
+            </tr>                
+        </tbody>       
+    </table>
+
+    <button type="button" routerLink='flightBookingSteps/choose-seat'>Sledeći korak</button>
+
+   

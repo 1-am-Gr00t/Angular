@@ -8,8 +8,12 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
 import { AirCompanyProfileComponent } from './components/air-company-profile/air-company-profile.component';
 import { UserBookingComponent } from './components/user-booking/user-booking.component';
 import { QuickUserBookingComponent } from './components/quick-user-booking/quick-user-booking.component';
-import { SearchAndFilterFlightComponent } from './components/search-and-filter-flight/search-and-filter-flight.component';
-import { LocationDisplayComponent } from './components/location-display/location-display.component';
+import { UserHomePageComponent } from './components/user-home-page/user-home-page.component';
+import { ChooseSeatComponent } from './components/flightBookingSteps/choose-seat/choose-seat.component';
+import { InviteFriendsComponent } from './components/flightBookingSteps/invite-friends/invite-friends.component';
+import { PersonalDataComponent } from './components/flightBookingSteps/personal-data/personal-data.component';
+import { RentCarComponent } from './components/flightBookingSteps/rent-car/rent-car.component';
+import { SuccessfulReservationComponent } from './components/flightBookingSteps/successful-reservation/successful-reservation.component';
 
 @NgModule({
   declarations: [
@@ -18,8 +22,12 @@ import { LocationDisplayComponent } from './components/location-display/location
     AirCompanyProfileComponent,
     UserBookingComponent,
     QuickUserBookingComponent,
-    SearchAndFilterFlightComponent,
-    LocationDisplayComponent
+    UserHomePageComponent,
+    ChooseSeatComponent,
+    InviteFriendsComponent,
+    PersonalDataComponent,
+    RentCarComponent,
+    SuccessfulReservationComponent
   ],
   imports: [
     BrowserModule,

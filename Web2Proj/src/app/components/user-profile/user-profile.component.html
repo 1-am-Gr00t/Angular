@@ -1,22 +1,22 @@
-<div >    
-    <div class="form-group row" >
+<div class="user-profile">    
+    <div class="row" >
         <b>Ime:</b> <i>{{regUser.name}}</i>
     </div>
-    <div class="form-group row">
+    <div class="row">
          <b>Prezime:</b> <i>{{regUser.lastname}}</i>
     </div>
-    <div class="form-group row">
+    <div class="row">
         <b>Email:</b> <i>{{regUser.email}}</i>
     </div>
-    <div class="form-group row">
+    <div class="row">
         <b> Grad:</b> <i>{{regUser.city}}</i>
     </div>
-    <div class="form-group row">
+    <div class="row">
         <b>Telefonski broj:</b> <i>{{regUser.phoneNumber}}</i>
     </div> 
 </div>
 <div>
-    <br/><button class="change-profile" data-toggle="modal" data-target="#profileEdit">Izmeni profil</button>
+    <br/><button data-toggle="modal" data-target="#profileEdit">Izmeni profil</button>
 </div>
 
 <div class="modal fade" id="profileEdit" aria-labelledby="profileEdit" aria-hidden="true"  role="dialog">
@@ -26,7 +26,7 @@
             <h5 class="modal-title" id="profileEdit">Izmena podataka</h5>
         </div>
         <div class="modal-body">           
-            <form [formGroup]="profileForm" >              
+            <form [formGroup]="profileForm" id="user-form">              
                 <div class="form-group row">
                   <label for="profileName" class="col-sm-4 col-form-label">Ime: </label>
                   <div class="col-sm-8">

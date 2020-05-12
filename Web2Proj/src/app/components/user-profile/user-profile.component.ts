@@ -32,6 +32,8 @@ export class UserProfileComponent implements OnInit {
     
   }  
 
+  onSubmit(){}
+
   editProfileInfo(): void{
     let profileName = (<HTMLInputElement> document.getElementById("profileName")).value;
     let lastname = (<HTMLInputElement> document.getElementById("lastname")).value;
