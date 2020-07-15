@@ -1,6 +1,166 @@
-<h4>Izbor sedišta</h4>
 
-<button type="button" routerLink="../">Odustanie</button>
-<button type="button" routerLink="user-booking">Nazad</button>
-<button type="button" routerLink="invite-friends">Dalje</button>
+<h4 style="text-align: center;">Izaberite željeno sedište</h4>
+<div class="seat-booking">
+    <ol class="cabin fuselage">
+        <li class="row-1">
+            <ol class="seats">
+                <li class="seat">
+                    <input type="checkbox"id="1A"/>
+                    <label for="1A">1A</label>
+                </li>
+                <li class="seat">
+                    <input type="checkbox"id="1B"/>
+                    <label for="1B">1B</label>
+                </li>
+                <li class="seat">
+                    <input type="checkbox"id="1C"/>
+                    <label for="1C">1C</label>
+                </li>
+                <div class=passageway></div>
+                <li class="seat">
+                    <input type="checkbox"id="1D"/>
+                    <label for="1D">1D</label>
+                </li>
+                <li class="seat">
+                    <input type="checkbox"id="1E"/>
+                    <label for="1E">1E</label>
+                </li>
+                <li class="seat">
+                    <input type="checkbox"id="1F"/>
+                    <label for="1F">1F</label>
+                </li>             
+            </ol>
+        </li>
+        <li class="row-2">
+            <ol class="seats">
+                <li class="seat">
+                    <input type="checkbox"id="2A"/>
+                    <label for="2A">2A</label>
+                </li>
+                <li class="seat">
+                    <input type="checkbox"id="2B"/>
+                    <label for="2B">2B</label>
+                </li>
+                <li class="seat">
+                    <input type="checkbox"id="2C"/>
+                    <label for="2C">2C</label>
+                </li>
+                <div class=passageway></div>
+                <li class="seat">
+                    <input type="checkbox"id="2D"/>
+                    <label for="2D">2D</label>
+                </li>
+                <li class="seat">
+                    <input type="checkbox"id="2E"/>
+                    <label for="2E">2E</label>
+                </li>
+                <li class="seat">
+                    <input type="checkbox"id="2F"/>
+                    <label for="2F">2F</label>
+                </li>                 
+            </ol>
+        </li>
+        <li class="row-3">
+            <ol class="seats">
+                <li class="seat">
+                    <input type="checkbox"id="3A"/>
+                    <label for="3A">3A</label>
+                </li>
+                <li class="seat">
+                    <input type="checkbox"id="3B"/>
+                    <label for="3B">3B</label>
+                </li>
+                <li class="seat">
+                    <input type="checkbox"id="3C"/>
+                    <label for="3C">3C</label>
+                </li>
+                <div class=passageway></div>
+                <li class="seat">
+                    <input type="checkbox"id="3D"/>
+                    <label for="3D">3D</label>
+                </li>
+                <li class="seat">
+                    <input type="checkbox"id="3E"/>
+                    <label for="3E">3E</label>
+                </li>
+                <li class="seat">
+                    <input type="checkbox"id="3F"/>
+                    <label for="3F">3F</label>
+                </li>                     
+            </ol>
+        </li>       
+        <li class="row-4">
+            <ol class="seats">
+                <li class="seat">
+                    <input type="checkbox"id="4A"/>
+                    <label for="4A">4A</label>
+                </li>
+                <li class="seat">
+                    <input type="checkbox"id="4B"/>
+                    <label for="4B">4B</label>
+                </li>
+                <li class="seat">
+                    <input type="checkbox"id="4C"/>
+                    <label for="4C">4C</label>
+                </li>
+                <div class=passageway></div>
+                <li class="seat">
+                    <input type="checkbox"id="4D"/>
+                    <label for="4D">4D</label>
+                </li>
+                <li class="seat">
+                    <input type="checkbox"id="4E"/>
+                    <label for="4E">4E</label>
+                </li>
+                <li class="seat">
+                    <input type="checkbox"id="4F"/>
+                    <label for="4F">4F</label>
+                </li>                 
+            </ol>
+        </li>
+        <li class="row-5">
+            <ol class="seats">
+                <li class="seat">
+                    <input type="checkbox"id="5A"/>
+                    <label for="5A">5A</label>
+                </li>
+                <li class="seat">
+                    <input type="checkbox"id="5B"/>
+                    <label for="5B">5B</label>
+                </li>
+                <li class="seat">
+                    <input type="checkbox"id="5C"/>
+                    <label for="5C">5C</label>
+                </li>
+                <div class=passageway></div>
+                <li class="seat">
+                    <input type="checkbox"id="5D"/>
+                    <label for="5D">5D</label>
+                </li>
+                <li class="seat">
+                    <input type="checkbox"id="5E"/>
+                    <label for="5E">5E</label>
+                </li>
+                <li class="seat">
+                    <input type="checkbox"id="5F"/>
+                    <label for="5F">5F</label>
+                </li>             
+            </ol>
+        </li>
+    </ol>
+</div>
 
+<div class="seat-confirm"  > 
+    <button class="seat-confirm-btn" type="button"(click)=multipleReservations()>Potvrdi mesto</button>
+</div>
+
+<!--button type="button" routerLink="invite-friends">Dalje</button-->
+<div *ngIf="numberOfReservations > 1" class="next-page">
+    <button type="button" class="next-btn" routerLink="invite-friends">Dalje</button>
+</div>
+<div *ngIf="numberOfReservations == 1" class="next-page">
+    <button type="button" class="next-btn" routerLink="invite-friends/personal-data">Dalje</button>
+</div>
+<div *ngIf="numberOfReservations == 0" class="invalid-seat">
+    <p style="color: red;">Morate izabrati mesto kako biste mogli potvrditi rezervaciju<p>
+</div>

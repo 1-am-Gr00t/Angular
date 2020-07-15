@@ -1,6 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule} from '@angular/forms';
+import { ChartModule } from '@syncfusion/ej2-angular-charts';
+import { DateFormatOptions } from '@syncfusion/ej2-base'
+import { CategoryService, DateTimeService, ScrollBarService, ColumnSeriesService, LineSeriesService, 
+    ChartAnnotationService, RangeColumnSeriesService, StackingColumnSeriesService,LegendService, TooltipService
+ } from '@syncfusion/ej2-angular-charts';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -33,8 +38,10 @@ import { SuccessfulReservationComponent } from './components/flightBookingSteps/
     BrowserModule,
     ReactiveFormsModule,    
     AppRoutingModule,
+    ChartModule,
   ],
-  providers: [],
+  providers: [CategoryService, DateTimeService, ScrollBarService, ColumnSeriesService, LineSeriesService, 
+    ChartAnnotationService, RangeColumnSeriesService, StackingColumnSeriesService,LegendService, TooltipService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

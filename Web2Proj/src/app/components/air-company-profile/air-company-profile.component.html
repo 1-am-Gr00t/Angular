@@ -100,7 +100,14 @@
     <h4>Poslovni izvestaj</h4>
     <label>Ocena aviokompanije od strane korisnika</label>
     <label>Prosecna ocena leta</label>
-    <label>Graficki prikaz prodatih karata na dnevnom, nedeljnom i mesečnom nivou</label>
+
+    <label>Graficki prikaz prodatih karata na dnevnom, nedeljnom i mesečnom nivou</label>   
+    <ejs-chart id="chart-container" [primaryXAxis]='XAxis' [primaryYAxis]='YAxis' [title]='title'>
+        <e-series-collection>
+            <e-series [dataSource]='chartData' type='Column' xName='raspon' yName=prodatih name='Prodate karte na dnevnom, nedeljnom i mesecnom nivou'></e-series>           
+        </e-series-collection>
+    </ejs-chart>
+
     <label>Prihodi kompanije</label>
 </div>
 
@@ -131,4 +138,5 @@
             <button type="submit" (click)="editPlaneAdminProfile()">Sačuvaj izmene</button>
         </div>
     <!--/form-->
+    
 </div>
