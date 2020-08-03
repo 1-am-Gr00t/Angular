@@ -20,6 +20,9 @@ import { PersonalDataComponent } from './components/flightBookingSteps/personal-
 import { RentCarComponent } from './components/flightBookingSteps/rent-car/rent-car.component';
 import { SuccessfulReservationComponent } from './components/flightBookingSteps/successful-reservation/successful-reservation.component';
 
+import { HttpClientModule } from "@angular/common/http";
+import { FlightService } from  './shared/flight-service-and-model/flight.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,9 +42,12 @@ import { SuccessfulReservationComponent } from './components/flightBookingSteps/
     ReactiveFormsModule,    
     AppRoutingModule,
     ChartModule,
+    HttpClientModule
   ],
   providers: [CategoryService, DateTimeService, ScrollBarService, ColumnSeriesService, LineSeriesService, 
-    ChartAnnotationService, RangeColumnSeriesService, StackingColumnSeriesService,LegendService, TooltipService],
+    ChartAnnotationService, RangeColumnSeriesService, StackingColumnSeriesService,LegendService, TooltipService,
+    FlightService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

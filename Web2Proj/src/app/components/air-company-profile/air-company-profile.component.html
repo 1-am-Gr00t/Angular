@@ -56,20 +56,25 @@
                     <td>{{flight.TravelTime}}</td>   
                     <td>{{flight.TravelLength}}</td>
                     <td>{{flight.TicketPrice}}</td>                            
-                    <td *ngFor="let changeoverDest of flight.ChangevoerDests">
+                    <!--<td *ngFor="let changeoverDest of flight.ChangevoerDests">
                          {{changeoverDest}}
-                    </td>
+                    </td>-->
                     <td>{{flight.NumberOfChangeovers}}</td>
                 </tr>                
             </tbody>
             <tfoot>
                 <tr>
                     <td>
-                        <button type="button" class="btn btn-primary" (click)="EditFlights()">Uredi letove</button>
+                        <button type="button" class="btn btn-primary" (click)="EditFlights()" 
+                            data-toggle="modal" data-target="#flightEdit">Uredi letove</button>
                     </td>
                 </tr>
             </tfoot>
         </table>
+
+       
+               
+
         <div class="row">
             <h6>Karte na popustu za brzu rezervaciju:</h6>
             <table class="table table-hover" title="Brza rezervacija">
@@ -139,4 +144,81 @@
         </div>
     <!--/form-->
     
+</div>
+
+
+<div class="modal fade" id="flightEdit" aria-labelledby="flightEdit" aria-hidden="true"  role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="flightEdit">Izmena podataka</h5>
+            </div>
+            <div class="modal-body">           
+                <form [formGroup]="flightForm" id="flight-form" method="POST" >              
+                    <div class="form-group row">
+                    <label for="flightID" class="col-sm-4 col-form-label">ID leta: </label>
+                        <div class="col-sm-8">
+                            <input type="number" id="flightName" formCotrolName="flightName" class="form-control" placeholder="Unesi ID leta" required>
+                            <div *ngIf="flightForm.controls.flightName.invalid">
+                                Unesite ID leta
+                            </div>
+                        </div>
+                        </div>
+        
+                    <div class="form-group row">
+                    <label for="departure" class="col-sm-4 col-form-label">Poletanje: </label>
+                        <div class="col-sm-8">
+                            <input type="datetime-local" class="form-control" id="departure" formCotrolName="departure" required>
+                            <div *ngIf="flightForm.controls.departure.invalid">
+                            Unesite polazak leta
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="form-group row">
+                    <label for="landing" class="col-sm-4 col-form-label">Email: </label>
+                        <div class="col-sm-8">
+                            <input type="datetime-local" class="form-control" id="landing" formCotrolName="landing" required>
+                            <div *ngIf="flightForm.controls.landing.invalid">
+                                Unesite vreme sletanja
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="form-group row">
+                    <label for="travelTime" class="col-sm-4 col-form-label">Vreme puta: </label>
+                        <div class="col-sm-8">
+                            <input type="time" class="form-control" id="travelTime" formCotrolName="travelTime">
+                            <div *ngIf="flightForm.controls.travelTime.invalid">
+                            Unesite Vreme puta
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="form-group row">
+                    <label for="ticketPrice" class="col-sm-4 col-form-label">Dužina puta(km): </label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" id="ticketPrice" formCotrolName="ticketPrice" placeholder="Unesite cenu karte">
+                            <div *ngIf="flightForm.controls.ticketPrice.invalid">
+                            Unesite cenu karte
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="changeoverNo" class="col-sm-4 col-form-label">Broj presedanja: </label>
+                            <div class="col-sm-8">
+                                <input type="number" class="form-control" id="changeoverNo" formCotrolName="changeoverNo" placeholder="Unesite broj presedanja">
+                                <div *ngIf="flightForm.controls.changeoverNo.invalid">
+                                Unesite cenu karte
+                                </div>
+                            </div>
+                    </div>
+                </form>
+            <div class="modal-footer">
+            <button type="button"  class="btn btn-primary" data-dismiss="modal">Odustani</button>
+            <button type="submit" [disabled]="!flightForm.valid" class="btn btn-success" data-dismiss="modal" (click)="editFlightInfo()">Sačuvaj izmene</button>
+            </div>
+        <div>
+    </div>
 </div>

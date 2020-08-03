@@ -1,4 +1,4 @@
-import { Flight } from './flight';
+/*import { Flight } from './flight';
 
 export class AirCompany{
     flight: Flight;
@@ -8,3 +8,4 @@ export class AirCompany{
     destinations: Array<string>;
     ticketDiscounts: Array<number>
 }
+*/

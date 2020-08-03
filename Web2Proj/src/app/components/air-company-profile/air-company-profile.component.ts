@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PlaneAdmin } from 'src/app/entities/planeAdmin';
 import { FormGroup, FormControl } from '@angular/forms';
-import { Flight } from 'src/app/entities/flight';
+import { Flight } from 'src/app/shared/flight-service-and-model/flight';
+import { FlightService } from 'src/app/shared/flight-service-and-model/flight.service';
 import { Category } from '@syncfusion/ej2-angular-charts';
 
 
@@ -14,24 +15,25 @@ export class AirCompanyProfileComponent implements OnInit {
 
   planeAdmin: PlaneAdmin
   
-
-  flights: Array<Flight>;
+  public flights = Array<Flight>();
 
   companyName: string;
   address: string;
-  destinacije: Array<string>;  
+  destinacije: Array<string>; 
+  flightForm: FormGroup;
 
+//#region chart properties
   title: string;//chart title
   chartData: Object[];
   XAxis : Object;
   YAxis : Object;
-
-  constructor() {
+//#endregion
+  constructor(private _flightService: FlightService) {
+    
     this.planeAdmin = new PlaneAdmin("ime", "prezimic", "ime.prezimic@mail", "New Now", "+381 666");
     this.companyName = "Swiss Air";
     this.address = "Marka Kraljevica";
     this.destinacije = new Array(2);
-    this.flights = new Array();
     this.destinacije[0] = "Madrid";
     this.destinacije[1] = "Paris";
 
@@ -39,7 +41,13 @@ export class AirCompanyProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-   
+    this.initFlightForm();
+    //#region flight service - GET
+    this._flightService.getFlights()
+    .subscribe(data => this.flights = data);
+    //#endregion
+    
+    //#region chart
     this.chartData = [
       { raspon: 'Dnevno', prodatih: 20 },
       { raspon: 'Nedeljno', prodatih: 800 },
@@ -53,11 +61,19 @@ export class AirCompanyProfileComponent implements OnInit {
     this.YAxis = {
       title: 'Prodatih'
     }
+    //#endregion
+  }
+  initFlightForm() {
+    //this.flightForm = new FormGroup()
   }
 
   onSubmit(){
   }
 
+  editFlightInfo(){
+
+  }
+  
   editPlaneAdminProfile(){
     let name = (<HTMLInputElement> document.getElementById("padmin-name")).value;
     let lastname = (<HTMLInputElement> document.getElementById("padmin-lastname")).value;
