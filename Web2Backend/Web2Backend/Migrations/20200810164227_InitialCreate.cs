@@ -11,8 +11,7 @@ namespace Web2Backend.Migrations
                 name: "Flights",
                 columns: table => new
                 {
-                    FlightID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FlightID = table.Column<int>(nullable: false),
                     DepartureTime = table.Column<DateTime>(nullable: false),
                     LandingTime = table.Column<DateTime>(nullable: false),
                     TravelTime = table.Column<TimeSpan>(nullable: false),

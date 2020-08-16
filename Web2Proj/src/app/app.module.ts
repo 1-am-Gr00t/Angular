@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule} from '@angular/forms';
+import { ReactiveFormsModule, FormsModule} from '@angular/forms';
 import { ChartModule } from '@syncfusion/ej2-angular-charts';
 import { DateFormatOptions } from '@syncfusion/ej2-base'
 import { CategoryService, DateTimeService, ScrollBarService, ColumnSeriesService, LineSeriesService, 
@@ -35,11 +35,12 @@ import { FlightService } from  './shared/flight-service-and-model/flight.service
     InviteFriendsComponent,
     PersonalDataComponent,
     RentCarComponent,
-    SuccessfulReservationComponent
+    SuccessfulReservationComponent,
   ],
   imports: [
     BrowserModule,
-    ReactiveFormsModule,    
+    ReactiveFormsModule,
+    FormsModule,          
     AppRoutingModule,
     ChartModule,
     HttpClientModule

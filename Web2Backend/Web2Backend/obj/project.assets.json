@@ -8519,21 +8519,17 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\David\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\David\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\David\\Desktop\\Web2Backend\\Web2Backend\\Web2Backend.csproj",
+      "projectUniqueName": "C:\\Users\\David\\Desktop\\Angular\\Web2Backend\\Web2Backend\\Web2Backend.csproj",
       "projectName": "Web2Backend",
-      "projectPath": "C:\\Users\\David\\Desktop\\Web2Backend\\Web2Backend\\Web2Backend.csproj",
+      "projectPath": "C:\\Users\\David\\Desktop\\Angular\\Web2Backend\\Web2Backend\\Web2Backend.csproj",
       "packagesPath": "C:\\Users\\David\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\David\\Desktop\\Web2Backend\\Web2Backend\\obj\\",
+      "outputPath": "C:\\Users\\David\\Desktop\\Angular\\Web2Backend\\Web2Backend\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
         "C:\\Users\\David\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
@@ -8542,8 +8538,7 @@
         "netcoreapp3.1"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\DownloadedNuget": {},
-        "C:\\Users\\David\\Documents\\NuGet Packages": {},
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -8597,7 +8592,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
       }
     }
   }

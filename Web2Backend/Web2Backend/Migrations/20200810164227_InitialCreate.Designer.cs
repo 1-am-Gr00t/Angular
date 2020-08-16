@@ -10,7 +10,7 @@ using Web2Backend.Data;
 namespace Web2Backend.Migrations
 {
     [DbContext(typeof(FlightDataContext))]
-    [Migration("20200727172643_InitialCreate")]
+    [Migration("20200810164227_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,9 +24,7 @@ namespace Web2Backend.Migrations
             modelBuilder.Entity("Web2Backend.Model.Flight", b =>
                 {
                     b.Property<int>("FlightID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("DepartureTime")
                         .HasColumnType("datetime2");

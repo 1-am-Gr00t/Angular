@@ -1,15 +1,14 @@
-import { Time } from '@angular/common';
+import { Vreme } from 'src/app/Misc-classes/vreme';
 
 export class Flight {
 
     FlightID: number
     Departure: Date
     Landing: Date
-    TravelTime: Time
+    TravelTime: Vreme
     TravelLength: number
     TicketPrice: number
     //ChangevoerDests: Array<string>
     NumberOfChangeovers: number
 
-    constructor(){}
 }
