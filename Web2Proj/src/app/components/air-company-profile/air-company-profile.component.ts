@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { PlaneAdmin } from 'src/app/entities/planeAdmin';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Flight } from 'src/app/shared/flight-service-and-model/flight';
 import { FlightService } from 'src/app/shared/flight-service-and-model/flight.service';
 import { Category } from '@syncfusion/ej2-angular-charts';
-
+import { NgForm } from '@angular/forms';
+import { Time, formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-air-company-profile',
@@ -12,42 +13,46 @@ import { Category } from '@syncfusion/ej2-angular-charts';
   styleUrls: ['./air-company-profile.component.css']
 })
 export class AirCompanyProfileComponent implements OnInit {
+  
+  @ViewChild('flightForm') flightForm: NgForm;
+  @ViewChild('adminForm') adminProfileForm: NgForm;
+  @ViewChild('airCompanyForm') airCompanyForm: NgForm;
 
   planeAdmin: PlaneAdmin
   
-  public flights = Array<Flight>();
+  flights = [];
+  flight: Flight;
 
   companyName: string;
   address: string;
   destinacije: Array<string>; 
-  flightForm: FormGroup;
 
 //#region chart properties
-  title: string;//chart title
+  title: string;
   chartData: Object[];
   XAxis : Object;
   YAxis : Object;
 //#endregion
   constructor(private _flightService: FlightService) {
-    
+    this.flight = new Flight();
+    this.destinacije = new Array();
     this.planeAdmin = new PlaneAdmin("ime", "prezimic", "ime.prezimic@mail", "New Now", "+381 666");
     this.companyName = "Swiss Air";
     this.address = "Marka Kraljevica";
-    this.destinacije = new Array(2);
-    this.destinacije[0] = "Madrid";
-    this.destinacije[1] = "Paris";
-
-   
+    this.destinacije[0]="Madrid";   
   }
 
   ngOnInit(): void {
-    this.initFlightForm();
+   
     //#region flight service - GET
     this._flightService.getFlights()
-    .subscribe(data => this.flights = data);
+    .subscribe(((data: any) => {
+    this.flights = data;
+  }
+    ));
     //#endregion
     
-    //#region chart
+    //#region chart    
     this.chartData = [
       { raspon: 'Dnevno', prodatih: 20 },
       { raspon: 'Nedeljno', prodatih: 800 },
@@ -62,16 +67,38 @@ export class AirCompanyProfileComponent implements OnInit {
       title: 'Prodatih'
     }
     //#endregion
-  }
-  initFlightForm() {
-    //this.flightForm = new FormGroup()
-  }
+  } 
 
-  onSubmit(){
+  onFlightSubmit(f: NgForm){
+    //POST to DB
+    //#region flight service - POST
+    this._flightService.postFlight(this.flight)
+    .subscribe(flajt => this.flights.push(flajt));
+    //#endregion
+
   }
 
   editFlightInfo(){
+    let flightId = (<HTMLInputElement> document.getElementById("flightId")).value;
+    let departure = (<HTMLInputElement> document.getElementById("departure")).value;
+    let landing = (<HTMLInputElement> document.getElementById("landing")).value;
+    let travelTime = (<HTMLInputElement> document.getElementById("travelTime")).value;
+    let ticketPrice = (<HTMLInputElement> document.getElementById("ticketPrice")).value;
+    let changeoverNo = (<HTMLInputElement> document.getElementById("changeoverNo")).value;
+    let travelLength = (<HTMLInputElement> document.getElementById("travelLength")).value;
 
+    let travelTimeSplit = travelTime.split(':');
+    this.flight.TravelTime.hours = parseInt(travelTimeSplit[0]);
+    this.flight.TravelTime.minutes = parseInt(travelTimeSplit[1]);
+
+    this.flight.FlightID = parseInt(flightId);
+    this.flight.Departure = new Date(departure);
+    this.flight.Landing = new Date(landing);   
+    this.flight.TicketPrice = parseInt(ticketPrice);
+    this.flight.NumberOfChangeovers = parseInt(changeoverNo);
+    this.flight.TravelLength = parseInt(travelLength);
+
+    //PUT to DB
   }
   
   editPlaneAdminProfile(){
@@ -86,13 +113,22 @@ export class AirCompanyProfileComponent implements OnInit {
     this.planeAdmin.email = email;
     this.planeAdmin.city = city;
     this.planeAdmin.phoneNumber = phoneNumber;
+
+    //PUT to DB
   }
 
   AddDestinations(){
-    
+    //POST to DB
+    this.destinacije[0] = "Madrid";
+    this.destinacije[1] = "Paris";
+    this.destinacije[2] = "Lisabon";
   }
 
-  RemoveDestinations(){}
+  RemoveDestinations(){
+    //DELETE from DB
+  }
 
-  EditFlights(){}
+  EditFlights(){
+    //PUT to DB
+  }
 }

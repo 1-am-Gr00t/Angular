@@ -22,9 +22,7 @@ namespace Web2Backend.Migrations
             modelBuilder.Entity("Web2Backend.Model.Flight", b =>
                 {
                     b.Property<int>("FlightID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("DepartureTime")
                         .HasColumnType("datetime2");
