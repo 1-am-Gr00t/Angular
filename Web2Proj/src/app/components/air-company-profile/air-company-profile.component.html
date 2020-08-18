@@ -66,15 +66,16 @@
             <tfoot>
                 <tr>
                     <td>
-                        <button type="button" class="btn btn-primary" (click)="EditFlights()" 
-                            data-toggle="modal" data-target="#flightEdit">Uredi letove</button>
+                        <button type="button" class="btn btn-primary"
+                            data-toggle="modal" data-target="#flightEdit">Dodaj/Izmeni let</button>
+                    </td>
+                    <td>                    
+                        <button type="button" class="btn btn-secondary"
+                        data-toggle="modal" data-target="#flightRemove">Obrisi let</button>
                     </td>
                 </tr>
             </tfoot>
         </table>
-
-       
-               
 
         <div class="row">
             <h6>Karte na popustu za brzu rezervaciju:</h6>
@@ -142,11 +143,38 @@
         </div> 
         <div>
             <button type="submit" (click)="editPlaneAdminProfile()">Sačuvaj izmene</button>
+            
         </div>
     <!--/form-->
     
 </div>
 
+<div class="modal fade" id="flightRemove" aria-labelledby="flightRemove" aria-hidden="true"  role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="flightRemove">Izmena podataka</h5>
+            </div>
+            <div class="modal-body">           
+                <form (ngSubmit)='flightFormDel.form.valid && onFlightDel(flightFormDel)' #flightFormDel="ngForm" >              
+                    <div class="form-group row"> 
+                    <label for="flightIdDel" class="col-sm-4 col-form-label">ID leta: </label>
+                        <div class="col-sm-8">
+                            <input type="number" id="flightIdDel" name="flightIdDel" class="form-control" ngModel required #flightIdDel="ngModel">
+                            <div *ngIf="flightFormDel.submitted && flightIdDel.invalid">
+                                Unesite ID leta
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="modal-footer">
+                <button type="button"  class="btn btn-primary" data-dismiss="modal">Odustani</button>
+                <button type="submit" [disabled]="!flightFormDel.form.valid" class="btn btn-success" data-dismiss="modal" (click)="DeleteFlight()">Sačuvaj izmene</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="modal fade" id="flightEdit" aria-labelledby="flightEdit" aria-hidden="true"  role="dialog">
     <div class="modal-dialog" role="document">
@@ -177,7 +205,7 @@
                     </div>
         
                     <div class="form-group row">
-                    <label for="landing" class="col-sm-4 col-form-label">Email: </label>
+                    <label for="landing" class="col-sm-4 col-form-label">Vreme sletanja: </label>
                         <div class="col-sm-8">
                             <input type="datetime-local" class="form-control" id="landing" name="landing" ngModel required #landing="ngModel">
                             <div *ngIf="flightForm.submitted && landing.invalid">
@@ -201,7 +229,7 @@
                         <div class="col-sm-8">
                             <input type="number" class="form-control" id="travelLength" name="travelLength" ngModel required #travelLength="ngModel">
                             <div *ngIf="flightForm.submitted && travelLength.invalid">
-                            Unesite cenu karte
+                            Unesite duzinu puta
                             </div>
                         </div>
                     </div>
@@ -211,7 +239,7 @@
                             <div class="col-sm-8">
                             <input type="text" class="form-control" id="travelTime" name="travelTime" ngModel required #travelTime="ngModel" placeholder="hh:mm">
                             <div *ngIf="flightForm.submitted && travelTime.invalid">
-                            Unesite cenu karte
+                            Unesite vreme leta
                             </div>
                         </div>
                     </div>
@@ -233,3 +261,5 @@
         <div>
     </div>
 </div>
+
+

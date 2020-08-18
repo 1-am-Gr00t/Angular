@@ -8,7 +8,7 @@ import { catchError, retry } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class FlightService {
-
+  
   flight: Flight;
 
   readonly rootURL = "https://localhost:5001/api";
@@ -20,6 +20,14 @@ export class FlightService {
   }
 
   postFlight(flight : Flight) {
-    return this.http.post(this.rootURL, flight);   
+    return this.http.post(this.rootURL+"/flights", flight);   
   }  
+
+  putFlight(FlightID: number, flight: Flight) {
+    return this.http.put(this.rootURL+"/flights/" + FlightID, flight);
+  }
+  
+  deleteFligh(FlightID: number){
+    return this.http.delete(this.rootURL+"/flights/" + FlightID);
+  }
 }

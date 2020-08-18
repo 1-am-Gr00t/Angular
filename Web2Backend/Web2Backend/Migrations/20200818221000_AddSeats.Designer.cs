@@ -10,8 +10,8 @@ using Web2Backend.Data;
 namespace Web2Backend.Migrations
 {
     [DbContext(typeof(FlightDataContext))]
-    [Migration("20200810164227_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20200818221000_AddSeats")]
+    partial class AddSeats
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,8 +32,14 @@ namespace Web2Backend.Migrations
                     b.Property<DateTime>("LandingTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("NewTicketPrice")
+                        .HasColumnType("int");
+
                     b.Property<int>("NumberOfChangeovers")
                         .HasColumnType("int");
+
+                    b.Property<bool>("TicketDisctount")
+                        .HasColumnType("bit");
 
                     b.Property<int>("TicketPrice")
                         .HasColumnType("int");
@@ -41,12 +47,39 @@ namespace Web2Backend.Migrations
                     b.Property<int>("TravelLength")
                         .HasColumnType("int");
 
-                    b.Property<TimeSpan>("TravelTime")
-                        .HasColumnType("time");
+                    b.Property<string>("TravelTime")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("FlightID");
 
                     b.ToTable("Flights");
+                });
+
+            modelBuilder.Entity("Web2Backend.Model.Seat", b =>
+                {
+                    b.Property<string>("SeatID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("FlightID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SeatAvailability")
+                        .HasColumnType("int");
+
+                    b.HasKey("SeatID");
+
+                    b.HasIndex("FlightID");
+
+                    b.ToTable("Seats");
+                });
+
+            modelBuilder.Entity("Web2Backend.Model.Seat", b =>
+                {
+                    b.HasOne("Web2Backend.Model.Flight", "Flight")
+                        .WithMany("Seats")
+                        .HasForeignKey("FlightID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

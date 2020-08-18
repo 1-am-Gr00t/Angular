@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Web2Backend.Data;
 
 namespace Web2Backend.Migrations
 {
     [DbContext(typeof(FlightDataContext))]
-    partial class FlightDataContextModelSnapshot : ModelSnapshot
+    [Migration("20200818230456_AddDestionations")]
+    partial class AddDestionations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -94,24 +96,6 @@ namespace Web2Backend.Migrations
                     b.HasIndex("FlightID");
 
                     b.ToTable("Seats");
-                });
-
-            modelBuilder.Entity("Web2Backend.Model.SoldTicket", b =>
-                {
-                    b.Property<int>("TicketId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("DateSold")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("TicketPrice")
-                        .HasColumnType("int");
-
-                    b.HasKey("TicketId");
-
-                    b.ToTable("SoldTickets");
                 });
 
             modelBuilder.Entity("Web2Backend.JoiningTableModels.FlightDestinations", b =>

@@ -15,6 +15,7 @@ import { Time, formatDate } from '@angular/common';
 export class AirCompanyProfileComponent implements OnInit {
   
   @ViewChild('flightForm') flightForm: NgForm;
+  @ViewChild('flightFormDel') flightFormDel: NgForm;
   @ViewChild('adminForm') adminProfileForm: NgForm;
   @ViewChild('airCompanyForm') airCompanyForm: NgForm;
 
@@ -22,6 +23,7 @@ export class AirCompanyProfileComponent implements OnInit {
   
   flights = [];
   flight: Flight;
+  idFligh: number;
 
   companyName: string;
   address: string;
@@ -70,7 +72,7 @@ export class AirCompanyProfileComponent implements OnInit {
   } 
 
   onFlightSubmit(f: NgForm){
-    //POST to DB
+    //POST to DB--why u no come here
     //#region flight service - POST
     this._flightService.postFlight(this.flight)
     .subscribe(flajt => this.flights.push(flajt));
@@ -86,11 +88,10 @@ export class AirCompanyProfileComponent implements OnInit {
     let ticketPrice = (<HTMLInputElement> document.getElementById("ticketPrice")).value;
     let changeoverNo = (<HTMLInputElement> document.getElementById("changeoverNo")).value;
     let travelLength = (<HTMLInputElement> document.getElementById("travelLength")).value;
+    
+    let exists = false;
 
-    let travelTimeSplit = travelTime.split(':');
-    this.flight.TravelTime.hours = parseInt(travelTimeSplit[0]);
-    this.flight.TravelTime.minutes = parseInt(travelTimeSplit[1]);
-
+    this.flight.TravelTime = travelTime;    
     this.flight.FlightID = parseInt(flightId);
     this.flight.Departure = new Date(departure);
     this.flight.Landing = new Date(landing);   
@@ -98,6 +99,21 @@ export class AirCompanyProfileComponent implements OnInit {
     this.flight.NumberOfChangeovers = parseInt(changeoverNo);
     this.flight.TravelLength = parseInt(travelLength);
 
+    for(let i = 0; i < this.flights.length; i++){
+      if(this.flights[i].FlightID == this.flight.FlightID){
+        exists = true;
+        this._flightService.putFlight(this.flight.FlightID, this.flight)
+        .subscribe();
+        break;
+      }
+    }
+
+    if(!exists){
+      this._flightService.postFlight(this.flight)
+      .subscribe(flajt => this.flights.push(flajt));
+    }
+    
+    this.flightForm.reset();
     //PUT to DB
   }
   
@@ -128,7 +144,16 @@ export class AirCompanyProfileComponent implements OnInit {
     //DELETE from DB
   }
 
-  EditFlights(){
-    //PUT to DB
+ 
+  DeleteFlight(){
+    let flightId = (<HTMLInputElement> document.getElementById("flightIdDel")).value;
+    this.idFligh = parseInt(flightId);
+
+    this._flightService.deleteFligh(this.idFligh)
+    .subscribe();
   }
+  onFlightDel(f: NgForm){
+
+  }
+
 }

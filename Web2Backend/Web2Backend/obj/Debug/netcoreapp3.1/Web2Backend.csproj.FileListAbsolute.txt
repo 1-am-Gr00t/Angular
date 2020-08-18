@@ -285,8 +285,6 @@ C:\Users\David\Desktop\Angular\Web2Backend\Web2Backend\bin\Debug\netcoreapp3.1\r
 C:\Users\David\Desktop\Angular\Web2Backend\Web2Backend\obj\Debug\netcoreapp3.1\Web2Backend.csprojAssemblyReference.cache
 C:\Users\David\Desktop\Angular\Web2Backend\Web2Backend\obj\Debug\netcoreapp3.1\Web2Backend.AssemblyInfoInputs.cache
 C:\Users\David\Desktop\Angular\Web2Backend\Web2Backend\obj\Debug\netcoreapp3.1\Web2Backend.AssemblyInfo.cs
-C:\Users\David\Desktop\Angular\Web2Backend\Web2Backend\obj\Debug\netcoreapp3.1\Web2Backend.csproj.CoreCompileInputs.cache
-C:\Users\David\Desktop\Angular\Web2Backend\Web2Backend\obj\Debug\netcoreapp3.1\Web2Backend.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\David\Desktop\Angular\Web2Backend\Web2Backend\obj\Debug\netcoreapp3.1\Web2Backend.RazorTargetAssemblyInfo.cache
 C:\Users\David\Desktop\Angular\Web2Backend\Web2Backend\obj\Debug\netcoreapp3.1\Web2Backend.csproj.CopyComplete
 C:\Users\David\Desktop\Angular\Web2Backend\Web2Backend\obj\Debug\netcoreapp3.1\staticwebassets\Web2Backend.StaticWebAssets.Manifest.cache
@@ -294,3 +292,5 @@ C:\Users\David\Desktop\Angular\Web2Backend\Web2Backend\obj\Debug\netcoreapp3.1\s
 C:\Users\David\Desktop\Angular\Web2Backend\Web2Backend\obj\Debug\netcoreapp3.1\Web2Backend.dll
 C:\Users\David\Desktop\Angular\Web2Backend\Web2Backend\obj\Debug\netcoreapp3.1\Web2Backend.pdb
 C:\Users\David\Desktop\Angular\Web2Backend\Web2Backend\obj\Debug\netcoreapp3.1\Web2Backend.genruntimeconfig.cache
+C:\Users\David\Desktop\Angular\Web2Backend\Web2Backend\obj\Debug\netcoreapp3.1\Web2Backend.csproj.CoreCompileInputs.cache
+C:\Users\David\Desktop\Angular\Web2Backend\Web2Backend\obj\Debug\netcoreapp3.1\Web2Backend.MvcApplicationPartsAssemblyInfo.cache

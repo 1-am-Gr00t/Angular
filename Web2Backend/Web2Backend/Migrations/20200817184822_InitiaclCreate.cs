@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Web2Backend.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitiaclCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +14,7 @@ namespace Web2Backend.Migrations
                     FlightID = table.Column<int>(nullable: false),
                     DepartureTime = table.Column<DateTime>(nullable: false),
                     LandingTime = table.Column<DateTime>(nullable: false),
-                    TravelTime = table.Column<TimeSpan>(nullable: false),
+                    TravelTime = table.Column<string>(nullable: true),
                     TravelLength = table.Column<int>(nullable: false),
                     TicketPrice = table.Column<int>(nullable: false),
                     NumberOfChangeovers = table.Column<int>(nullable: false)
