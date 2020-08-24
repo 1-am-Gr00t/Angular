@@ -20,6 +20,9 @@ namespace Web2Backend.Data
         public DbSet<Seat> Seats { get; set; }
         public DbSet<Destination> Destinations { get; set; }
         public DbSet<SoldTicket> SoldTickets { get; set; }
+        public DbSet<Vehicle> Vehicles { get; set; }
+        public DbSet<RACService> RACServices { get; set; }
+        public DbSet<RACAdmin> RACAdmins { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

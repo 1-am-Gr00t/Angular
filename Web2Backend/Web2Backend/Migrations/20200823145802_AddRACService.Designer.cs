@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Web2Backend.Data;
 
 namespace Web2Backend.Migrations
 {
     [DbContext(typeof(FlightDataContext))]
-    partial class FlightDataContextModelSnapshot : ModelSnapshot
+    [Migration("20200823145802_AddRACService")]
+    partial class AddRACService
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,27 +78,6 @@ namespace Web2Backend.Migrations
                     b.HasKey("FlightID");
 
                     b.ToTable("Flights");
-                });
-
-            modelBuilder.Entity("Web2Backend.Model.RACAdmin", b =>
-                {
-                    b.Property<int>("ID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("RACID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Username")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("RACID");
-
-                    b.ToTable("RACAdmins");
                 });
 
             modelBuilder.Entity("Web2Backend.Model.RACService", b =>
@@ -205,13 +186,6 @@ namespace Web2Backend.Migrations
                         .HasForeignKey("FlightId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Web2Backend.Model.RACAdmin", b =>
-                {
-                    b.HasOne("Web2Backend.Model.RACService", "RAC")
-                        .WithMany("RACAdmins")
-                        .HasForeignKey("RACID");
                 });
 
             modelBuilder.Entity("Web2Backend.Model.Seat", b =>

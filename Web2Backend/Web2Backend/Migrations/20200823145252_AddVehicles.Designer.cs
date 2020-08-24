@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Web2Backend.Data;
 
 namespace Web2Backend.Migrations
 {
     [DbContext(typeof(FlightDataContext))]
-    partial class FlightDataContextModelSnapshot : ModelSnapshot
+    [Migration("20200823145252_AddVehicles")]
+    partial class AddVehicles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,46 +78,6 @@ namespace Web2Backend.Migrations
                     b.HasKey("FlightID");
 
                     b.ToTable("Flights");
-                });
-
-            modelBuilder.Entity("Web2Backend.Model.RACAdmin", b =>
-                {
-                    b.Property<int>("ID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("RACID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Username")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("RACID");
-
-                    b.ToTable("RACAdmins");
-                });
-
-            modelBuilder.Entity("Web2Backend.Model.RACService", b =>
-                {
-                    b.Property<int>("RACID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("RACID");
-
-                    b.ToTable("RACServices");
                 });
 
             modelBuilder.Entity("Web2Backend.Model.Seat", b =>
@@ -187,8 +149,6 @@ namespace Web2Backend.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("RACID");
-
                     b.ToTable("Vehicles");
                 });
 
@@ -207,27 +167,11 @@ namespace Web2Backend.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Web2Backend.Model.RACAdmin", b =>
-                {
-                    b.HasOne("Web2Backend.Model.RACService", "RAC")
-                        .WithMany("RACAdmins")
-                        .HasForeignKey("RACID");
-                });
-
             modelBuilder.Entity("Web2Backend.Model.Seat", b =>
                 {
                     b.HasOne("Web2Backend.Model.Flight", "Flight")
                         .WithMany("Seats")
                         .HasForeignKey("FlightID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Web2Backend.Model.Vehicle", b =>
-                {
-                    b.HasOne("Web2Backend.Model.RACService", "RAC")
-                        .WithMany("Vehicles")
-                        .HasForeignKey("RACID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
