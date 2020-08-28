@@ -15,7 +15,19 @@ namespace Web2Backend.Model
         public String PromoDescription { get; set; }
 
         public double MeanGrade { get; set; }
-         
-        //arrays: flightGrade, soldtickets, dests, flights, seats, luggage, admins
+
+        public ICollection<FlightAdmin> FlightAdmins { get; set; }
+        public ICollection<SoldTicket> SoldTickets { get; set; }
+        public ICollection<Flight> Flights { get; set; }
+        public ICollection<Luggage> Luggage { get; set; }
+        public AirCompany()
+        {
+            this.FlightAdmins = new HashSet<FlightAdmin>();
+            this.SoldTickets = new HashSet<SoldTicket>();
+            this.Flights = new HashSet<Flight>();
+            this.Luggage = new HashSet<Luggage>();
+
+        }
+        //arrays: flightGrade
     }
 }

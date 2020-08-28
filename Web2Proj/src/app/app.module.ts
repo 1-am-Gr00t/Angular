@@ -22,6 +22,7 @@ import { SuccessfulReservationComponent } from './components/flightBookingSteps/
 
 import { HttpClientModule } from "@angular/common/http";
 import { FlightService } from  './shared/flight-service-and-model/flight.service';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { FlightService } from  './shared/flight-service-and-model/flight.service
     FormsModule,          
     AppRoutingModule,
     ChartModule,
-    HttpClientModule
+    HttpClientModule,
+    GoogleMapsModule
   ],
   providers: [CategoryService, DateTimeService, ScrollBarService, ColumnSeriesService, LineSeriesService, 
     ChartAnnotationService, RangeColumnSeriesService, StackingColumnSeriesService,LegendService, TooltipService,

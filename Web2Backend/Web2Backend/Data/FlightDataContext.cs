@@ -15,11 +15,17 @@ namespace Web2Backend.Data
            : base(options)
         {
         }
-
+        public DbSet<FlightDestinations> FlightDestinations { get; set; }
+        public DbSet<AirCompany> AirCompanies { get; set; }
+        public DbSet<Luggage> Luggage { get; set; }
+        public DbSet<Friends> Friends { get; set; }
         public DbSet<Flight> Flights { get; set; }
+        public DbSet<RegisteredUser> RegisteredUsers { get; set; }
+        public DbSet<FlightAdmin> FlightAdmins { get; set; }
         public DbSet<Seat> Seats { get; set; }
         public DbSet<Destination> Destinations { get; set; }
         public DbSet<SoldTicket> SoldTickets { get; set; }
+        public DbSet<ServiceGrade> ServiceGrades { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<RACService> RACServices { get; set; }
         public DbSet<RACAdmin> RACAdmins { get; set; }
@@ -27,18 +33,22 @@ namespace Web2Backend.Data
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Seat>().HasKey(s => new { s.SeatID, s.FlightID }); //pravi se kljuc od 2 polja
+            modelBuilder.Entity<FlightAdmin>().HasKey(fa => new { fa.Email, fa.Password });
+            modelBuilder.Entity<RegisteredUser>().HasKey(ru => new { ru.Email, ru.Password });
+            modelBuilder.Entity<Friends>().HasKey(id => new { id.User1, id.User2 });
+           
 
             //Mapping many-to-many relationship
             modelBuilder.Entity<FlightDestinations>()
-                .HasKey(fd => new { fd.FlightId, fd.DestionationId });
+                .HasKey(fd => new { fd.FlightId, fd.DestinationId });
             modelBuilder.Entity<FlightDestinations>()
                 .HasOne(fd => fd.Flight)
-                .WithMany(f => f.FlightDestionations)
+                .WithMany(f => f.FlightDestinations)
                 .HasForeignKey(fd => fd.FlightId);
             modelBuilder.Entity<FlightDestinations>()
                 .HasOne(fd => fd.Destination)
-                .WithMany(d => d.FlightDestionations)
-                .HasForeignKey(fd => fd.DestionationId);
+                .WithMany(d => d.FlightDestinations)
+                .HasForeignKey(fd => fd.DestinationId);
             
         }
     }

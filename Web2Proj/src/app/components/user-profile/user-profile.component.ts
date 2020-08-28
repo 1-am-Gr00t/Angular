@@ -13,11 +13,11 @@ export class UserProfileComponent implements OnInit {
  @ViewChild('userForm') userProfileForm: NgForm;
 
   constructor() {    
-    //for testing purposes    
-      this.regUser = new RegUser("AWD", "Dawd", "aw@gm.com", "NS", "26165");      
-  }
+
+    }
 
   ngOnInit() {
+    this.regUser = new RegUser();
   }
 
 
@@ -32,12 +32,7 @@ export class UserProfileComponent implements OnInit {
     let city = (<HTMLInputElement> document.getElementById("city")).value;
     let phoneNumber = (<HTMLInputElement> document.getElementById("phoneNumber")).value;
 
-    this.regUser.name = profileName;
-    this.regUser.lastname = lastname;
-    this.regUser.email = email;
-    this.regUser.city = city;
-    this.regUser.phoneNumber = phoneNumber;
-
+  
     //PUT into DB
   }
 

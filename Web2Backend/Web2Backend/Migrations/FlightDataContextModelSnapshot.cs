@@ -24,14 +24,52 @@ namespace Web2Backend.Migrations
                     b.Property<int>("FlightId")
                         .HasColumnType("int");
 
-                    b.Property<string>("DestionationId")
+                    b.Property<string>("DestinationId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("FlightId", "DestionationId");
+                    b.HasKey("FlightId", "DestinationId");
 
-                    b.HasIndex("DestionationId");
+                    b.HasIndex("DestinationId");
 
                     b.ToTable("FlightDestinations");
+                });
+
+            modelBuilder.Entity("Web2Backend.JoiningTableModels.Friends", b =>
+                {
+                    b.Property<int>("User1")
+                        .HasColumnType("int");
+
+                    b.Property<int>("User2")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FriendStatus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserPerformedAction")
+                        .HasColumnType("int");
+
+                    b.HasKey("User1", "User2");
+
+                    b.ToTable("Friends");
+                });
+
+            modelBuilder.Entity("Web2Backend.Model.AirCompany", b =>
+                {
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("MeanGrade")
+                        .HasColumnType("float");
+
+                    b.Property<string>("PromoDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Name");
+
+                    b.ToTable("AirCompanies");
                 });
 
             modelBuilder.Entity("Web2Backend.Model.Destination", b =>
@@ -48,6 +86,9 @@ namespace Web2Backend.Migrations
                 {
                     b.Property<int>("FlightID")
                         .HasColumnType("int");
+
+                    b.Property<string>("AirCompanyName")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("DepartureTime")
                         .HasColumnType("datetime2");
@@ -75,7 +116,60 @@ namespace Web2Backend.Migrations
 
                     b.HasKey("FlightID");
 
+                    b.HasIndex("AirCompanyName");
+
                     b.ToTable("Flights");
+                });
+
+            modelBuilder.Entity("Web2Backend.Model.FlightAdmin", b =>
+                {
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AirCompanyName")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Email", "Password");
+
+                    b.HasIndex("AirCompanyName");
+
+                    b.ToTable("FlightAdmins");
+                });
+
+            modelBuilder.Entity("Web2Backend.Model.Luggage", b =>
+                {
+                    b.Property<int>("LuggageID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("AirCompanyName")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LuggageDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("LuggagePrice")
+                        .HasColumnType("float");
+
+                    b.HasKey("LuggageID");
+
+                    b.HasIndex("AirCompanyName");
+
+                    b.ToTable("Luggage");
                 });
 
             modelBuilder.Entity("Web2Backend.Model.RACAdmin", b =>
@@ -118,6 +212,39 @@ namespace Web2Backend.Migrations
                     b.ToTable("RACServices");
                 });
 
+            modelBuilder.Entity("Web2Backend.Model.RegisteredUser", b =>
+                {
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RegisteredUserEmail")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RegisteredUserPassword")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Email", "Password");
+
+                    b.HasIndex("RegisteredUserEmail", "RegisteredUserPassword");
+
+                    b.ToTable("RegisteredUsers");
+                });
+
             modelBuilder.Entity("Web2Backend.Model.Seat", b =>
                 {
                     b.Property<string>("SeatID")
@@ -136,12 +263,40 @@ namespace Web2Backend.Migrations
                     b.ToTable("Seats");
                 });
 
+            modelBuilder.Entity("Web2Backend.Model.ServiceGrade", b =>
+                {
+                    b.Property<int>("GradeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AirCompanyName")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("FlightID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Grade")
+                        .HasColumnType("int");
+
+                    b.HasKey("GradeId");
+
+                    b.HasIndex("AirCompanyName");
+
+                    b.HasIndex("FlightID");
+
+                    b.ToTable("ServiceGrades");
+                });
+
             modelBuilder.Entity("Web2Backend.Model.SoldTicket", b =>
                 {
                     b.Property<int>("TicketId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AirCompanyName")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("DateSold")
                         .HasColumnType("datetime2");
@@ -150,6 +305,8 @@ namespace Web2Backend.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("TicketId");
+
+                    b.HasIndex("AirCompanyName");
 
                     b.ToTable("SoldTickets");
                 });
@@ -195,16 +352,37 @@ namespace Web2Backend.Migrations
             modelBuilder.Entity("Web2Backend.JoiningTableModels.FlightDestinations", b =>
                 {
                     b.HasOne("Web2Backend.Model.Destination", "Destination")
-                        .WithMany("FlightDestionations")
-                        .HasForeignKey("DestionationId")
+                        .WithMany("FlightDestinations")
+                        .HasForeignKey("DestinationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Web2Backend.Model.Flight", "Flight")
-                        .WithMany("FlightDestionations")
+                        .WithMany("FlightDestinations")
                         .HasForeignKey("FlightId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Web2Backend.Model.Flight", b =>
+                {
+                    b.HasOne("Web2Backend.Model.AirCompany", "AirCompany")
+                        .WithMany("Flights")
+                        .HasForeignKey("AirCompanyName");
+                });
+
+            modelBuilder.Entity("Web2Backend.Model.FlightAdmin", b =>
+                {
+                    b.HasOne("Web2Backend.Model.AirCompany", "AirCompany")
+                        .WithMany("FlightAdmins")
+                        .HasForeignKey("AirCompanyName");
+                });
+
+            modelBuilder.Entity("Web2Backend.Model.Luggage", b =>
+                {
+                    b.HasOne("Web2Backend.Model.AirCompany", "AirCompany")
+                        .WithMany("Luggage")
+                        .HasForeignKey("AirCompanyName");
                 });
 
             modelBuilder.Entity("Web2Backend.Model.RACAdmin", b =>
@@ -214,6 +392,13 @@ namespace Web2Backend.Migrations
                         .HasForeignKey("RACID");
                 });
 
+            modelBuilder.Entity("Web2Backend.Model.RegisteredUser", b =>
+                {
+                    b.HasOne("Web2Backend.Model.RegisteredUser", null)
+                        .WithMany("Friends")
+                        .HasForeignKey("RegisteredUserEmail", "RegisteredUserPassword");
+                });
+
             modelBuilder.Entity("Web2Backend.Model.Seat", b =>
                 {
                     b.HasOne("Web2Backend.Model.Flight", "Flight")
@@ -221,6 +406,24 @@ namespace Web2Backend.Migrations
                         .HasForeignKey("FlightID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Web2Backend.Model.ServiceGrade", b =>
+                {
+                    b.HasOne("Web2Backend.Model.AirCompany", "AirCompany")
+                        .WithMany()
+                        .HasForeignKey("AirCompanyName");
+
+                    b.HasOne("Web2Backend.Model.Flight", "Flight")
+                        .WithMany("ServiceGrades")
+                        .HasForeignKey("FlightID");
+                });
+
+            modelBuilder.Entity("Web2Backend.Model.SoldTicket", b =>
+                {
+                    b.HasOne("Web2Backend.Model.AirCompany", "AirCompany")
+                        .WithMany("SoldTickets")
+                        .HasForeignKey("AirCompanyName");
                 });
 
             modelBuilder.Entity("Web2Backend.Model.Vehicle", b =>

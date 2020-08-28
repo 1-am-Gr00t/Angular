@@ -8,12 +8,8 @@ using System.Threading.Tasks;
 namespace Web2Backend.Model
 {
     public class FlightAdmin
-    {
-        [Key]
-        [Column(Order = 1)]
-        public String Email { get; set; }
-        [Key]
-        [Column(Order = 2)]
+    {        
+        public String Email { get; set; }        
         public String Password { get; set; }
 
         public String Name { get; set; }
@@ -21,5 +17,6 @@ namespace Web2Backend.Model
         public String City { get; set; }
         public String PhoneNumber { get; set; }
 
+        public AirCompany AirCompany { get; set; }
     }
 }

@@ -9,18 +9,20 @@ namespace Web2Backend.Model
 {
     public class RegisteredUser
     {
-        [Key]
-        [Column(Order = 1)]
+        
         public String Email { get; set; }
-        [Key]
-        [Column(Order = 2)]
+        
         public String Password { get; set; }
 
         public String Name { get; set; }
         public String LastName { get; set; }
         public String City { get; set; }
         public String PhoneNumber { get; set; }
+        public virtual ICollection<RegisteredUser> Friends { get; set; }
 
-        //FriendList Array
+        public RegisteredUser()
+        {
+            this.Friends = new HashSet<RegisteredUser>();
+        }
     }
 }

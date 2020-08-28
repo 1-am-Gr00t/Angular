@@ -3,14 +3,26 @@
     <h4>Profil aviokompanije</h4>
     <div class="row" >
         <label for="company-name"><b>Ime aviokompanije:</b></label>
-        <input type="text" placeholder={{companyName}} id="company-name">
+        <input type="text" id="company-name" >
     </div>
     <div class="row">
         <label for="company-address"><b>Adresa:</b></label>
-        <input type="text" placeholder={{address}} id="company-address">
+        <google-map>
+            <map-marker *ngFor="let marker of markers"
+            [position] = "marker.position"
+            [label] = "marker.label"
+            [title] = "marker.title"
+            [options] = "marker.options"
+            >
+            </map-marker>
+        </google-map>
+        <input type="text" id="company-address" >
         <!--Posebno mesto za mapu adrese-->
     </div>
-
+    <div class="row">
+        <label for="company-promo"><b>Promotivni opis komanije</b></label>
+        <input type="text" width="60" height="60" id="company-promo">
+    </div>
     <div class ="row">
         <table class="table table-hover">
             <thead>
@@ -19,8 +31,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let A of destinacije">
-                    <td>{{A}}</td>
+                <tr *ngFor="let destination of destinations">
+                    <td>{{destination.dest}}</td>
                 </tr>                
             </tbody>
             <tfoot>
@@ -44,23 +56,23 @@
                     <th scope="col">Sletanje</th>
                     <th scope="col">Duzina leta</th>
                     <th scope="col">Razdaljina (km)</th>
-                    <th scope="col">Cena karte(din)</th>
-                    <!--<th scope="col">Presedanja</th>-->
+                    <th scope="col">Cena karte(din)</th>                    
                     <th scope="col">Broj presedanja</th>
+                    <th scope="col">Presedanja</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let flight of flights">
-                    <td>{{flight.Id}}</td>
-                    <td>{{flight.Departure}}</td>
-                    <td>{{flight.Landing}}</td>
-                    <td>{{flight.TravelTime}}</td>   
-                    <td>{{flight.TravelLength}}</td>
-                    <td>{{flight.TicketPrice}}</td>                            
-                    <!--<td *ngFor="let changeoverDest of flight.ChangevoerDests">
-                         {{changeoverDest}}
-                    </td>-->
-                    <td>{{flight.NumberOfChangeovers}}</td>
+                    <td>{{flight.flightID}}</td>
+                    <td>{{flight.departureTime}}</td>
+                    <td>{{flight.landingTime}}</td>
+                    <td>{{flight.travelTime}}</td>   
+                    <td>{{flight.travelLength}}</td>
+                    <td>{{flight.ticketPrice}}</td>                                               
+                    <td>{{flight.numberOfChangeovers}}</td>
+                    <td *ngFor="let changeoverDest of flight.ChangevoerDests">
+                        {{changeoverDest}}
+                   </td>
                 </tr>                
             </tbody>
             <tfoot>
@@ -87,7 +99,7 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let flight of flights">
-                        <td>{{flight.TicketPrice}}</td>
+                        <td *ngIf="flight.ticketDisctount == true">{{flight.TicketPrice}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -99,14 +111,20 @@
         <button type="button">Uredi sedista na letu</button>
     </div>
     <div class="row">
-        <h6>Prtljag: cene i informacije</h6>        
+        <h6>Prtljag: cene i informacije :</h6><br/>
+        <table>
+            <tr>
+                <th scope="col">Cena prtljaga</th>
+                <th scope="col">Opis</th>
+            </tr>            
+        </table>
     </div>
 </div>
 
 <div class="bussiness-log">
-    <h4>Poslovni izvestaj</h4>
-    <label>Ocena aviokompanije od strane korisnika</label>
-    <label>Prosecna ocena leta</label>
+    <h4>Poslovni izvestaj</h4><br/>
+    <label>Ocena aviokompanije od strane korisnika: </label><br/>
+    <label>Prosecna ocena leta : </label><br/>
 
     <label>Graficki prikaz prodatih karata na dnevnom, nedeljnom i mesečnom nivou</label>   
     <ejs-chart id="chart-container" [primaryXAxis]='XAxis' [primaryYAxis]='YAxis' [title]='title'>
@@ -123,23 +141,23 @@
     <!--form id="padmin-form"-->
         <div class="row" >
             <label for="padmin-name"><b>Ime:</b></label>
-            <input type="text" placeholder="{{planeAdmin.name}}" id="padmin-name">
+            <input type="text" id="padmin-name">
         </div>
         <div class="row">
             <label for="padmin-lastname"><b>Prezime:</b></label>
-            <input type="text" placeholder="{{planeAdmin.lastname}}" id="padmin-lastname">
+            <input type="text" id="padmin-lastname">
         </div>
         <div class="row">
             <label for="padmin-email"><b>Email:</b></label>
-            <input type="text" placeholder="{{planeAdmin.email}}" id="padmin-email">
+            <input type="text"  id="padmin-email">
         </div>
         <div class="row">
             <label for="padmin-city"><b>Grad:</b></label>
-            <input type="text" placeholder="{{planeAdmin.city}}" id="padmin-city">
+            <input type="text"  id="padmin-city">
         </div>
         <div class="row">
             <label for="padmin-phoneNumber"><b>Broj telefona:</b></label>
-            <input type="text" placeholder="{{planeAdmin.phoneNumber}}" id="padmin-phoneNumber">
+            <input type="text" id="padmin-phoneNumber">
         </div> 
         <div>
             <button type="submit" (click)="editPlaneAdminProfile()">Sačuvaj izmene</button>
@@ -183,7 +201,7 @@
                 <h5 class="modal-title" id="flightEdit">Izmena podataka</h5>
             </div>
             <div class="modal-body">           
-                <form (ngSubmit)='flightForm.form.valid && onFlightSubmit(flightForm)' #flightForm="ngForm" >              
+                <form (ngSubmit)='flightForm.form.valid && onFlightSubmit(flightForm)' #flightForm="ngForm" >Bitno: Ukoliko Id Ne postoji, kreirace se novi. Ukoliko unesete postojeci Id, promenicete podatke postojeceg leta!         
                     <div class="form-group row"> 
                     <label for="flightId" class="col-sm-4 col-form-label">ID leta: </label>
                         <div class="col-sm-8">

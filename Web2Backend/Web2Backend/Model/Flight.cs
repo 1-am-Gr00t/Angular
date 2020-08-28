@@ -25,13 +25,15 @@ namespace Web2Backend.Model
         [AllowNull]
         public int NewTicketPrice { get; set; }
 
+        public AirCompany AirCompany { get; set; }
         public virtual ICollection<Seat> Seats { get; set; }
-        public virtual ICollection<FlightDestinations> FlightDestionations { get; set; }//Presedanja
-
+        public virtual ICollection<FlightDestinations> FlightDestinations { get; set; }//Presedanja
+        public virtual ICollection<ServiceGrade> ServiceGrades { get; set; }
         public Flight()
         {
             this.Seats = new HashSet<Seat>();
-            this.FlightDestionations = new HashSet<FlightDestinations>();
+            this.FlightDestinations = new HashSet<FlightDestinations>();
+            this.ServiceGrades = new HashSet<ServiceGrade>();
         }
     }
 }

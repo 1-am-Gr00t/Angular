@@ -14,10 +14,10 @@ namespace Web2Backend.Model
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public String Dest { get; set; }//Destination
 
-        public virtual ICollection<FlightDestinations> FlightDestionations { get; set; }
+        public virtual ICollection<FlightDestinations> FlightDestinations { get; set; }
         public Destination()
         {
-            this.FlightDestionations = new HashSet<FlightDestinations>();
+            this.FlightDestinations = new HashSet<FlightDestinations>();
         }
     }
 }

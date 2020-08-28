@@ -3,9 +3,13 @@ import { PlaneAdmin } from 'src/app/entities/planeAdmin';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Flight } from 'src/app/shared/flight-service-and-model/flight';
 import { FlightService } from 'src/app/shared/flight-service-and-model/flight.service';
-import { Category } from '@syncfusion/ej2-angular-charts';
+import { Category, redrawElement } from '@syncfusion/ej2-angular-charts';
 import { NgForm } from '@angular/forms';
 import { Time, formatDate } from '@angular/common';
+import { StringIdService } from 'src/app/services/string-id.service';
+import { AirCompany } from 'src/app/entities/airCompany';
+import { IntegerIdService } from 'src/app/services/integer-id.service';
+import { GoogleMap, MapMarker } from '@angular/google-maps';
 
 @Component({
   selector: 'app-air-company-profile',
@@ -19,42 +23,71 @@ export class AirCompanyProfileComponent implements OnInit {
   @ViewChild('adminForm') adminProfileForm: NgForm;
   @ViewChild('airCompanyForm') airCompanyForm: NgForm;
 
+  readonly destUrl = "Destinations";
+  readonly airCompUrl = "AirCompanies";
+  readonly ticketsSoldUrl = "SoldTickets";
+  readonly luggagesUrl = "Luggages";
+  readonly gradesUrl = "ServiceGrades";
+  readonly seatsUrl = "Seats";
   planeAdmin: PlaneAdmin
   
+  serviceGrades = [];
+  luggages = [];
+  soldTickets = [];
   flights = [];
+  destinations = [];
   flight: Flight;
   idFligh: number;
 
-  companyName: string;
-  address: string;
-  destinacije: Array<string>; 
-
+  markers: Array<MapMarker>;
+  marker: MapMarker;
+  airCompany: AirCompany;
 //#region chart properties
   title: string;
   chartData: Object[];
   XAxis : Object;
   YAxis : Object;
 //#endregion
-  constructor(private _flightService: FlightService) {
-    this.flight = new Flight();
-    this.destinacije = new Array();
-    this.planeAdmin = new PlaneAdmin("ime", "prezimic", "ime.prezimic@mail", "New Now", "+381 666");
-    this.companyName = "Swiss Air";
-    this.address = "Marka Kraljevica";
-    this.destinacije[0]="Madrid";   
+center: google.maps.LatLngLiteral
+  constructor(private _flightService: FlightService, private _stringIdService: StringIdService,
+    private _integerIdService: IntegerIdService) {
+   this.flight = new Flight();
   }
 
   ngOnInit(): void {
    
-    //#region flight service - GET
-    this._flightService.getFlights()
-    .subscribe(((data: any) => {
+    //#region services - GET
+    this._flightService.getFlights()//gets all flights
+    .subscribe((data: any) => {
     this.flights = data;
-  }
-    ));
-    //#endregion
+    }
+      );
+    this._stringIdService.getItems(this.destUrl)//gets all destinations
+    .subscribe((data: any) => {
+      this.destinations = data;
+    }
+      );
+    this._stringIdService.getItem(this.airCompUrl, "Tesla")//treba se menjati nakon uspesnog logovanja admina!!, ie. adming.airCompany.Name
+    .subscribe((data: any) => {
+      this.airCompany = data;
+     }
+    );
+    this._integerIdService.getItems(this.ticketsSoldUrl)
+    .subscribe((data: any) => {
+      this.soldTickets = data;
+    });
+    this._integerIdService.getItems(this.luggagesUrl)
+    .subscribe((data: any) => {
+      this.luggages = data;
+    });
+    this._integerIdService.getItems(this.luggagesUrl)
+    .subscribe((data: any) => {
+      this.serviceGrades = data;
+    });
     
-    //#region chart    
+    //#endregion
+    //#region chart
+
     this.chartData = [
       { raspon: 'Dnevno', prodatih: 20 },
       { raspon: 'Nedeljno', prodatih: 800 },
@@ -69,8 +102,20 @@ export class AirCompanyProfileComponent implements OnInit {
       title: 'Prodatih'
     }
     //#endregion
+    //#region gmap marker
+    this.marker.label = {color : 'red', text: "Markerk label"};
+    this.marker.position = {
+      lat: 17 + ((Math.random() - 0.5) * 2) / 10,
+        lng: 45 + ((Math.random() - 0.5) * 2) / 10,
+    };
+    this.marker.title = "Adresa";
+    this.marker.options = {
+      animation: google.maps.Animation.BOUNCE 
+    }
+    this.markers.push(this.marker);
+    //#endregion
   } 
-
+  
   onFlightSubmit(f: NgForm){
     //POST to DB--why u no come here
     //#region flight service - POST
@@ -90,7 +135,7 @@ export class AirCompanyProfileComponent implements OnInit {
     let travelLength = (<HTMLInputElement> document.getElementById("travelLength")).value;
     
     let exists = false;
-
+    
     this.flight.TravelTime = travelTime;    
     this.flight.FlightID = parseInt(flightId);
     this.flight.Departure = new Date(departure);
@@ -122,22 +167,13 @@ export class AirCompanyProfileComponent implements OnInit {
     let lastname = (<HTMLInputElement> document.getElementById("padmin-lastname")).value;
     let email = (<HTMLInputElement> document.getElementById("padmin-email")).value;
     let city = (<HTMLInputElement> document.getElementById("padmin-city")).value;
-    let phoneNumber = (<HTMLInputElement> document.getElementById("padmin-phoneNumber")).value;
-
-    this.planeAdmin.name = name;
-    this.planeAdmin.lastname = lastname;
-    this.planeAdmin.email = email;
-    this.planeAdmin.city = city;
-    this.planeAdmin.phoneNumber = phoneNumber;
-
+    let phoneNumber = (<HTMLInputElement> document.getElementById("padmin-phoneNumber")).value;   
     //PUT to DB
   }
 
   AddDestinations(){
     //POST to DB
-    this.destinacije[0] = "Madrid";
-    this.destinacije[1] = "Paris";
-    this.destinacije[2] = "Lisabon";
+   
   }
 
   RemoveDestinations(){
@@ -154,6 +190,5 @@ export class AirCompanyProfileComponent implements OnInit {
   }
   onFlightDel(f: NgForm){
 
-  }
-
+  }  
 }

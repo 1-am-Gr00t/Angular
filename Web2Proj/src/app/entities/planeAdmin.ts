@@ -1,15 +1,12 @@
-export class PlaneAdmin{
-    name: string;
-    lastname: string;
-    email: string;
-    city: string;
-    phoneNumber: string;
+import { AirCompany } from './airCompany'
 
-    constructor(name: string, lastname: string, email: string, city: string, phoneNumber: string){
-        this.name = name;
-        this.lastname = lastname;
-        this.email = email;
-        this.city = city;
-        this.phoneNumber = phoneNumber;
-    }
+export class PlaneAdmin{
+    Email: String
+    Password: String
+    Name: String
+    LastName: string
+    City: String
+    PhoneNumber: String
+    AirCompany: AirCompany
+
 }
