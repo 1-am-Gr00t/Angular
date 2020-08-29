@@ -29,10 +29,10 @@ namespace Web2Backend.Controllers
         }
 
         // GET: api/RegisteredUsers/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<RegisteredUser>> GetRegisteredUser(string id)
+        [HttpGet("{email}+{password}")]
+        public async Task<ActionResult<RegisteredUser>> GetRegisteredUser(string email, string password)
         {
-            var registeredUser = await _context.RegisteredUsers.FindAsync(id);
+            var registeredUser = await _context.RegisteredUsers.FindAsync(email, password);
 
             if (registeredUser == null)
             {
