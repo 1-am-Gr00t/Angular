@@ -4,4 +4,10 @@ export class RegUser{
     email: string;
     city: string;
     phoneNumber: string;   
+    password: string;
+
+    constructor(mail: string, pass:string) {
+        this.email = mail;
+        this.password = pass;
+    }
 }

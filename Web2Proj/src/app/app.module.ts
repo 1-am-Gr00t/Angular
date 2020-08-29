@@ -23,6 +23,9 @@ import { SuccessfulReservationComponent } from './components/flightBookingSteps/
 import { HttpClientModule } from "@angular/common/http";
 import { FlightService } from  './shared/flight-service-and-model/flight.service';
 import { GoogleMapsModule } from '@angular/google-maps';
+import { LogInPageComponent } from './components/log-in-page/log-in-page.component';
+import { SharedData } from './services/shared-data';
+import { RegisterProfileComponent } from './components/register-profile/register-profile.component'
 
 @NgModule({
   declarations: [
@@ -37,6 +40,8 @@ import { GoogleMapsModule } from '@angular/google-maps';
     PersonalDataComponent,
     RentCarComponent,
     SuccessfulReservationComponent,
+    LogInPageComponent,
+    RegisterProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,7 +54,7 @@ import { GoogleMapsModule } from '@angular/google-maps';
   ],
   providers: [CategoryService, DateTimeService, ScrollBarService, ColumnSeriesService, LineSeriesService, 
     ChartAnnotationService, RangeColumnSeriesService, StackingColumnSeriesService,LegendService, TooltipService,
-    FlightService,
+    FlightService, SharedData,
   ],
   bootstrap: [AppComponent]
 })
