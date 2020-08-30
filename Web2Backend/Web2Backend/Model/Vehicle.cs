@@ -21,6 +21,14 @@ namespace Web2Backend.Model
         //public string[] ZauzetostVozila { get; set; }
         public int CenaZaDan { get; set; }
 
+        public virtual ICollection<DateReserved> DatesReserved { get; set; }
+
+        public Vehicle()
+        {
+            this.DatesReserved = new HashSet<DateReserved>();
+        }
+
+
 
     }
 }

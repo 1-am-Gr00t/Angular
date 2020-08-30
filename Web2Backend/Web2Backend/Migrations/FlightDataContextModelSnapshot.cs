@@ -72,6 +72,27 @@ namespace Web2Backend.Migrations
                     b.ToTable("AirCompanies");
                 });
 
+            modelBuilder.Entity("Web2Backend.Model.DateReserved", b =>
+                {
+                    b.Property<int>("VehicleID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VehicleRACID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VehicleID1")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VehicleRACID1")
+                        .HasColumnType("int");
+
+                    b.HasKey("VehicleID", "VehicleRACID");
+
+                    b.HasIndex("VehicleID1", "VehicleRACID1");
+
+                    b.ToTable("DatesReserved");
+                });
+
             modelBuilder.Entity("Web2Backend.Model.Destination", b =>
                 {
                     b.Property<string>("Dest")
@@ -177,16 +198,16 @@ namespace Web2Backend.Migrations
                     b.Property<int>("ID")
                         .HasColumnType("int");
 
+                    b.Property<int>("RACID")
+                        .HasColumnType("int");
+
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("RACID")
-                        .HasColumnType("int");
 
                     b.Property<string>("Username")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ID");
+                    b.HasKey("ID", "RACID");
 
                     b.HasIndex("RACID");
 
@@ -314,9 +335,10 @@ namespace Web2Backend.Migrations
             modelBuilder.Entity("Web2Backend.Model.Vehicle", b =>
                 {
                     b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    b.Property<int>("RACID")
+                        .HasColumnType("int");
 
                     b.Property<int>("CenaZaDan")
                         .HasColumnType("int");
@@ -333,16 +355,13 @@ namespace Web2Backend.Migrations
                     b.Property<double>("ProsecnaOcena")
                         .HasColumnType("float");
 
-                    b.Property<int>("RACID")
-                        .HasColumnType("int");
-
                     b.Property<int>("RegBroj")
                         .HasColumnType("int");
 
                     b.Property<string>("TipVozila")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ID");
+                    b.HasKey("ID", "RACID");
 
                     b.HasIndex("RACID");
 
@@ -360,6 +379,15 @@ namespace Web2Backend.Migrations
                     b.HasOne("Web2Backend.Model.Flight", "Flight")
                         .WithMany("FlightDestinations")
                         .HasForeignKey("FlightId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Web2Backend.Model.DateReserved", b =>
+                {
+                    b.HasOne("Web2Backend.Model.Vehicle", "Vehicle")
+                        .WithMany("DatesReserved")
+                        .HasForeignKey("VehicleID1", "VehicleRACID1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -389,7 +417,9 @@ namespace Web2Backend.Migrations
                 {
                     b.HasOne("Web2Backend.Model.RACService", "RAC")
                         .WithMany("RACAdmins")
-                        .HasForeignKey("RACID");
+                        .HasForeignKey("RACID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Web2Backend.Model.RegisteredUser", b =>

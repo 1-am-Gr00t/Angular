@@ -27,6 +27,8 @@ namespace Web2Backend.Data
         public DbSet<SoldTicket> SoldTickets { get; set; }
         public DbSet<ServiceGrade> ServiceGrades { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
+
+        public DbSet<DateReserved> DatesReserved  { get; set; }
         public DbSet<RACService> RACServices { get; set; }
         public DbSet<RACAdmin> RACAdmins { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -36,7 +38,9 @@ namespace Web2Backend.Data
             modelBuilder.Entity<FlightAdmin>().HasKey(fa => new { fa.Email, fa.Password });
             modelBuilder.Entity<RegisteredUser>().HasKey(ru => new { ru.Email, ru.Password });
             modelBuilder.Entity<Friends>().HasKey(id => new { id.User1, id.User2 });
-           
+            modelBuilder.Entity<RACAdmin>().HasKey(racA => new { racA.ID, racA.RACID});
+            modelBuilder.Entity<Vehicle>().HasKey(v => new { v.ID, v.RACID });
+            modelBuilder.Entity<DateReserved>().HasKey(dr => new { dr.VehicleID, dr.VehicleRACID });
 
             //Mapping many-to-many relationship
             modelBuilder.Entity<FlightDestinations>()

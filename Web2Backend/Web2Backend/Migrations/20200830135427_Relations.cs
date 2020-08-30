@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Web2Backend.Migrations
 {
-    public partial class Reseted : Migration
+    public partial class Relations : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -65,21 +65,22 @@ namespace Web2Backend.Migrations
                 columns: table => new
                 {
                     Email = table.Column<string>(nullable: false),
-                    Password = table.Column<string>(nullable: true),
+                    Password = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
                     City = table.Column<string>(nullable: true),
                     PhoneNumber = table.Column<string>(nullable: true),
-                    RegisteredUserEmail = table.Column<string>(nullable: true)
+                    RegisteredUserEmail = table.Column<string>(nullable: true),
+                    RegisteredUserPassword = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RegisteredUsers", x => x.Email);
+                    table.PrimaryKey("PK_RegisteredUsers", x => new { x.Email, x.Password });
                     table.ForeignKey(
-                        name: "FK_RegisteredUsers_RegisteredUsers_RegisteredUserEmail",
-                        column: x => x.RegisteredUserEmail,
+                        name: "FK_RegisteredUsers_RegisteredUsers_RegisteredUserEmail_RegisteredUserPassword",
+                        columns: x => new { x.RegisteredUserEmail, x.RegisteredUserPassword },
                         principalTable: "RegisteredUsers",
-                        principalColumn: "Email",
+                        principalColumns: new[] { "Email", "Password" },
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -88,7 +89,7 @@ namespace Web2Backend.Migrations
                 columns: table => new
                 {
                     Email = table.Column<string>(nullable: false),
-                    Password = table.Column<string>(nullable: true),
+                    Password = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
                     City = table.Column<string>(nullable: true),
@@ -97,7 +98,7 @@ namespace Web2Backend.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FlightAdmins", x => x.Email);
+                    table.PrimaryKey("PK_FlightAdmins", x => new { x.Email, x.Password });
                     table.ForeignKey(
                         name: "FK_FlightAdmins_AirCompanies_AirCompanyName",
                         column: x => x.AirCompanyName,
@@ -178,27 +179,26 @@ namespace Web2Backend.Migrations
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false),
-                    RACID = table.Column<int>(nullable: true),
+                    RACID = table.Column<int>(nullable: false),
                     Username = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RACAdmins", x => x.ID);
+                    table.PrimaryKey("PK_RACAdmins", x => new { x.ID, x.RACID });
                     table.ForeignKey(
                         name: "FK_RACAdmins_RACServices_RACID",
                         column: x => x.RACID,
                         principalTable: "RACServices",
                         principalColumn: "RACID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Vehicles",
                 columns: table => new
                 {
-                    ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ID = table.Column<int>(nullable: false),
                     RACID = table.Column<int>(nullable: false),
                     Naziv = table.Column<string>(nullable: true),
                     Marka = table.Column<string>(nullable: true),
@@ -210,7 +210,7 @@ namespace Web2Backend.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Vehicles", x => x.ID);
+                    table.PrimaryKey("PK_Vehicles", x => new { x.ID, x.RACID });
                     table.ForeignKey(
                         name: "FK_Vehicles_RACServices_RACID",
                         column: x => x.RACID,
@@ -289,6 +289,31 @@ namespace Web2Backend.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "DatesReserved",
+                columns: table => new
+                {
+                    VehicleID = table.Column<int>(nullable: false),
+                    VehicleRACID = table.Column<int>(nullable: false),
+                    VehicleID1 = table.Column<int>(nullable: false),
+                    VehicleRACID1 = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DatesReserved", x => new { x.VehicleID, x.VehicleRACID });
+                    table.ForeignKey(
+                        name: "FK_DatesReserved_Vehicles_VehicleID1_VehicleRACID1",
+                        columns: x => new { x.VehicleID1, x.VehicleRACID1 },
+                        principalTable: "Vehicles",
+                        principalColumns: new[] { "ID", "RACID" },
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DatesReserved_VehicleID1_VehicleRACID1",
+                table: "DatesReserved",
+                columns: new[] { "VehicleID1", "VehicleRACID1" });
+
             migrationBuilder.CreateIndex(
                 name: "IX_FlightAdmins_AirCompanyName",
                 table: "FlightAdmins",
@@ -315,9 +340,9 @@ namespace Web2Backend.Migrations
                 column: "RACID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RegisteredUsers_RegisteredUserEmail",
+                name: "IX_RegisteredUsers_RegisteredUserEmail_RegisteredUserPassword",
                 table: "RegisteredUsers",
-                column: "RegisteredUserEmail");
+                columns: new[] { "RegisteredUserEmail", "RegisteredUserPassword" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Seats_FlightID",
@@ -347,6 +372,9 @@ namespace Web2Backend.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "DatesReserved");
+
             migrationBuilder.DropTable(
                 name: "FlightAdmins");
 

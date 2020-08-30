@@ -44,6 +44,10 @@ namespace Web2Backend
 
             app.UseRouting();
 
+            app.UseCors(builder => builder.WithOrigins(
+                Configuration["ApplicationSettings:Client_URL"].ToString())
+            );
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
