@@ -24,6 +24,7 @@
     ".NETCoreApp,Version=v3.1": {
       "Web2Backend/1.0.0": {
         "dependencies": {
+          "CsvHelper": "15.0.5",
           "Microsoft.EntityFrameworkCore.SqlServer": "3.1.6",
           "Microsoft.EntityFrameworkCore.Sqlite": "3.1.6",
           "Microsoft.EntityFrameworkCore.Tools": "3.1.6",
@@ -302,6 +303,20 @@
         },
         "compile": {
           "Web2Backend.dll": {}
+        }
+      },
+      "CsvHelper/15.0.5": {
+        "dependencies": {
+          "Microsoft.CSharp": "4.7.0"
+        },
+        "runtime": {
+          "lib/netstandard2.1/CsvHelper.dll": {
+            "assemblyVersion": "15.0.0.0",
+            "fileVersion": "15.0.5.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.1/CsvHelper.dll": {}
         }
       },
       "Microsoft.AspNetCore.Html.Abstractions/2.2.0": {
@@ -3922,6 +3937,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "CsvHelper/15.0.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-HPoE5nASoFXqoXKSi5yEBam7TzDrtC8WESA4xq53JtPKV8Mm+IKRuN+FJyMoJg1Whv/NG4JiCUs9yUcaSY/ziQ==",
+      "path": "csvhelper/15.0.5",
+      "hashPath": "csvhelper.15.0.5.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Html.Abstractions/2.2.0": {
       "type": "package",

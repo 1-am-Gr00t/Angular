@@ -46,7 +46,9 @@ namespace Web2Backend
 
             app.UseCors(builder => builder.WithOrigins(
                 Configuration["ApplicationSettings:Client_URL"].ToString())
-            );
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                );
 
             app.UseAuthorization();
 

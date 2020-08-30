@@ -15,16 +15,10 @@ export class UserProfileComponent implements OnInit {
  @ViewChild('userForm') userProfileForm: NgForm;
 
   constructor(private user: SharedData) {}
-  //@ViewChild(LogInComponent) logIn;
 
   ngOnInit() {
     this.user.currentUser.subscribe(valUser => this.regUser = valUser)
   }
-/* child->parent, eventEmmiter
-  CheckUser($event)
-  {
-    this.regUser = $event;
-  }*/
 
 
   onSubmit(f: NgForm){

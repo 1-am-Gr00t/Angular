@@ -28,4 +28,7 @@ export class StringIdService {
   deleteItem(url : string, itemId: string){
     return this.http.delete(this.rootURL+ "/" + url + "/" + itemId);
   }
+  getUser(url: string, email: string, pass: string){
+    return this.http.get(this.rootURL + "/" + url, [email, pass]);
+  }  
 }
