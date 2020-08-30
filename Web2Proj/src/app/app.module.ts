@@ -25,7 +25,11 @@ import { FlightService } from  './shared/flight-service-and-model/flight.service
 import { GoogleMapsModule } from '@angular/google-maps';
 import { LogInPageComponent } from './components/log-in-page/log-in-page.component';
 import { SharedData } from './services/shared-data';
-import { RegisterProfileComponent } from './components/register-profile/register-profile.component'
+import { RegisterProfileComponent } from './components/register-profile/register-profile.component';
+import { VehicleComponent } from './components/vehicle/vehicle.component';
+import { RACProfileComponent } from './components/rac-profile/rac-profile.component';
+import { RACAdminProfileComponent } from './components/rac-admin-profile/rac-admin-profile.component';
+import { PasswordChangeComponent } from './components/password-change/password-change.component'
 
 @NgModule({
   declarations: [
@@ -42,6 +46,10 @@ import { RegisterProfileComponent } from './components/register-profile/register
     SuccessfulReservationComponent,
     LogInPageComponent,
     RegisterProfileComponent,
+    VehicleComponent,
+    RACProfileComponent,
+    RACAdminProfileComponent,
+    PasswordChangeComponent,
   ],
   imports: [
     BrowserModule,

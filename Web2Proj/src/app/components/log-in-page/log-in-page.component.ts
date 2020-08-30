@@ -13,9 +13,6 @@ export class LogInPageComponent implements OnInit {
 
  
   regUser: RegUser;
-  
-  //@Output() UserLogIn = new EventEmitter<RegUser>();
-
 
   constructor(private user: SharedData) { 
   }

@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "kApZUyyuZEO3uPV0zE03Lp49s71FncCVqcvR8S/rruMTjQIw1CphVp2OlS07Ck+Xtys83WUbqQ3z+XZzm+xlqQ==",
+  "dgSpecHash": "I9e0RUjtDPXvyZvNs9iGwHVoHaVbpxS24KUYLkBWY4S6SRweiJgLiKZ2BuguTT9Yr8FNp0Uj/DHYEG8uSvu5rw==",
   "success": true,
   "projectFilePath": "D:\\faks\\4godina\\Web2\\ZaSvakiSlucaj\\stupid\\Angular\\Web2Backend\\Web2Backend\\Web2Backend.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Angelina\\.nuget\\packages\\csvhelper\\15.0.5\\csvhelper.15.0.5.nupkg.sha512",
     "C:\\Users\\Angelina\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\Angelina\\.nuget\\packages\\microsoft.aspnetcore.razor\\2.2.0\\microsoft.aspnetcore.razor.2.2.0.nupkg.sha512",
     "C:\\Users\\Angelina\\.nuget\\packages\\microsoft.aspnetcore.razor.language\\3.1.0\\microsoft.aspnetcore.razor.language.3.1.0.nupkg.sha512",
