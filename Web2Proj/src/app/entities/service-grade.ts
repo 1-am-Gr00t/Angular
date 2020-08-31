@@ -4,6 +4,6 @@ import { AirCompany } from './airCompany'
 export class ServiceGrade {
     GradeId: number
     Grade: number
-    Flight: Flight
-    AirCompany: AirCompany
+    Flight: number
+    AirCompany: string
 }

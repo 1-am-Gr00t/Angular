@@ -12,48 +12,48 @@ namespace Web2Backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RegisteredUsersController : ControllerBase
+    public class DateReservedsController : ControllerBase
     {
         private readonly FlightDataContext _context;
 
-        public RegisteredUsersController(FlightDataContext context)
+        public DateReservedsController(FlightDataContext context)
         {
             _context = context;
         }
 
-        // GET: api/RegisteredUsers
+        // GET: api/DateReserveds
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<RegisteredUser>>> GetRegisteredUsers()
+        public async Task<ActionResult<IEnumerable<DateReserved>>> GetDatesReserved()
         {
-            return await _context.RegisteredUsers.ToListAsync();
+            return await _context.DatesReserved.ToListAsync();
         }
 
-        // GET: api/RegisteredUsers/5
-        [HttpGet("id")]
-        public async Task<ActionResult<RegisteredUser>> GetRegisteredUser(string id)
+        // GET: api/DateReserveds/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<DateReserved>> GetDateReserved(int id)
         {
-            var registeredUser = await _context.RegisteredUsers.FindAsync(id);
+            var dateReserved = await _context.DatesReserved.FindAsync(id);
 
-            if (registeredUser == null)
+            if (dateReserved == null)
             {
                 return NotFound();
             }
 
-            return registeredUser;
+            return dateReserved;
         }
 
-        // PUT: api/RegisteredUsers/5
+        // PUT: api/DateReserveds/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRegisteredUser(string id, RegisteredUser registeredUser)
+        public async Task<IActionResult> PutDateReserved(int id, DateReserved dateReserved)
         {
-            if (id != registeredUser.Email)
+            if (id != dateReserved.VehicleID)
             {
                 return BadRequest();
             }
 
-            _context.Entry(registeredUser).State = EntityState.Modified;
+            _context.Entry(dateReserved).State = EntityState.Modified;
 
             try
             {
@@ -61,7 +61,7 @@ namespace Web2Backend.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!RegisteredUserExists(id))
+                if (!DateReservedExists(id))
                 {
                     return NotFound();
                 }
@@ -74,20 +74,20 @@ namespace Web2Backend.Controllers
             return NoContent();
         }
 
-        // POST: api/RegisteredUsers
+        // POST: api/DateReserveds
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<RegisteredUser>> PostRegisteredUser(RegisteredUser registeredUser)
+        public async Task<ActionResult<DateReserved>> PostDateReserved(DateReserved dateReserved)
         {
-            _context.RegisteredUsers.Add(registeredUser);
+            _context.DatesReserved.Add(dateReserved);
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateException)
             {
-                if (RegisteredUserExists(registeredUser.Email))
+                if (DateReservedExists(dateReserved.VehicleID))
                 {
                     return Conflict();
                 }
@@ -97,28 +97,28 @@ namespace Web2Backend.Controllers
                 }
             }
 
-            return CreatedAtAction("GetRegisteredUser", new { id = registeredUser.Email }, registeredUser);
+            return CreatedAtAction("GetDateReserved", new { id = dateReserved.VehicleID }, dateReserved);
         }
 
-        // DELETE: api/RegisteredUsers/5
+        // DELETE: api/DateReserveds/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<RegisteredUser>> DeleteRegisteredUser(string id)
+        public async Task<ActionResult<DateReserved>> DeleteDateReserved(int id)
         {
-            var registeredUser = await _context.RegisteredUsers.FindAsync(id);
-            if (registeredUser == null)
+            var dateReserved = await _context.DatesReserved.FindAsync(id);
+            if (dateReserved == null)
             {
                 return NotFound();
             }
 
-            _context.RegisteredUsers.Remove(registeredUser);
+            _context.DatesReserved.Remove(dateReserved);
             await _context.SaveChangesAsync();
 
-            return registeredUser;
+            return dateReserved;
         }
 
-        private bool RegisteredUserExists(string id)
+        private bool DateReservedExists(int id)
         {
-            return _context.RegisteredUsers.Any(e => e.Email == id);
+            return _context.DatesReserved.Any(e => e.VehicleID == id);
         }
     }
 }

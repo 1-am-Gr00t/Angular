@@ -10,14 +10,14 @@ using Web2Backend.Data;
 namespace Web2Backend.Migrations
 {
     [DbContext(typeof(FlightDataContext))]
-    [Migration("20200830135427_Relations")]
-    partial class Relations
+    [Migration("20200830152948_update")]
+    partial class update
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.6")
+                .HasAnnotation("ProductVersion", "3.1.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -149,9 +149,6 @@ namespace Web2Backend.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Password")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("AirCompanyName")
                         .HasColumnType("nvarchar(450)");
 
@@ -164,10 +161,13 @@ namespace Web2Backend.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Email", "Password");
+                    b.HasKey("Email");
 
                     b.HasIndex("AirCompanyName");
 
@@ -240,9 +240,6 @@ namespace Web2Backend.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Password")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
@@ -252,18 +249,18 @@ namespace Web2Backend.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RegisteredUserEmail")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("RegisteredUserPassword")
-                        .HasColumnType("nvarchar(450)");
+                    b.HasKey("Email");
 
-                    b.HasKey("Email", "Password");
-
-                    b.HasIndex("RegisteredUserEmail", "RegisteredUserPassword");
+                    b.HasIndex("RegisteredUserEmail");
 
                     b.ToTable("RegisteredUsers");
                 });
@@ -428,7 +425,7 @@ namespace Web2Backend.Migrations
                 {
                     b.HasOne("Web2Backend.Model.RegisteredUser", null)
                         .WithMany("Friends")
-                        .HasForeignKey("RegisteredUserEmail", "RegisteredUserPassword");
+                        .HasForeignKey("RegisteredUserEmail");
                 });
 
             modelBuilder.Entity("Web2Backend.Model.Seat", b =>

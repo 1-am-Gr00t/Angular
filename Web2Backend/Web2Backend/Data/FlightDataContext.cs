@@ -35,8 +35,8 @@ namespace Web2Backend.Data
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Seat>().HasKey(s => new { s.SeatID, s.FlightID }); //pravi se kljuc od 2 polja
-            modelBuilder.Entity<FlightAdmin>().HasKey(fa => new { fa.Email, fa.Password });
-            modelBuilder.Entity<RegisteredUser>().HasKey(ru => new { ru.Email, ru.Password });
+            modelBuilder.Entity<FlightAdmin>().HasKey(fa => new { fa.Email });
+            modelBuilder.Entity<RegisteredUser>().HasKey(ru => new { ru.Email });
             modelBuilder.Entity<Friends>().HasKey(id => new { id.User1, id.User2 });
             modelBuilder.Entity<RACAdmin>().HasKey(racA => new { racA.ID, racA.RACID});
             modelBuilder.Entity<Vehicle>().HasKey(v => new { v.ID, v.RACID });

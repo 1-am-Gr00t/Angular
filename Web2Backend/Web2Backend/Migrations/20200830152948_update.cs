@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Web2Backend.Migrations
 {
-    public partial class Relations : Migration
+    public partial class update : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -65,22 +65,21 @@ namespace Web2Backend.Migrations
                 columns: table => new
                 {
                     Email = table.Column<string>(nullable: false),
-                    Password = table.Column<string>(nullable: false),
+                    Password = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
                     City = table.Column<string>(nullable: true),
                     PhoneNumber = table.Column<string>(nullable: true),
-                    RegisteredUserEmail = table.Column<string>(nullable: true),
-                    RegisteredUserPassword = table.Column<string>(nullable: true)
+                    RegisteredUserEmail = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RegisteredUsers", x => new { x.Email, x.Password });
+                    table.PrimaryKey("PK_RegisteredUsers", x => x.Email);
                     table.ForeignKey(
-                        name: "FK_RegisteredUsers_RegisteredUsers_RegisteredUserEmail_RegisteredUserPassword",
-                        columns: x => new { x.RegisteredUserEmail, x.RegisteredUserPassword },
+                        name: "FK_RegisteredUsers_RegisteredUsers_RegisteredUserEmail",
+                        column: x => x.RegisteredUserEmail,
                         principalTable: "RegisteredUsers",
-                        principalColumns: new[] { "Email", "Password" },
+                        principalColumn: "Email",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -89,7 +88,7 @@ namespace Web2Backend.Migrations
                 columns: table => new
                 {
                     Email = table.Column<string>(nullable: false),
-                    Password = table.Column<string>(nullable: false),
+                    Password = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
                     City = table.Column<string>(nullable: true),
@@ -98,7 +97,7 @@ namespace Web2Backend.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FlightAdmins", x => new { x.Email, x.Password });
+                    table.PrimaryKey("PK_FlightAdmins", x => x.Email);
                     table.ForeignKey(
                         name: "FK_FlightAdmins_AirCompanies_AirCompanyName",
                         column: x => x.AirCompanyName,
@@ -340,9 +339,9 @@ namespace Web2Backend.Migrations
                 column: "RACID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RegisteredUsers_RegisteredUserEmail_RegisteredUserPassword",
+                name: "IX_RegisteredUsers_RegisteredUserEmail",
                 table: "RegisteredUsers",
-                columns: new[] { "RegisteredUserEmail", "RegisteredUserPassword" });
+                column: "RegisteredUserEmail");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Seats_FlightID",

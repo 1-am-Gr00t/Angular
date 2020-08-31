@@ -1,14 +1,14 @@
 import { Flight } from 'src/app/shared/flight-service-and-model/flight';
-import { PlaneAdmin } from './planeAdmin';
+import { FlightAdmin } from './flightAdmin';
 import { SoldTicket } from './sold-ticket';
 import { Luggage } from './luggage';
 
 export class AirCompany{
-    name: String;
-    address: String;
-    promoDescription: String;
+    name: string;
+    address: string;
+    promoDescription: string;
     meanGrade: number;
-    flightAdmins: PlaneAdmin[];
+    flightAdmins: FlightAdmin[];
     soldTickets: SoldTicket[];
     flights: Flight[];
     luggage: Luggage[];

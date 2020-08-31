@@ -5,5 +5,5 @@ export class SoldTicket {
     TicketId: number;
     DateSold: Date;
     TicketPrice: number;
-    AirCompany: AirCompany;
+    AirCompany: string;
 }

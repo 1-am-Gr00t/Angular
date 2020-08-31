@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { PlaneAdmin } from 'src/app/entities/planeAdmin';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { FlightAdmin } from 'src/app/entities/flightAdmin';
+import { FormGroup, FormControl, Validators, FormBuilder, NgModel } from '@angular/forms';
 import { Flight } from 'src/app/shared/flight-service-and-model/flight';
 import { FlightService } from 'src/app/shared/flight-service-and-model/flight.service';
 import { Category, redrawElement } from '@syncfusion/ej2-angular-charts';
@@ -10,6 +10,7 @@ import { StringIdService } from 'src/app/services/string-id.service';
 import { AirCompany } from 'src/app/entities/airCompany';
 import { IntegerIdService } from 'src/app/services/integer-id.service';
 import { GoogleMap, MapMarker } from '@angular/google-maps';
+import { Destination } from 'src/app/entities/destination';
 
 @Component({
   selector: 'app-air-company-profile',
@@ -22,6 +23,7 @@ export class AirCompanyProfileComponent implements OnInit {
   @ViewChild('flightFormDel') flightFormDel: NgForm;
   @ViewChild('adminForm') adminProfileForm: NgForm;
   @ViewChild('airCompanyForm') airCompanyForm: NgForm;
+  @ViewChild('addDestFrom') addDestForm: NgForm;
 
   readonly destUrl = "Destinations";
   readonly airCompUrl = "AirCompanies";
@@ -29,7 +31,7 @@ export class AirCompanyProfileComponent implements OnInit {
   readonly luggagesUrl = "Luggages";
   readonly gradesUrl = "ServiceGrades";
   readonly seatsUrl = "Seats";
-  planeAdmin: PlaneAdmin
+  planeAdmin: FlightAdmin
   
   serviceGrades = [];
   luggages = [];
@@ -38,10 +40,11 @@ export class AirCompanyProfileComponent implements OnInit {
   destinations = [];
   flight: Flight;
   idFligh: number;
+  airCompany: AirCompany;
+  flightAdmin : FlightAdmin;
 
   markers: Array<MapMarker>;
   marker: MapMarker;
-  airCompany: AirCompany;
 //#region chart properties
   title: string;
   chartData: Object[];
@@ -52,11 +55,10 @@ center: google.maps.LatLngLiteral
   constructor(private _flightService: FlightService, private _stringIdService: StringIdService,
     private _integerIdService: IntegerIdService) {
    this.flight = new Flight();
+   this.flightAdmin = new FlightAdmin();
   }
 
-  ngOnInit(): void {
-   
-    //#region services - GET
+  allGETmethods(){
     this._flightService.getFlights()//gets all flights
     .subscribe((data: any) => {
     this.flights = data;
@@ -67,11 +69,11 @@ center: google.maps.LatLngLiteral
       this.destinations = data;
     }
       );
-    this._stringIdService.getItem(this.airCompUrl, "Tesla")//treba se menjati nakon uspesnog logovanja admina!!, ie. adming.airCompany.Name
+    /*this._stringIdService.getItem(this.airCompUrl, this.flightAdmin.AirCompany)//treba se menjati nakon uspesnog logovanja admina!!, ie. adming.airCompany.Name
     .subscribe((data: any) => {
       this.airCompany = data;
-     }
-    );
+      }
+    );*/
     this._integerIdService.getItems(this.ticketsSoldUrl)
     .subscribe((data: any) => {
       this.soldTickets = data;
@@ -83,9 +85,12 @@ center: google.maps.LatLngLiteral
     this._integerIdService.getItems(this.luggagesUrl)
     .subscribe((data: any) => {
       this.serviceGrades = data;
-    });
-    
-    //#endregion
+    });    
+  }
+
+  ngOnInit(): void {
+   this.allGETmethods();
+   
     //#region chart
 
     this.chartData = [
@@ -131,18 +136,24 @@ center: google.maps.LatLngLiteral
     let landing = (<HTMLInputElement> document.getElementById("landing")).value;
     let travelTime = (<HTMLInputElement> document.getElementById("travelTime")).value;
     let ticketPrice = (<HTMLInputElement> document.getElementById("ticketPrice")).value;
-    let changeoverNo = (<HTMLInputElement> document.getElementById("changeoverNo")).value;
     let travelLength = (<HTMLInputElement> document.getElementById("travelLength")).value;
-    
+    let ticketDisctount = (<HTMLInputElement> document.getElementById("ticketDiscount")).value;
+    let discount =  (<HTMLInputElement> document.getElementById("discount")).value;
     let exists = false;
     
     this.flight.TravelTime = travelTime;    
     this.flight.FlightID = parseInt(flightId);
-    this.flight.Departure = new Date(departure);
-    this.flight.Landing = new Date(landing);   
+    this.flight.DepartureTime = new Date(departure);
+    this.flight.LandingTime = new Date(landing);   
     this.flight.TicketPrice = parseInt(ticketPrice);
-    this.flight.NumberOfChangeovers = parseInt(changeoverNo);
+    this.flight.NumberOfChangeovers = 1;
     this.flight.TravelLength = parseInt(travelLength);
+    this.flight.NewTicketPrice = parseInt(ticketDisctount)
+
+    if (discount == "true")
+      this.flight.TicketDisctount = true;
+    else  
+      this.flight.TicketDisctount = false;
 
     for(let i = 0; i < this.flights.length; i++){
       if(this.flights[i].FlightID == this.flight.FlightID){
@@ -169,15 +180,20 @@ center: google.maps.LatLngLiteral
     let city = (<HTMLInputElement> document.getElementById("padmin-city")).value;
     let phoneNumber = (<HTMLInputElement> document.getElementById("padmin-phoneNumber")).value;   
     //PUT to DB
+    this.allGETmethods();
   }
 
   AddDestinations(){
-    //POST to DB
-   
+    let destination = (<HTMLInputElement> document.getElementById("newDest")).value;
+    let D = new Destination();
+    D.Dest = destination;
+    this._stringIdService.postItem(this.destUrl, D)
+    .subscribe(dest => this.destinations.push(dest));
   }
 
   RemoveDestinations(){
     //DELETE from DB
+    this.allGETmethods();
   }
 
  
@@ -187,8 +203,18 @@ center: google.maps.LatLngLiteral
 
     this._flightService.deleteFligh(this.idFligh)
     .subscribe();
+    this.allGETmethods();
   }
   onFlightDel(f: NgForm){
-
+    this.allGETmethods();
   }  
+
+  addChangeovers(changeovers : string){
+    this.flight.FlightChangeovers.push(changeovers);
+    (<HTMLInputElement> document.getElementById("padmin-name")).append(", " + changeovers);
+  }
+  resetFlightForm(){
+    this.flightForm.reset();
+    this.flight.FlightChangeovers = [];
+  }
 }

@@ -28,4 +28,17 @@ export class IntegerIdService {
   deleteItem(url : string, itemId: number){
     return this.http.delete(this.rootURL+ "/" + url + "/" + itemId);
   }
+
+   //CRUD with 2 keys int
+   getItem2IntId(url: string, itemId1: number, itemId2 : number) : Observable<any>{
+    return this.http.get<any>(this.rootURL + "/" + url + "/" + itemId1 + "+" + itemId2);
+  }  
+
+  putItem2IntId(url : string, item : any, itemId1: number, itemId2: number) {
+    return this.http.put(this.rootURL + "/" + url + "/" + itemId1 + "+" + itemId2, item);
+  }
+  
+  deleteItem2IntId(url : string, itemId1: number, itemId2: number){
+    return this.http.delete(this.rootURL+ "/" + url + "/" + itemId1 + "+" + itemId2);
+  }
 }

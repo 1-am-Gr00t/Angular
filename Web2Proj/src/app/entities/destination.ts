@@ -1,3 +1,3 @@
 export class Destination {
-    Destination: string
+    Dest: string
 }

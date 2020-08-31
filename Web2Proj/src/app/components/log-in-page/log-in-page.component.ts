@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { stringToNumber } from '@syncfusion/ej2-angular-charts';
-import { RegUser } from 'src/app/entities/regUser';
+import { RegisteredUser } from 'src/app/entities/registeredUser';
 import { BehaviorSubject, empty } from 'rxjs';
 import { SharedData } from 'src/app/services/shared-data';
 
@@ -12,7 +12,7 @@ import { SharedData } from 'src/app/services/shared-data';
 export class LogInPageComponent implements OnInit {
 
  
-  regUser: RegUser;
+  regUser: RegisteredUser;
   
   //@Output() UserLogIn = new EventEmitter<RegUser>();
 
@@ -33,7 +33,7 @@ export class LogInPageComponent implements OnInit {
     checkMail= this.regUser.email.split('@');
     if(checkMail[1] != "")
     {
-      let currentUser = new RegUser("", "");
+      let currentUser = new RegisteredUser("", "");
       //proveriti da li User iz baze odgovara unetom Useru
       //greska ako ne postoji
     }
