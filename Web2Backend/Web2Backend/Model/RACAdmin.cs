@@ -12,13 +12,8 @@ namespace Web2Backend.Model
         public int ID { get; set; }
         public int RACID { get; set; }
         public virtual RACService RAC { get; set; }
-        public string Username { get; set; }
+        public string email { get; set; }
         public string Password { get; set; }
 
-
-        /*public RACAdmin()
-        {
-            this.Password = "changepassword";
-        }*/
     }
 }

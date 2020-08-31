@@ -28,29 +28,7 @@ export class StringIdService {
   deleteItem(url : string, itemId: string){
     return this.http.delete(this.rootURL+ "/" + url + "/" + itemId);
   }
-  //CRUD with 2 keys string
-  getItem2StringId(url: string, itemId1: string, itemId2: string) : Observable<any>{
-    return this.http.get<any>(this.rootURL + "/" + url + "/" + itemId1 + "+" + itemId2);
-  }  
-
-  putItem2StringId(url : string, item : any, itemId1: string, itemId2: string) {
-    return this.http.put(this.rootURL + "/" + url + "/" + itemId1 + "+" + itemId2, item);
-  }
-  
-  deleteItem2StringId(url : string, itemId1: string, itemId2: string){
-    return this.http.delete(this.rootURL+ "/" + url + "/" + itemId1 + "+" + itemId2);
-  }
-
-  //CRUD with 2 keys - 1int 1string
-  getItem1String1IntId(url: string, itemId1: string, itemId2) : Observable<any>{
-    return this.http.get<any>(this.rootURL + "/" + url + "/" + itemId1 + "+" + itemId2);
-  }  
-
-  putItem1String1IntId(url : string, item : any, itemId1: string, itemId2: number) {
-    return this.http.put(this.rootURL + "/" + url + "/" + itemId1 + "+" + itemId2, item);
-  }
-  
-  deleteItem1String1IntId(url : string, itemId1: string, itemId2: number){
-    return this.http.delete(this.rootURL+ "/" + url + "/" + itemId1 + "+" + itemId2);
-  }
+  /*getUser(url: string, email: string, pass: string){
+    return this.http.get(this.rootURL + "/" + url, [email, pass]);
+  }  */
 }
