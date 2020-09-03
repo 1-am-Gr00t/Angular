@@ -12,8 +12,7 @@ import { SharedData } from 'src/app/services/shared-data';
 export class LogInPageComponent implements OnInit {
 
  
-  regUser: RegisteredUser;
-  
+  regUser: RegisteredUser;  
   //@Output() UserLogIn = new EventEmitter<RegUser>();
 
 
@@ -25,18 +24,11 @@ export class LogInPageComponent implements OnInit {
     this.regUser.email = (<HTMLInputElement> document.getElementById("user-email")).value;
     this.regUser.password = (<HTMLInputElement> document.getElementById("user-password")).value;
 
-    //provera ispravnosti kljuca
-    let arr = new Array<number>(3)
-    let checkMail= new Array<string>(2);
-    checkMail.fill("");
-
-    checkMail= this.regUser.email.split('@');
-    if(checkMail[1] != "")
-    {
-      let currentUser = new RegisteredUser("", "");
+    let currentUser = new RegisteredUser("", "");
       //proveriti da li User iz baze odgovara unetom Useru
       //greska ako ne postoji
-    }
+      //regUser = dodji iz baze
+    
   }
   
 

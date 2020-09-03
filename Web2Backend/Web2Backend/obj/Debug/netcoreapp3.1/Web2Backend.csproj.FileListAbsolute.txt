@@ -443,3 +443,4 @@ C:\Users\David\Desktop\Angular\Web2Backend\Web2Backend\bin\Debug\netcoreapp3.1\r
 C:\Users\David\Desktop\Angular\Web2Backend\Web2Backend\obj\Debug\netcoreapp3.1\Web2Backend.csproj.CoreCompileInputs.cache
 C:\Users\David\Desktop\Angular\Web2Backend\Web2Backend\obj\Debug\netcoreapp3.1\Web2Backend.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\David\Desktop\Angular\Web2Backend\Web2Backend\obj\Debug\netcoreapp3.1\Web2Backend.csproj.CopyComplete
+D:\faks\4godina\Web2\ZaSvakiSlucaj\stupid\Angular\Web2Backend\Web2Backend\bin\Debug\netcoreapp3.1\CsvHelper.dll

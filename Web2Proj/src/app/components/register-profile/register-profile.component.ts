@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { stringToNumber } from '@syncfusion/ej2-angular-charts';
-import { RegUser } from 'src/app/entities/regUser';
+import { RegisteredUser } from 'src/app/entities/registeredUser';
 import { BehaviorSubject, empty } from 'rxjs';
 import { SharedData } from 'src/app/services/shared-data';
 
@@ -12,7 +12,7 @@ import { SharedData } from 'src/app/services/shared-data';
 export class RegisterProfileComponent implements OnInit {
 
  
-  regUser: RegUser;
+  regUser: RegisteredUser;
   constructor(private user: SharedData) { 
   }
 
@@ -26,22 +26,15 @@ export class RegisterProfileComponent implements OnInit {
     this.regUser.password = (<HTMLInputElement> document.getElementById("user-password")).value;
     
     //provera ispravnosti kljuca
-    let arr = new Array<number>(3)
-    let checkMail= new Array<string>(2);
-    checkMail.fill("");
-
-    checkMail= this.regUser.email.split('@');
-    if(checkMail[1] != "")
-    {
-      let currentUser = new RegUser("", "");
+    let currentUser = new RegisteredUser("", "");
       //proveriti da li User iz baze odgovara unetom Useru
       //greska ako postoji
-    }
+    
   }
   
 
   ngOnInit(): void {
-    this.user.currentUser.subscribe(valUser => this.regUser = valUser)
+    this.user.currentUser.subscribe(valUser  => this.regUser = valUser)
   }
 
 }

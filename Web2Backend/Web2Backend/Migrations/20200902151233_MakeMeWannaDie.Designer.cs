@@ -10,8 +10,8 @@ using Web2Backend.Data;
 namespace Web2Backend.Migrations
 {
     [DbContext(typeof(FlightDataContext))]
-    [Migration("20200830152948_update")]
-    partial class update
+    [Migration("20200902151233_MakeMeWannaDie")]
+    partial class MakeMeWannaDie
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -206,7 +206,7 @@ namespace Web2Backend.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Username")
+                    b.Property<string>("email")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID", "RACID");

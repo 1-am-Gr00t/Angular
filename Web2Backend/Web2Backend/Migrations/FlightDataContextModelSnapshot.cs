@@ -204,7 +204,7 @@ namespace Web2Backend.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Username")
+                    b.Property<string>("email")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID", "RACID");

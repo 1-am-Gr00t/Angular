@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Web2Backend.Migrations
 {
-    public partial class update : Migration
+    public partial class MakeMeWannaDie : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -179,7 +179,7 @@ namespace Web2Backend.Migrations
                 {
                     ID = table.Column<int>(nullable: false),
                     RACID = table.Column<int>(nullable: false),
-                    Username = table.Column<string>(nullable: true),
+                    email = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true)
                 },
                 constraints: table =>

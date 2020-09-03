@@ -23,9 +23,10 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let vozilo of rac.vehicles">
-                    <td>
-                        <div class="row" >
+                    <app-vehicle *ngFor="let vozilo of rac.vehicles"
+                            [vehicle] = "vozilo">
+                        </app-vehicle>
+                        <!--div class="row" >
                             <b>Naziv: </b> {{vozilo.naziv}}
                         </div>
                         <div class="row">
@@ -42,9 +43,7 @@
                         </div>
                         <div class="row">
                             <b>Cena za dan: </b> {{vozilo.cenaZaDan}} (u dinarima)
-                        </div>
-                    </td>
-                </tr>                
+                        </div-->               
             </tbody>
         </table>
         <!--table class = "Admins">
