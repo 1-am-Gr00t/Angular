@@ -9,6 +9,7 @@ namespace Web2Backend.Model
     public class AirCompany
     {
         [Key]
+        public int AirCompanyId { get; set; }
         public String Name { get; set; }
 
         public String Address { get; set; }

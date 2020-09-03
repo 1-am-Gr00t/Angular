@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Web2Backend.Migrations
 {
-    public partial class update : Migration
+    public partial class create : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,14 +11,16 @@ namespace Web2Backend.Migrations
                 name: "AirCompanies",
                 columns: table => new
                 {
-                    Name = table.Column<string>(nullable: false),
+                    AirCompanyId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true),
                     Address = table.Column<string>(nullable: true),
                     PromoDescription = table.Column<string>(nullable: true),
                     MeanGrade = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AirCompanies", x => x.Name);
+                    table.PrimaryKey("PK_AirCompanies", x => x.AirCompanyId);
                 });
 
             migrationBuilder.CreateTable(
@@ -93,16 +95,16 @@ namespace Web2Backend.Migrations
                     LastName = table.Column<string>(nullable: true),
                     City = table.Column<string>(nullable: true),
                     PhoneNumber = table.Column<string>(nullable: true),
-                    AirCompanyName = table.Column<string>(nullable: true)
+                    AirCompanyId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_FlightAdmins", x => x.Email);
                     table.ForeignKey(
-                        name: "FK_FlightAdmins_AirCompanies_AirCompanyName",
-                        column: x => x.AirCompanyName,
+                        name: "FK_FlightAdmins_AirCompanies_AirCompanyId",
+                        column: x => x.AirCompanyId,
                         principalTable: "AirCompanies",
-                        principalColumn: "Name",
+                        principalColumn: "AirCompanyId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -119,16 +121,16 @@ namespace Web2Backend.Migrations
                     NumberOfChangeovers = table.Column<int>(nullable: false),
                     TicketDisctount = table.Column<bool>(nullable: false),
                     NewTicketPrice = table.Column<int>(nullable: false),
-                    AirCompanyName = table.Column<string>(nullable: true)
+                    AirCompanyId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Flights", x => x.FlightID);
                     table.ForeignKey(
-                        name: "FK_Flights_AirCompanies_AirCompanyName",
-                        column: x => x.AirCompanyName,
+                        name: "FK_Flights_AirCompanies_AirCompanyId",
+                        column: x => x.AirCompanyId,
                         principalTable: "AirCompanies",
-                        principalColumn: "Name",
+                        principalColumn: "AirCompanyId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -139,16 +141,16 @@ namespace Web2Backend.Migrations
                     LuggageID = table.Column<int>(nullable: false),
                     LuggagePrice = table.Column<double>(nullable: false),
                     LuggageDescription = table.Column<string>(nullable: true),
-                    AirCompanyName = table.Column<string>(nullable: true)
+                    AirCompanyId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Luggage", x => x.LuggageID);
                     table.ForeignKey(
-                        name: "FK_Luggage_AirCompanies_AirCompanyName",
-                        column: x => x.AirCompanyName,
+                        name: "FK_Luggage_AirCompanies_AirCompanyId",
+                        column: x => x.AirCompanyId,
                         principalTable: "AirCompanies",
-                        principalColumn: "Name",
+                        principalColumn: "AirCompanyId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -160,16 +162,16 @@ namespace Web2Backend.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DateSold = table.Column<DateTime>(nullable: false),
                     TicketPrice = table.Column<int>(nullable: false),
-                    AirCompanyName = table.Column<string>(nullable: true)
+                    AirCompanyId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SoldTickets", x => x.TicketId);
                     table.ForeignKey(
-                        name: "FK_SoldTickets_AirCompanies_AirCompanyName",
-                        column: x => x.AirCompanyName,
+                        name: "FK_SoldTickets_AirCompanies_AirCompanyId",
+                        column: x => x.AirCompanyId,
                         principalTable: "AirCompanies",
-                        principalColumn: "Name",
+                        principalColumn: "AirCompanyId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -179,7 +181,7 @@ namespace Web2Backend.Migrations
                 {
                     ID = table.Column<int>(nullable: false),
                     RACID = table.Column<int>(nullable: false),
-                    Username = table.Column<string>(nullable: true),
+                    email = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -269,16 +271,16 @@ namespace Web2Backend.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Grade = table.Column<int>(nullable: false),
                     FlightID = table.Column<int>(nullable: true),
-                    AirCompanyName = table.Column<string>(nullable: true)
+                    AirCompanyId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ServiceGrades", x => x.GradeId);
                     table.ForeignKey(
-                        name: "FK_ServiceGrades_AirCompanies_AirCompanyName",
-                        column: x => x.AirCompanyName,
+                        name: "FK_ServiceGrades_AirCompanies_AirCompanyId",
+                        column: x => x.AirCompanyId,
                         principalTable: "AirCompanies",
-                        principalColumn: "Name",
+                        principalColumn: "AirCompanyId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_ServiceGrades_Flights_FlightID",
@@ -314,9 +316,9 @@ namespace Web2Backend.Migrations
                 columns: new[] { "VehicleID1", "VehicleRACID1" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_FlightAdmins_AirCompanyName",
+                name: "IX_FlightAdmins_AirCompanyId",
                 table: "FlightAdmins",
-                column: "AirCompanyName");
+                column: "AirCompanyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_FlightDestinations_DestinationId",
@@ -324,14 +326,14 @@ namespace Web2Backend.Migrations
                 column: "DestinationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Flights_AirCompanyName",
+                name: "IX_Flights_AirCompanyId",
                 table: "Flights",
-                column: "AirCompanyName");
+                column: "AirCompanyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Luggage_AirCompanyName",
+                name: "IX_Luggage_AirCompanyId",
                 table: "Luggage",
-                column: "AirCompanyName");
+                column: "AirCompanyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RACAdmins_RACID",
@@ -349,9 +351,9 @@ namespace Web2Backend.Migrations
                 column: "FlightID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ServiceGrades_AirCompanyName",
+                name: "IX_ServiceGrades_AirCompanyId",
                 table: "ServiceGrades",
-                column: "AirCompanyName");
+                column: "AirCompanyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ServiceGrades_FlightID",
@@ -359,9 +361,9 @@ namespace Web2Backend.Migrations
                 column: "FlightID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SoldTickets_AirCompanyName",
+                name: "IX_SoldTickets_AirCompanyId",
                 table: "SoldTickets",
-                column: "AirCompanyName");
+                column: "AirCompanyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Vehicles_RACID",

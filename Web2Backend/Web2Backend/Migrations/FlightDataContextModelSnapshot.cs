@@ -55,8 +55,10 @@ namespace Web2Backend.Migrations
 
             modelBuilder.Entity("Web2Backend.Model.AirCompany", b =>
                 {
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("AirCompanyId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
@@ -64,10 +66,13 @@ namespace Web2Backend.Migrations
                     b.Property<double>("MeanGrade")
                         .HasColumnType("float");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PromoDescription")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Name");
+                    b.HasKey("AirCompanyId");
 
                     b.ToTable("AirCompanies");
                 });
@@ -108,8 +113,8 @@ namespace Web2Backend.Migrations
                     b.Property<int>("FlightID")
                         .HasColumnType("int");
 
-                    b.Property<string>("AirCompanyName")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("AirCompanyId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("DepartureTime")
                         .HasColumnType("datetime2");
@@ -137,7 +142,7 @@ namespace Web2Backend.Migrations
 
                     b.HasKey("FlightID");
 
-                    b.HasIndex("AirCompanyName");
+                    b.HasIndex("AirCompanyId");
 
                     b.ToTable("Flights");
                 });
@@ -147,8 +152,8 @@ namespace Web2Backend.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("AirCompanyName")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("AirCompanyId")
+                        .HasColumnType("int");
 
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
@@ -167,7 +172,7 @@ namespace Web2Backend.Migrations
 
                     b.HasKey("Email");
 
-                    b.HasIndex("AirCompanyName");
+                    b.HasIndex("AirCompanyId");
 
                     b.ToTable("FlightAdmins");
                 });
@@ -177,8 +182,8 @@ namespace Web2Backend.Migrations
                     b.Property<int>("LuggageID")
                         .HasColumnType("int");
 
-                    b.Property<string>("AirCompanyName")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("AirCompanyId")
+                        .HasColumnType("int");
 
                     b.Property<string>("LuggageDescription")
                         .HasColumnType("nvarchar(max)");
@@ -188,7 +193,7 @@ namespace Web2Backend.Migrations
 
                     b.HasKey("LuggageID");
 
-                    b.HasIndex("AirCompanyName");
+                    b.HasIndex("AirCompanyId");
 
                     b.ToTable("Luggage");
                 });
@@ -288,8 +293,8 @@ namespace Web2Backend.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("AirCompanyName")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("AirCompanyId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("FlightID")
                         .HasColumnType("int");
@@ -299,7 +304,7 @@ namespace Web2Backend.Migrations
 
                     b.HasKey("GradeId");
 
-                    b.HasIndex("AirCompanyName");
+                    b.HasIndex("AirCompanyId");
 
                     b.HasIndex("FlightID");
 
@@ -313,8 +318,8 @@ namespace Web2Backend.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("AirCompanyName")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("AirCompanyId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("DateSold")
                         .HasColumnType("datetime2");
@@ -324,7 +329,7 @@ namespace Web2Backend.Migrations
 
                     b.HasKey("TicketId");
 
-                    b.HasIndex("AirCompanyName");
+                    b.HasIndex("AirCompanyId");
 
                     b.ToTable("SoldTickets");
                 });
@@ -393,21 +398,21 @@ namespace Web2Backend.Migrations
                 {
                     b.HasOne("Web2Backend.Model.AirCompany", "AirCompany")
                         .WithMany("Flights")
-                        .HasForeignKey("AirCompanyName");
+                        .HasForeignKey("AirCompanyId");
                 });
 
             modelBuilder.Entity("Web2Backend.Model.FlightAdmin", b =>
                 {
                     b.HasOne("Web2Backend.Model.AirCompany", "AirCompany")
                         .WithMany("FlightAdmins")
-                        .HasForeignKey("AirCompanyName");
+                        .HasForeignKey("AirCompanyId");
                 });
 
             modelBuilder.Entity("Web2Backend.Model.Luggage", b =>
                 {
                     b.HasOne("Web2Backend.Model.AirCompany", "AirCompany")
                         .WithMany("Luggage")
-                        .HasForeignKey("AirCompanyName");
+                        .HasForeignKey("AirCompanyId");
                 });
 
             modelBuilder.Entity("Web2Backend.Model.RACAdmin", b =>
@@ -439,7 +444,7 @@ namespace Web2Backend.Migrations
                 {
                     b.HasOne("Web2Backend.Model.AirCompany", "AirCompany")
                         .WithMany()
-                        .HasForeignKey("AirCompanyName");
+                        .HasForeignKey("AirCompanyId");
 
                     b.HasOne("Web2Backend.Model.Flight", "Flight")
                         .WithMany("ServiceGrades")
@@ -450,7 +455,7 @@ namespace Web2Backend.Migrations
                 {
                     b.HasOne("Web2Backend.Model.AirCompany", "AirCompany")
                         .WithMany("SoldTickets")
-                        .HasForeignKey("AirCompanyName");
+                        .HasForeignKey("AirCompanyId");
                 });
 
             modelBuilder.Entity("Web2Backend.Model.Vehicle", b =>

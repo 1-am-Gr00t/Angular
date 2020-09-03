@@ -1,8 +1,8 @@
 import { AirCompany } from './airCompany';
 
 export class Luggage {
-    LuggageID: number;
-    LuggagePrice: number;
-    LuggageDescription: String;
-    AirCompany: AirCompany
+    luggageID: number;
+    luggagePrice: number;
+    luggageDescription: string;
+    airCompany: number
 }

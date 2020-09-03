@@ -30,7 +30,7 @@ namespace Web2Backend.Controllers
 
         // GET: api/AirCompanies/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<AirCompany>> GetAirCompany(string id)
+        public async Task<ActionResult<AirCompany>> GetAirCompany(int id)
         {
             var airCompany = await _context.AirCompanies.FindAsync(id);
 
@@ -46,9 +46,9 @@ namespace Web2Backend.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAirCompany(string id, AirCompany airCompany)
+        public async Task<IActionResult> PutAirCompany(int id, AirCompany airCompany)
         {
-            if (id != airCompany.Name)
+            if (id != airCompany.AirCompanyId)
             {
                 return BadRequest();
             }
@@ -81,28 +81,14 @@ namespace Web2Backend.Controllers
         public async Task<ActionResult<AirCompany>> PostAirCompany(AirCompany airCompany)
         {
             _context.AirCompanies.Add(airCompany);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (AirCompanyExists(airCompany.Name))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetAirCompany", new { id = airCompany.Name }, airCompany);
+            return CreatedAtAction("GetAirCompany", new { id = airCompany.AirCompanyId }, airCompany);
         }
 
         // DELETE: api/AirCompanies/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<AirCompany>> DeleteAirCompany(string id)
+        public async Task<ActionResult<AirCompany>> DeleteAirCompany(int id)
         {
             var airCompany = await _context.AirCompanies.FindAsync(id);
             if (airCompany == null)
@@ -116,9 +102,9 @@ namespace Web2Backend.Controllers
             return airCompany;
         }
 
-        private bool AirCompanyExists(string id)
+        private bool AirCompanyExists(int id)
         {
-            return _context.AirCompanies.Any(e => e.Name == id);
+            return _context.AirCompanies.Any(e => e.AirCompanyId == id);
         }
     }
 }

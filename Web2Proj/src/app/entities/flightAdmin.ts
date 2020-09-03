@@ -7,5 +7,5 @@ export class FlightAdmin{
     LastName: string
     City: string
     PhoneNumber: string
-    AirCompany: string
+    AirCopmanyId: number
 }

@@ -7,7 +7,7 @@
     </div>
     <div class="row">
         <label for="company-address"><b>Adresa:</b></label>
-        <google-map>
+        <!--google-map>
             <map-marker *ngFor="let marker of markers"
             [position] = "marker.position"
             [label] = "marker.label"
@@ -15,20 +15,20 @@
             [options] = "marker.options"
             >
             </map-marker>
-        </google-map>
+        </google-map-->
         <input type="text" id="company-address" >
         <!--Posebno mesto za mapu adrese-->
     </div>
     <div class="row">
         <label for="company-promo"><b>Promotivni opis komanije</b></label>
-        <input type="text" width="60" height="60" id="company-promo">
+        <input type="text" id="company-promo">
     </div>
     <div class ="row">
         <table class="table table-hover">
             <thead>
                 <tr>
                     <th scope="col">Destinacije</th>
-                    <th scope="col">Dodaj/ukloni destinacije</th>
+                    <th scope="col">Ukloni destinacije</th>
                 </tr>
             </thead>
             <tbody>
@@ -80,7 +80,7 @@
                     <td>
                         <ng-container *ngFor="let fd of flightDestinations">
                             <div *ngIf="fd.flightId==flight.flightID"> 
-                                {{fd.destinationId}}
+                              {{fd.destinationId}}
                             </div>                                               
                         </ng-container>                       
                    </td>
@@ -99,7 +99,10 @@
                 </tr>
             </tfoot>
         </table>
-
+        <div class="row">
+            <h6>Konfiguracija sedista</h6>
+            <button type="button">Uredi sedista na letu</button>
+        </div>
         <div class="row">
             <h6>Karte na popustu za brzu rezervaciju:</h6>
             <table class="table table-hover" title="Brza rezervacija">
@@ -116,24 +119,41 @@
                     </tr>
                 </tbody>
             </table>
-        </div>
-       
+        </div>       
     </div>
+    
+    
     <div class="row">
-        <h6>Konfiguracija sedista</h6>
-        <button type="button">Uredi sedista na letu</button>
-    </div>
-    <div class="row">
-        <h6>Prtljag: cene i informacije :</h6><br/>
-        <table>
-            <tr>
-                <th scope="col">Cena prtljaga</th>
-                <th scope="col">Opis</th>
-            </tr>            
-        </table>
+        Prtljazi:
+        <table class="table table-hover" title="Cenei informacije o prtljagu">
+            <thead title="Prtljazi">
+                <th>Cena </th>
+                <th>Informacije </th>
+                <th>Izbriši </th>
+                <th>Izmeni</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let lg of luggages">
+                    <div *ngIf="lg.airCompany == airCompany.airCompanyId">
+                        <td>{{lg.luggagePrice}}</td>
+                        <td>{{lg.luggageDescription}}</td>
+                        <td>
+                            <button type="button" class="btn-secondary" data-toggle="modal" data-target="#luggageUpdate" (click)="saveLuggageId(lg.luggageID)"></button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn-secondary" (click)="deleteLuggage(lg.luggageID)"></button>
+                        </td>
+                        </div>
+                </tr>
+                <tr>
+                    <button type="button" class="btn btn-secondary"
+                    data-toggle="modal" data-target="#luggageAdd">Dodaj prtljag</button>
+                </tr>
+            </tbody>
+        </table>              
     </div>
 </div>
-
+<br>/
 <div class="bussiness-log">
     <h4>Poslovni izvestaj</h4><br/>
     <label>Ocena aviokompanije od strane korisnika: </label><br/>
@@ -180,6 +200,92 @@
     
 </div>
 <!----------------------POPUT WINDOWS-------------------------------->
+
+<div class="modal fade" id="luggageUpdate" aria-labelledby="luggageUpdate" aria-hidden="true"  role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="luggageUpdate">Izmena podataka</h5>
+            </div>
+            <div class="modal-body">           
+                <form (ngSubmit)='luggageUpdateFrom.form.valid && updateLuggageForm(flightFormDel)' #luggageUpdateFrom="ngForm" >              
+                    <div class="form-group row"> 
+                    <label for="luggagePriceUpdate" class="col-sm-4 col-form-label">Cena prtljaga: </label>
+                        <div class="col-sm-8">
+                            <input type="number" id="luggagePriceUpdate" name="luggagePriceUpdate" class="form-control" ngModel required #luggagePriceUpdate="ngModel">
+                            <div *ngIf="luggageUpdateFrom.submitted && luggagePriceUpdate.invalid">
+                                Unesite novu cenu prtljaga
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row"> 
+                        <label for="luggageInfoUpdate" class="col-sm-4 col-form-label">Informacije prtljaga: </label>
+                            <div class="col-sm-8">
+                                <input type="text" id="luggageInfoUpdate" name="luggageInfoUpdate" class="form-control" ngModel required #luggageInfoUpdate="ngModel">
+                                <div *ngIf="luggageUpdateFrom.submitted && luggageInfoUpdate.invalid">
+                                    Unesite novu informaciju o prtljagu
+                                </div>
+                            </div>
+                        </div>
+                </form>
+                <div class="modal-footer">
+                <button type="button"  class="btn btn-primary" data-dismiss="modal">Odustani</button>
+                <button type="submit" [disabled]="!luggageUpdateFrom.form.valid" class="btn btn-success" data-dismiss="modal" (click)="updateLuggage()">Sačuvaj izmene</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="luggageAdd" aria-labelledby="luggageAdd" aria-hidden="true"  role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="luggageAdd">Izmena podataka</h5>
+            </div>
+            <div class="modal-body">           
+                <form (ngSubmit)='luggageFormAdd.form.valid && AddLuggage(luggageFormAdd)' #luggageFormAdd="ngForm" >              
+                    <div class="form-group row"> 
+                    <label for="luggageIdAdd" class="col-sm-4 col-form-label">ID prtljaga </label>
+                        <div class="col-sm-8">
+                            <input type="number" id="luggageIdAdd" name="luggageIdAdd" class="form-control" ngModel required #luggageIdAdd="ngModel">
+                            <div *ngIf="luggageFormAdd.submitted && luggageIdAdd.invalid">
+                                Unesite ID prtljaga
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row"> 
+                        <label for="luggagePriceAdd" class="col-sm-4 col-form-label">Cena  prtljaga </label>
+                            <div class="col-sm-8">
+                                <input type="number" id="luggagePriceAdd" name="luggagePriceAdd" class="form-control" ngModel required #luggagePriceAdd="ngModel">
+                                <div *ngIf="luggageFormAdd.submitted && luggagePriceAdd.invalid">
+                                    Unesite cenu prtljaga
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row"> 
+                            <label for="luggageInfoAdd" class="col-sm-4 col-form-label">Informacije o prtljagu </label>
+                                <div class="col-sm-8">
+                                    <input type="text" id="luggageInfoAdd" name="luggageInfoAdd" class="form-control" ngModel required #luggageInfoAdd="ngModel">
+                                    <div *ngIf="luggageFormAdd.submitted && luggageInfoAdd.invalid">
+                                        Unesite informacije za prtljag
+                                    </div>
+                                </div>
+                            </div>
+                </form>
+                <div class="modal-footer">
+                <button type="button"  class="btn btn-primary" data-dismiss="modal">Odustani</button>
+                <button type="submit" [disabled]="!luggageFormAdd.form.valid" class="btn btn-success" data-dismiss="modal" (click)="AddLuggageToDB()">Sačuvaj izmene</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 
 <div class="modal fade" id="flightRemove" aria-labelledby="flightRemove" aria-hidden="true"  role="dialog">
     <div class="modal-dialog" role="document">

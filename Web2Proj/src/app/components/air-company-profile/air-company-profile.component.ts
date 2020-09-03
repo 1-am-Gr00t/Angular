@@ -12,6 +12,7 @@ import { IntegerIdService } from 'src/app/services/integer-id.service';
 import { GoogleMap, MapMarker } from '@angular/google-maps';
 import { Destination } from 'src/app/entities/destination';
 import { FlightDestinations } from 'src/app/entities/flightDestinations';
+import { Luggage } from 'src/app/entities/luggage';
 
 @Component({
   selector: 'app-air-company-profile',
@@ -25,6 +26,8 @@ export class AirCompanyProfileComponent implements OnInit {
   @ViewChild('adminForm') adminProfileForm: NgForm;
   @ViewChild('airCompanyForm') airCompanyForm: NgForm;
   @ViewChild('addDestFrom') addDestForm: NgForm;
+  @ViewChild('luggageFormAdd') luggageFormAdd: NgForm;
+  @ViewChild('luggageUpdateForm') luggageUpdateForm: NgForm;
 
   readonly destUrl = "Destinations";
   readonly flightDestUrl = "FlightDestinations";
@@ -33,7 +36,7 @@ export class AirCompanyProfileComponent implements OnInit {
   readonly luggagesUrl = "Luggages";
   readonly gradesUrl = "ServiceGrades";
   readonly seatsUrl = "Seats";
-  
+
   ////#region  To be populated on init
   serviceGrades = [];
   luggages = [];
@@ -48,7 +51,7 @@ export class AirCompanyProfileComponent implements OnInit {
   flight: Flight; //new flight from flight form
   idFligh: number;
   destChangeovers = []; //flight form presedanja
-  
+  luggageToUpdateId: number;
   
 //#region chart properties
   title: string;
@@ -56,12 +59,14 @@ export class AirCompanyProfileComponent implements OnInit {
   XAxis : Object;
   YAxis : Object;
 //#endregion
-  center: google.maps.LatLngLiteral
+  /*center: google.maps.LatLngLiteral
   markers: Array<MapMarker>;
-  marker: MapMarker;
+  marker: MapMarker;*/
   constructor(private _flightService: FlightService, private _stringIdService: StringIdService,
     private _integerIdService: IntegerIdService) {
    this.flight = new Flight();
+   this.airCompany = new AirCompany();
+   this.airCompany.airCompanyId = 1;//test purpise
   }
 
   allGETmethods(){
@@ -80,11 +85,11 @@ export class AirCompanyProfileComponent implements OnInit {
       this.destinations = data;
     }
       );
-    /*this._stringIdService.getItem(this.airCompUrl, this.flightAdmin.AirCompany)//treba se menjati nakon uspesnog logovanja admina!!, ie. adming.airCompany.Name
+    this._integerIdService.getItem(this.airCompUrl, 1)//treba se menjati nakon uspesnog logovanja admina!!, ie. adming.airCompany.id
     .subscribe((data: any) => {
       this.airCompany = data;
       }
-    );*/
+    );
     this._integerIdService.getItems(this.ticketsSoldUrl)
     .subscribe((data: any) => {
       this.soldTickets = data;
@@ -93,7 +98,7 @@ export class AirCompanyProfileComponent implements OnInit {
     .subscribe((data: any) => {
       this.luggages = data;
     });
-    this._integerIdService.getItems(this.luggagesUrl)
+    this._integerIdService.getItems(this.gradesUrl)
     .subscribe((data: any) => {
       this.serviceGrades = data;
     });    
@@ -118,7 +123,7 @@ export class AirCompanyProfileComponent implements OnInit {
     }
     //#endregion
     //#region gmap marker
-    this.marker.label = {color : 'red', text: "Markerk label"};
+    /*this.marker.label = {color : 'red', text: "Markerk label"};
     this.marker.position = {
       lat: 17 + ((Math.random() - 0.5) * 2) / 10,
         lng: 45 + ((Math.random() - 0.5) * 2) / 10,
@@ -127,7 +132,7 @@ export class AirCompanyProfileComponent implements OnInit {
     this.marker.options = {
       animation: google.maps.Animation.BOUNCE 
     }
-    this.markers.push(this.marker);
+    this.markers.push(this.marker);*/
     //#endregion
   } 
   
@@ -168,8 +173,8 @@ export class AirCompanyProfileComponent implements OnInit {
     //post to flightDest table
     for (let changeover of this.destChangeovers) {
       let FlightDestination = new FlightDestinations();
-      FlightDestination.FlightId = this.flight.FlightID;
-      FlightDestination.DestinationId = changeover;
+      FlightDestination.flightId = this.flight.FlightID;
+      FlightDestination.destinationId = changeover;
           
       this.flightDestinations.push(FlightDestination);
       }
@@ -255,4 +260,43 @@ export class AirCompanyProfileComponent implements OnInit {
     this.flightForm.reset();
     this.destChangeovers = [];
   }
+  AddLuggage(f: NgForm){
+
+  }
+  AddLuggageToDB(){
+    let id = (<HTMLInputElement> document.getElementById("luggageIdAdd")).value;
+    let price = (<HTMLInputElement> document.getElementById("luggagePriceAdd")).value;
+    let info = (<HTMLInputElement> document.getElementById("luggageInfoAdd")).value;
+    
+    var luggage = new Luggage();
+    luggage.airCompany = this.airCompany.airCompanyId;
+    luggage.luggageID = parseInt(id);
+    luggage.luggagePrice = parseInt(price);
+    luggage.luggageDescription = info;
+    
+    this._integerIdService.postItem(this.luggagesUrl, luggage)
+    .subscribe(lugedz => this.luggages.push(lugedz));    
+  }
+  saveLuggageId(id: number){
+    this.luggageToUpdateId = id;
+  }
+  updateLuggage(){
+    var lg = new Luggage();
+    lg.luggageID = this.luggageToUpdateId;
+    lg.airCompany = this.airCompany.airCompanyId;
+
+    let price = (<HTMLInputElement> document.getElementById("luggagePriceUpdate")).value;
+    let info = (<HTMLInputElement> document.getElementById("luggageInfoUpdate")).value;
+
+    lg.luggagePrice = parseInt(price);
+    lg.luggageDescription = info;
+
+    this._integerIdService.putItem(this.luggagesUrl, lg, lg.luggageID)
+    .subscribe();
+  }
+  deleteLuggage(luggageId: number){
+    this._integerIdService.deleteItem(this.luggagesUrl, luggageId)
+    .subscribe();
+  }
+  updateLuggageForm(f: NgForm){}
 }

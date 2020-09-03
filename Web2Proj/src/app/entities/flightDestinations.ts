@@ -1,4 +1,4 @@
 export class FlightDestinations {
-    FlightId: number
-    DestinationId: string
+    flightId: number
+    destinationId: string
 }
