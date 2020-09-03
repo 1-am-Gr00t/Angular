@@ -1,9 +1,8 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { RegUser } from "src/app/entities/regUser"
 import { NgForm } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { SharedData } from 'src/app/services/shared-data';
-
+import {RegisteredUser} from 'src/app/entities/registeredUser'
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
@@ -11,7 +10,7 @@ import { SharedData } from 'src/app/services/shared-data';
 })
 export class UserProfileComponent implements OnInit {
 
- regUser: RegUser;
+ regUser: RegisteredUser;
  @ViewChild('userForm') userProfileForm: NgForm;
 
   constructor(private user: SharedData) {}

@@ -17,15 +17,6 @@ export class Flight {
     TicketDisctount: boolean
     NewTicketPrice: number
     AirCompany: AirCompany
-    Seats: Seat[]
-    FlightChangeovers: Array<string>
     ServiceGrades: ServiceGrade
-
-    /**
-     *
-     */
-    constructor() {        
-        this.FlightChangeovers = new Array<string>();
-        this.Seats = new Array();
-    }
+   
 }

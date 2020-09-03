@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RegUser } from 'src/app/entities/regUser';
+import { RegisteredUser } from 'src/app/entities/registeredUser';
 import { SharedData } from 'src/app/services/shared-data'
 
 @Component({
@@ -9,7 +9,7 @@ import { SharedData } from 'src/app/services/shared-data'
 })
 export class PasswordChangeComponent implements OnInit {
 
-  regUser: RegUser;
+  regUser: RegisteredUser;
   oldPassword: string;
   password: string;
   rpassword: string;

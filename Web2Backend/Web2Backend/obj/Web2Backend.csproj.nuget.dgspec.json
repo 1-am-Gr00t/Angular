@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\faks\\4godina\\Web2\\ZaSvakiSlucaj\\stupid\\Angular\\Web2Backend\\Web2Backend\\Web2Backend.csproj": {}
+    "C:\\Users\\David\\Desktop\\Angular\\Web2Backend\\Web2Backend\\Web2Backend.csproj": {}
   },
   "projects": {
-    "D:\\faks\\4godina\\Web2\\ZaSvakiSlucaj\\stupid\\Angular\\Web2Backend\\Web2Backend\\Web2Backend.csproj": {
+    "C:\\Users\\David\\Desktop\\Angular\\Web2Backend\\Web2Backend\\Web2Backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\faks\\4godina\\Web2\\ZaSvakiSlucaj\\stupid\\Angular\\Web2Backend\\Web2Backend\\Web2Backend.csproj",
+        "projectUniqueName": "C:\\Users\\David\\Desktop\\Angular\\Web2Backend\\Web2Backend\\Web2Backend.csproj",
         "projectName": "Web2Backend",
-        "projectPath": "D:\\faks\\4godina\\Web2\\ZaSvakiSlucaj\\stupid\\Angular\\Web2Backend\\Web2Backend\\Web2Backend.csproj",
-        "packagesPath": "C:\\Users\\Angelina\\.nuget\\packages\\",
-        "outputPath": "D:\\faks\\4godina\\Web2\\ZaSvakiSlucaj\\stupid\\Angular\\Web2Backend\\Web2Backend\\obj\\",
+        "projectPath": "C:\\Users\\David\\Desktop\\Angular\\Web2Backend\\Web2Backend\\Web2Backend.csproj",
+        "packagesPath": "C:\\Users\\David\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\David\\Desktop\\Angular\\Web2Backend\\Web2Backend\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Angelina\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\David\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -41,23 +38,19 @@
       "frameworks": {
         "netcoreapp3.1": {
           "dependencies": {
-            "CsvHelper": {
-              "target": "Package",
-              "version": "[15.0.5, )"
-            },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[3.1.6, )"
+              "version": "[3.1.7, )"
             },
             "Microsoft.EntityFrameworkCore.Sqlite": {
               "target": "Package",
-              "version": "[3.1.6, )"
+              "version": "[3.1.7, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[3.1.6, )"
+              "version": "[3.1.7, )"
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
@@ -82,7 +75,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
         }
       }
     }
