@@ -1,9 +1,8 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { RegisteredUser } from "src/app/entities/registeredUser"
 import { NgForm } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { SharedData } from 'src/app/services/shared-data';
-
+import {RegisteredUser} from 'src/app/entities/registeredUser'
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',

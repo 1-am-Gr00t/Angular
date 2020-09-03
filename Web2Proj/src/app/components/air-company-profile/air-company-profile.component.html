@@ -34,7 +34,7 @@
             <tbody>
                 <tr *ngFor="let destination of destinations">
                     <td>{{destination.dest}}</td>
-                    <td><button type="button" class="btn btn-secondary" (click)="RemoveDestinations()">Izbriši destinacije</button></td>
+                    <td><button type="button" class="btn btn-secondary" (click)="RemoveDestinations(destination.dest)">Izbriši destinacije</button></td>
                 </tr>                
             </tbody>
             <tfoot>
@@ -61,7 +61,8 @@
                     <th scope="col">Sletanje</th>
                     <th scope="col">Duzina leta</th>
                     <th scope="col">Razdaljina (km)</th>
-                    <th scope="col">Cena karte(din)</th>                    
+                    <th scope="col">Cena karte(din)</th>
+                    <th scope="col">Cena karte na popustu</th>                    
                     <th scope="col">Broj presedanja</th>
                     <th scope="col">Presedanja</th>
                 </tr>
@@ -73,10 +74,15 @@
                     <td>{{flight.landingTime}}</td>
                     <td>{{flight.travelTime}}</td>   
                     <td>{{flight.travelLength}}</td>
-                    <td>{{flight.ticketPrice}}</td>                                               
+                    <td>{{flight.ticketPrice}}</td>
+                    <td>{{flight.newTicketPrice}}</td>                                               
                     <td>{{flight.numberOfChangeovers}}</td>
-                    <td *ngFor="let changeoverDest of flight.ChangevoerDests">
-                        {{changeoverDest}}
+                    <td>
+                        <ng-container *ngFor="let fd of flightDestinations">
+                            <div *ngIf="fd.flightId==flight.flightID"> 
+                                {{fd.destinationId}}
+                            </div>                                               
+                        </ng-container>                       
                    </td>
                 </tr>                
             </tbody>
@@ -99,12 +105,14 @@
             <table class="table table-hover" title="Brza rezervacija">
                 <thead>
                     <tr>
+                        <th scope="col">ID leta</th>
                         <th scope="col">Cena(din)</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let flight of flights">
-                        <td *ngIf="flight.ticketDisctount == true">{{flight.TicketPrice}}</td>
+                        <td *ngIf="flight.ticketDisctount == true">{{flight.flightID}}</td>
+                        <td *ngIf="flight.ticketDisctount == true">{{flight.newTicketPrice}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -165,7 +173,7 @@
             <input type="text" id="padmin-phoneNumber">
         </div> 
         <div>
-            <button type="submit" (click)="editPlaneAdminProfile()">Sačuvaj izmene</button>
+            <button type="submit" (click)="editFlightAdminProfile()">Sačuvaj izmene</button>
             
         </div>
     <!--/form-->
@@ -290,13 +298,21 @@
                             <div class="col-sm-8">
                                 <select class="form-control"
                                 id="changeovers"
-                                ngModel name=changeovers
-                                #changeovers="ngModel"
+                                name="changeovers"
+                                #changeovers                                
                                 >
-                                <option *ngFor="let dest of destinations" [value]="dest">{{dest}}</option>
+                                <option *ngFor="let dest of destinations" [value]="dest.dest">{{dest.dest}}</option>
                                 </select>
                                 <button type="button" class="btn btn-secondary" (click)="addChangeovers(changeovers.value)">Dodaj</button>
-                                <label id="Presedanja">Presedanja: </label>
+                                <table>
+                                    <th>Presedanja</th>
+                                    <tr *ngFor="let changeover of destChangeovers">
+                                        <td >
+                                            {{changeover}}
+                                            <td><button type="button" class="btn btn-secondary" (click)="RemoveChangeover(changeover)">Izbriši</button>
+                                            </td>
+                                    </tr>
+                                </table>
                                 </div>
                         </div>
 

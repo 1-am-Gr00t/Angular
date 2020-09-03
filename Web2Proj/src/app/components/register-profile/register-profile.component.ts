@@ -1,9 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { stringToNumber } from '@syncfusion/ej2-angular-charts';
-import { RegisteredUser } from 'src/app/entities/registeredUser';
 import { BehaviorSubject, empty } from 'rxjs';
 import { SharedData } from 'src/app/services/shared-data';
-
+import { RegisteredUser } from 'src/app/entities/registeredUser';
 @Component({
   selector: 'app-register-profile',
   templateUrl: './register-profile.component.html',
@@ -26,7 +25,14 @@ export class RegisterProfileComponent implements OnInit {
     this.regUser.password = (<HTMLInputElement> document.getElementById("user-password")).value;
     
     //provera ispravnosti kljuca
-    let currentUser = new RegisteredUser("", "");
+    let arr = new Array<number>(3)
+    let checkMail= new Array<string>(2);
+    checkMail.fill("");
+
+    checkMail= this.regUser.email.split('@');
+    if(checkMail[1] != "")
+    {
+      let currentUser = new RegisteredUser("", "");
       //proveriti da li User iz baze odgovara unetom Useru
       //greska ako postoji
     

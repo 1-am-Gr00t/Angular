@@ -8,5 +8,4 @@ export class FlightAdmin{
     City: string
     PhoneNumber: string
     AirCompany: string
-
 }

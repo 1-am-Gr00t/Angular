@@ -11,6 +11,7 @@ import { AirCompany } from 'src/app/entities/airCompany';
 import { IntegerIdService } from 'src/app/services/integer-id.service';
 import { GoogleMap, MapMarker } from '@angular/google-maps';
 import { Destination } from 'src/app/entities/destination';
+import { FlightDestinations } from 'src/app/entities/flightDestinations';
 
 @Component({
   selector: 'app-air-company-profile',
@@ -26,44 +27,54 @@ export class AirCompanyProfileComponent implements OnInit {
   @ViewChild('addDestFrom') addDestForm: NgForm;
 
   readonly destUrl = "Destinations";
+  readonly flightDestUrl = "FlightDestinations";
   readonly airCompUrl = "AirCompanies";
   readonly ticketsSoldUrl = "SoldTickets";
   readonly luggagesUrl = "Luggages";
   readonly gradesUrl = "ServiceGrades";
   readonly seatsUrl = "Seats";
-  planeAdmin: FlightAdmin
   
+  ////#region  To be populated on init
   serviceGrades = [];
   luggages = [];
   soldTickets = [];
   flights = [];
   destinations = [];
-  flight: Flight;
-  idFligh: number;
+  flightDestinations = [];
   airCompany: AirCompany;
   flightAdmin : FlightAdmin;
+  ////#endregion
 
-  markers: Array<MapMarker>;
-  marker: MapMarker;
+  flight: Flight; //new flight from flight form
+  idFligh: number;
+  destChangeovers = []; //flight form presedanja
+  
+  
 //#region chart properties
   title: string;
   chartData: Object[];
   XAxis : Object;
   YAxis : Object;
 //#endregion
-center: google.maps.LatLngLiteral
+  center: google.maps.LatLngLiteral
+  markers: Array<MapMarker>;
+  marker: MapMarker;
   constructor(private _flightService: FlightService, private _stringIdService: StringIdService,
     private _integerIdService: IntegerIdService) {
    this.flight = new Flight();
-   this.flightAdmin = new FlightAdmin();
   }
 
   allGETmethods(){
     this._flightService.getFlights()//gets all flights
     .subscribe((data: any) => {
-    this.flights = data;
+      this.flights = data;
     }
       );
+    this._stringIdService.getItems(this.flightDestUrl)//gets all flight destinations
+    .subscribe((data: any) => {
+      this.flightDestinations = data;
+    }
+      );     
     this._stringIdService.getItems(this.destUrl)//gets all destinations
     .subscribe((data: any) => {
       this.destinations = data;
@@ -89,8 +100,7 @@ center: google.maps.LatLngLiteral
   }
 
   ngOnInit(): void {
-   this.allGETmethods();
-   
+   this.allGETmethods();     
     //#region chart
 
     this.chartData = [
@@ -126,8 +136,7 @@ center: google.maps.LatLngLiteral
     //#region flight service - POST
     this._flightService.postFlight(this.flight)
     .subscribe(flajt => this.flights.push(flajt));
-    //#endregion
-
+    //#endregion    
   }
 
   editFlightInfo(){
@@ -137,8 +146,15 @@ center: google.maps.LatLngLiteral
     let travelTime = (<HTMLInputElement> document.getElementById("travelTime")).value;
     let ticketPrice = (<HTMLInputElement> document.getElementById("ticketPrice")).value;
     let travelLength = (<HTMLInputElement> document.getElementById("travelLength")).value;
-    let ticketDisctount = (<HTMLInputElement> document.getElementById("ticketDiscount")).value;
-    let discount =  (<HTMLInputElement> document.getElementById("discount")).value;
+    let discount =  (<HTMLInputElement> document.getElementById("discount"));
+
+    let ticketDiscount = "-1";
+    if(discount.checked){
+      this.flight.TicketDisctount = true;
+      ticketDiscount = (<HTMLInputElement> document.getElementById("ticketDiscount")).value;
+    }
+    else  this.flight.TicketDisctount = false;
+
     let exists = false;
     
     this.flight.TravelTime = travelTime;    
@@ -146,17 +162,23 @@ center: google.maps.LatLngLiteral
     this.flight.DepartureTime = new Date(departure);
     this.flight.LandingTime = new Date(landing);   
     this.flight.TicketPrice = parseInt(ticketPrice);
-    this.flight.NumberOfChangeovers = 1;
     this.flight.TravelLength = parseInt(travelLength);
-    this.flight.NewTicketPrice = parseInt(ticketDisctount)
+    this.flight.NewTicketPrice = parseInt(ticketDiscount)
 
-    if (discount == "true")
-      this.flight.TicketDisctount = true;
-    else  
-      this.flight.TicketDisctount = false;
+    //post to flightDest table
+    for (let changeover of this.destChangeovers) {
+      let FlightDestination = new FlightDestinations();
+      FlightDestination.FlightId = this.flight.FlightID;
+      FlightDestination.DestinationId = changeover;
+          
+      this.flightDestinations.push(FlightDestination);
+      }
+      this.flight.NumberOfChangeovers = this.destChangeovers.length;
 
-    for(let i = 0; i < this.flights.length; i++){
-      if(this.flights[i].FlightID == this.flight.FlightID){
+
+
+    for(let flajt of this.flights){
+      if (flajt.flightID == this.flight.FlightID) {
         exists = true;
         this._flightService.putFlight(this.flight.FlightID, this.flight)
         .subscribe();
@@ -164,16 +186,22 @@ center: google.maps.LatLngLiteral
       }
     }
 
+
     if(!exists){
       this._flightService.postFlight(this.flight)
       .subscribe(flajt => this.flights.push(flajt));
-    }
+    }      
     
+    //post changeovers to table 
+    for(let fd of this.flightDestinations){
+      this._stringIdService.postItem(this.flightDestUrl, fd);
+    }
+
     this.flightForm.reset();
-    //PUT to DB
-  }
+    this.destChangeovers = [];
+    }
   
-  editPlaneAdminProfile(){
+  editFlightAdminProfile(){
     let name = (<HTMLInputElement> document.getElementById("padmin-name")).value;
     let lastname = (<HTMLInputElement> document.getElementById("padmin-lastname")).value;
     let email = (<HTMLInputElement> document.getElementById("padmin-email")).value;
@@ -189,14 +217,19 @@ center: google.maps.LatLngLiteral
     D.Dest = destination;
     this._stringIdService.postItem(this.destUrl, D)
     .subscribe(dest => this.destinations.push(dest));
+    
   }
 
-  RemoveDestinations(){
+  RemoveDestinations(dest: string){
     //DELETE from DB
+  
+    let D = new Destination();
+    D.Dest = dest;
+    this._stringIdService.deleteItem(this.destUrl, D.Dest)
+    .subscribe();
     this.allGETmethods();
   }
 
- 
   DeleteFlight(){
     let flightId = (<HTMLInputElement> document.getElementById("flightIdDel")).value;
     this.idFligh = parseInt(flightId);
@@ -205,16 +238,21 @@ center: google.maps.LatLngLiteral
     .subscribe();
     this.allGETmethods();
   }
+
   onFlightDel(f: NgForm){
     this.allGETmethods();
   }  
 
-  addChangeovers(changeovers : string){
-    this.flight.FlightChangeovers.push(changeovers);
-    (<HTMLInputElement> document.getElementById("padmin-name")).append(", " + changeovers);
+  addChangeovers(changeover){
+    this.destChangeovers.push(changeover);
+
+  }
+  RemoveChangeover(changeover){
+    let indx = this.destChangeovers.indexOf(changeover);
+    this.destChangeovers.splice(indx, 1);
   }
   resetFlightForm(){
     this.flightForm.reset();
-    this.flight.FlightChangeovers = [];
+    this.destChangeovers = [];
   }
 }

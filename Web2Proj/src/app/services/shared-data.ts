@@ -3,8 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { Vehicle } from '../entities/vehicle';
 
 export class SharedData {
-  //regUser = new RegisteredUser("def", "def");
-  regUser = new RegisteredUser("","");
+  regUser = new RegisteredUser("def", "def");
   private User = new BehaviorSubject(this.regUser);
   currentUser = this.User.asObservable();
   
