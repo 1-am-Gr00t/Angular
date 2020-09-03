@@ -23,7 +23,8 @@
         </td>
         <td>
             <br/>
-            <button class="button" data-toggle="modal" data-target="#ChangeVehicle">Change Vehicle</button>
+            <button class="button" data-toggle="modal" data-target="#ChangeVehicle">
+                Change Vehicle</button>
             <br/>
             <button class="button">Reserve Vehicle</button>
     </tr>
@@ -38,25 +39,22 @@
             <div class="modal-body">
                 <table>
                     <div class="row" >
-                        <b>ID: </b> <input type="text" id="promeniID"/>
-                    </div>
-                    <div class="row" >
-                        <b>Naziv: </b> <input type="text" id="promeniNaziv"/>
+                        <b>Naziv: </b> <input type="text" id="promeniNaziv{{vehicle.ID}}"/>
                     </div>
                     <div class="row">
-                        <b>Marka: </b> <input type="text" id="promeniMarku"/>
+                        <b>Marka: </b> <input type="text" id="promeniMarku{{vehicle.ID}}"/>
                     </div>
                     <div class="row">
-                        <b>Godina Proizvodnje: </b> <input type="text" id="promeniGod"/>
+                        <b>Godina Proizvodnje: </b> <input type="text" id="promeniGod{{vehicle.ID}}"/>
                     </div>
                     <div class="row">
-                        <b>Tip vozila: </b> <input type="text" id="promeniTip"/>
+                        <b>Tip vozila: </b> <input type="text" id="promeniTip{{vehicle.ID}}"/>
                     </div>
                     <div class="row">
-                        <b>Cena za dan: </b> <input type="text" id="promeniCenu"/> (u dinarima)
+                        <b>Cena za dan: </b> <input type="text" id="promeniCenu{{vehicle.ID}}"/> (u dinarima)
                     </div>
                     <div class="row">
-                        <b>Registarski broj: </b> <input type="text" id="promeniRegBr"/> (u dinarima)
+                        <b>Registarski broj: </b> <input type="text" id="promeniRegBr{{vehicle.ID}}"/>
                     </div>
                 </table>
                 <div>

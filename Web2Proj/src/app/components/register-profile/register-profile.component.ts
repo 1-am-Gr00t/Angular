@@ -35,6 +35,7 @@ export class RegisterProfileComponent implements OnInit {
       let currentUser = new RegisteredUser("", "");
       //proveriti da li User iz baze odgovara unetom Useru
       //greska ako postoji
+    }
     
   }
   

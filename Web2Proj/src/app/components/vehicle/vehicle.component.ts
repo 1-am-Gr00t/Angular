@@ -2,6 +2,7 @@ import { Component, OnInit, Input} from '@angular/core';
 import { Vehicle } from 'src/app/entities/vehicle'
 import { SharedData } from 'src/app/services/shared-data'
 import { RegisteredUser } from 'src/app/entities/registeredUser';
+import { stringToNumber } from '@syncfusion/ej2-angular-charts';
 
 @Component({
   selector: 'app-vehicle',
@@ -23,77 +24,81 @@ export class VehicleComponent implements OnInit {
     let validateInformation : Array<boolean> = [true, true, true, true];
     let canClose = new Boolean(false);
     let checkVehicleInfo = new Vehicle();
-    
+    checkVehicleInfo.ID = this.vehicle.ID;
     //provera da li je uneto nesto
     //#region IF
-    if((<HTMLInputElement> document.getElementById("promeniID")).value.length == 0)
-    {
-      checkVehicleInfo.ID = this.vehicle.ID;
-      validateInformation[0] = false;
-    }else
-    {
-      checkVehicleInfo.ID = parseInt((<HTMLInputElement> document.getElementById("promeniID")).value)
-    }
-    //#endregion
     //#region NAZIV
-    if((<HTMLInputElement> document.getElementById("promeniNaziv")).value.length == 0)
+    if((<HTMLInputElement> 
+      document.getElementById("promeniNaziv".concat(this.vehicle.ID.toString()))).value.length == 0)
     {
       checkVehicleInfo.naziv =  this.vehicle.naziv;
     }else
     {
-      checkVehicleInfo.naziv = (<HTMLInputElement> document.getElementById("promeniNaziv")).value;
+      checkVehicleInfo.naziv = 
+       (<HTMLInputElement> document.getElementById("promeniNaziv".concat(this.vehicle.ID.toString()))).value;
     }
     //#endregion
     //#region MARKA
-    if((<HTMLInputElement> document.getElementById("promeniMarku")).value.length == 0)
+    if((<HTMLInputElement> 
+      document.getElementById("promeniMarku".concat(this.vehicle.ID.toString()))).value.length == 0)
     {
       checkVehicleInfo.marka = this.vehicle.marka;
       //validateInformation[3] = false;
     }else
     {
-      checkVehicleInfo.marka = (<HTMLInputElement> document.getElementById("promeniMarku")).value;
+      checkVehicleInfo.marka = 
+        (<HTMLInputElement> document.getElementById("promeniMarku".concat(this.vehicle.ID.toString()))).value;
     }
     //#endregion 
     //#region GODINA
-    if((<HTMLInputElement> document.getElementById("promeniGod")).value.length == 0)
+    if((<HTMLInputElement> 
+      document.getElementById("promeniGod".concat(this.vehicle.ID.toString()))).value.length == 0)
     {
       checkVehicleInfo.godinaProizvodnje = this.vehicle.godinaProizvodnje;
       validateInformation[1] = false;
     }else
     {
       checkVehicleInfo.godinaProizvodnje = 
-      parseInt((<HTMLInputElement> document.getElementById("promeniGod")).value)
+        parseInt((<HTMLInputElement> 
+          document.getElementById("promeniGod".concat(this.vehicle.ID.toString()))).value)
     }
     //#endregion
     //#region TIP
-    if((<HTMLInputElement> document.getElementById("promeniTip")).value.length == 0)
+    if((<HTMLInputElement> 
+        document.getElementById("promeniTip".concat(this.vehicle.ID.toString()))).value.length == 0)
     {
       checkVehicleInfo.tipVozila = this.vehicle.tipVozila;
       //validateInformation[5] = false;
     }else
     {
-      checkVehicleInfo.tipVozila = (<HTMLInputElement> document.getElementById("promeniTip")).value;
+      checkVehicleInfo.tipVozila = 
+        (<HTMLInputElement> document.getElementById("promeniTip".concat(this.vehicle.ID.toString()))).value;
     }
     //#endregion
     //#region CENA
-    if((<HTMLInputElement> document.getElementById("promeniCenu")).value.length == 0)
+    if((<HTMLInputElement> 
+        document.getElementById("promeniCenu".concat(this.vehicle.ID.toString()))).value.length == 0)
     {
       checkVehicleInfo.cenaZaDan = this.vehicle.cenaZaDan;
       validateInformation[2] = false;
     }else
     {
       checkVehicleInfo.cenaZaDan = 
-                    parseInt((<HTMLInputElement> document.getElementById("promeniCenu")).value);
+        parseInt((<HTMLInputElement> 
+          document.getElementById("promeniCenu".concat(this.vehicle.ID.toString()))).value);
     }
     //#endregion
     //#region REGBR
-    if((<HTMLInputElement> document.getElementById("promeniRegBr")).value.length == 0)
+    if((<HTMLInputElement> 
+        document.getElementById("promeniRegBr".concat(this.vehicle.ID.toString()))).value.length == 0)
     {
       checkVehicleInfo.regBroj = this.vehicle.regBroj;
       validateInformation[3] = false;
     }else
     {
-      checkVehicleInfo.regBroj = parseInt((<HTMLInputElement> document.getElementById("promeniRegBr")).value);
+      checkVehicleInfo.regBroj = 
+        parseInt((<HTMLInputElement> 
+          document.getElementById("promeniRegBr".concat(this.vehicle.ID.toString()))).value);
     };
     //#endregion
     //#endregion IF
