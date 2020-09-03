@@ -36,11 +36,12 @@ export class RegisterProfileComponent implements OnInit {
       //proveriti da li User iz baze odgovara unetom Useru
       //greska ako postoji
     }
+    
   }
   
 
   ngOnInit(): void {
-    this.user.currentUser.subscribe(valUser => this.regUser = valUser)
+    this.user.currentUser.subscribe(valUser  => this.regUser = valUser)
   }
 
 }

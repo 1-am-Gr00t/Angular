@@ -16,7 +16,7 @@ export class UserProfileComponent implements OnInit {
   constructor(private user: SharedData) {}
 
   ngOnInit() {
-    this.user.currentUser.subscribe(valUser => this.regUser = valUser)
+    this.user.currentUser.subscribe(valUser => this.regUser = valUser);    
   }
 
 
@@ -25,6 +25,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   editProfileInfo(): void{
+
     let profileName = (<HTMLInputElement> document.getElementById("profileName")).value;
     let lastname = (<HTMLInputElement> document.getElementById("lastname")).value;
     let email = (<HTMLInputElement> document.getElementById("email")).value;

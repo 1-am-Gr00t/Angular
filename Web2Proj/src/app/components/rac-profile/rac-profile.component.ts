@@ -29,6 +29,7 @@ export class RACProfileComponent implements OnInit {
     this.rac.RACAdmins = [testRACAdmin];
 
     let testVehicle = new Vehicle();
+    testVehicle.ID = 1;
     testVehicle.naziv = "TestNaziv";
     testVehicle.marka = "TestMarka";
     testVehicle.prosecnaOcena = 9001;
@@ -38,6 +39,7 @@ export class RACProfileComponent implements OnInit {
     testVehicle.godinaProizvodnje = 9001;
 
     let testVehicle1 = new Vehicle();
+    testVehicle1.ID = 2;
     testVehicle1.naziv = "TestNaziv1";
     testVehicle1.marka = "TestMarka1";
     testVehicle1.prosecnaOcena = 9002;

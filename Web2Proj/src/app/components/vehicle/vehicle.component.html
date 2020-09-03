@@ -1,24 +1,66 @@
 <div class="vehicle"> 
-   
-    <div class="row" >
-        <b>Naziv: </b> {{vehicle.naziv}}
-    </div>
-    <div class="row">
-        <b>Marka: </b> {{vehicle.marka}}
-    </div>
-    <div class="row">
-        <b>Godina Proizvodnje: </b> {{vehicle.godinaProizvodnje}}
-    </div>
-    <div class="row">
-        <b>Tip vozila: </b> {{vehicle.tipVozila}}
-    </div>
-    <div class="row">
-        <b>Posecna ocena: </b> {{vehicle.prosecnaOcena}}
-    </div>
-    <div class="row">
-        <b>Cena za dan: </b> {{vehicle.cenaZaDan}} (u dinarima)
-    </div>
     
-<!--button>Click</button-->
+    <tr>
+        <td>
+            <div class="row" >
+                <b>Naziv: </b> {{vehicle.naziv}}
+            </div>
+            <div class="row">
+                <b>Marka: </b> {{vehicle.marka}}
+            </div>
+            <div class="row">
+                <b>Godina Proizvodnje: </b> {{vehicle.godinaProizvodnje}}
+            </div>
+            <div class="row">
+                <b>Tip vozila: </b> {{vehicle.tipVozila}}
+            </div>
+            <div class="row">
+                <b>Posecna ocena: </b> {{vehicle.prosecnaOcena}}
+            </div>
+            <div class="row">
+                <b>Cena za dan: </b> {{vehicle.cenaZaDan}} (u dinarima)
+            </div>
+        </td>
+        <td>
+            <br/>
+            <button class="button" data-toggle="modal" data-target="#ChangeVehicle">
+                Change Vehicle</button>
+            <br/>
+            <button class="button">Reserve Vehicle</button>
+    </tr>
 
+</div>
+<div id="ChangeVehicle" aria-labelledby="ChangeVehicle" aria-hidden="true" class="modal fade" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="profileEdit">Izmena podataka vozila</h5>
+          </div>
+            <div class="modal-body">
+                <table>
+                    <div class="row" >
+                        <b>Naziv: </b> <input type="text" id="promeniNaziv{{vehicle.ID}}"/>
+                    </div>
+                    <div class="row">
+                        <b>Marka: </b> <input type="text" id="promeniMarku{{vehicle.ID}}"/>
+                    </div>
+                    <div class="row">
+                        <b>Godina Proizvodnje: </b> <input type="text" id="promeniGod{{vehicle.ID}}"/>
+                    </div>
+                    <div class="row">
+                        <b>Tip vozila: </b> <input type="text" id="promeniTip{{vehicle.ID}}"/>
+                    </div>
+                    <div class="row">
+                        <b>Cena za dan: </b> <input type="text" id="promeniCenu{{vehicle.ID}}"/> (u dinarima)
+                    </div>
+                    <div class="row">
+                        <b>Registarski broj: </b> <input type="text" id="promeniRegBr{{vehicle.ID}}"/>
+                    </div>
+                </table>
+                <div>
+                    <button type="button"  class="btn btn-primary" data-dismiss="modal">Odustani</button>
+                    <button type="submit" class="btn btn-success" data-dismiss="modal" (click)="ChangeVehicle()">Sačuvaj izmene</button>
+                </div>
+            </div>
+    </div>
 </div>
