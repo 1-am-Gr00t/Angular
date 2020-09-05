@@ -2,8 +2,15 @@ import { AirCompanyProfileComponent } from '../components/air-company-profile/ai
 import { AirCompany } from './airCompany';
 
 export class SoldTicket {
-    TicketId: number;
-    DateSold: Date;
-    TicketPrice: number;
-    AirCompany: string;
+    ticketId: number;
+    dateSold: Date;
+    ticketPrice: number;
+    airCompanyId: number;
+
+    /**
+     *
+     */
+    constructor() {
+      this.dateSold = new Date();
+    }
 }

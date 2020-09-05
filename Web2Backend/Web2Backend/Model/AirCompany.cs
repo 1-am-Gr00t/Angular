@@ -20,6 +20,7 @@ namespace Web2Backend.Model
         public ICollection<FlightAdmin> FlightAdmins { get; set; }
         public ICollection<SoldTicket> SoldTickets { get; set; }
         public ICollection<Flight> Flights { get; set; }
+        
         public ICollection<Luggage> Luggage { get; set; }
         public AirCompany()
         {

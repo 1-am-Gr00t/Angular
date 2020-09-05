@@ -24,6 +24,7 @@
     "@syncfusion/ej2-angular-charts": "^18.1.52",
     "add-subtract-date": "^1.0.15",
     "angular8-yandex-maps": "^10.0.0",
+    "current-week-number": "^1.0.7",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"

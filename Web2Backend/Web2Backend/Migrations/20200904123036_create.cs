@@ -3,11 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Web2Backend.Migrations
 {
-<<<<<<< HEAD:Web2Backend/Web2Backend/Migrations/20200903155658_create.cs
     public partial class create : Migration
-=======
-    public partial class MakeMeWannaDie : Migration
->>>>>>> c5b5237a9b5ebde827698cf126f6fc51ef360617:Web2Backend/Web2Backend/Migrations/20200902151233_MakeMeWannaDie.cs
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

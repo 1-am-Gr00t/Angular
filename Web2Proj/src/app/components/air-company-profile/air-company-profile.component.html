@@ -68,22 +68,22 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let flight of flights">
-                    <td>{{flight.flightID}}</td>
-                    <td>{{flight.departureTime}}</td>
-                    <td>{{flight.landingTime}}</td>
-                    <td>{{flight.travelTime}}</td>   
-                    <td>{{flight.travelLength}}</td>
-                    <td>{{flight.ticketPrice}}</td>
-                    <td>{{flight.newTicketPrice}}</td>                                               
-                    <td>{{flight.numberOfChangeovers}}</td>
-                    <td>
-                        <ng-container *ngFor="let fd of flightDestinations">
-                            <div *ngIf="fd.flightId==flight.flightID"> 
-                              {{fd.destinationId}}
-                            </div>                                               
-                        </ng-container>                       
-                   </td>
+                <tr *ngFor="let flight of flights">                    
+                        <td *ngIf="flight.airCompanyId==airCompany.airCompanyId">{{flight.flightID}}</td>
+                        <td *ngIf="flight.airCompanyId==airCompany.airCompanyId">{{flight.departureTime}}</td>
+                        <td *ngIf="flight.airCompanyId==airCompany.airCompanyId">{{flight.landingTime}}</td>
+                        <td *ngIf="flight.airCompanyId==airCompany.airCompanyId">{{flight.travelTime}}</td>   
+                        <td *ngIf="flight.airCompanyId==airCompany.airCompanyId">{{flight.travelLength}}</td>
+                        <td *ngIf="flight.airCompanyId==airCompany.airCompanyId">{{flight.ticketPrice}}</td>
+                        <td *ngIf="flight.airCompanyId==airCompany.airCompanyId">{{flight.newTicketPrice}}</td>                                               
+                        <td *ngIf="flight.airCompanyId==airCompany.airCompanyId">{{flight.numberOfChangeovers}}</td>
+                        <td *ngIf="flight.airCompanyId==airCompany.airCompanyId">
+                            <ng-container *ngFor="let fd of flightDestinations">
+                                <div *ngIf="fd.flightId==flight.flightID"> 
+                                {{fd.destinationId}}
+                                </div>                                               
+                            </ng-container>                       
+                    </td>
                 </tr>                
             </tbody>
             <tfoot>
@@ -125,7 +125,7 @@
     
     <div class="row">
         Prtljazi:
-        <table class="table table-hover" title="Cenei informacije o prtljagu">
+        <table class="table table-hover" title="Cene i informacije o prtljagu">
             <thead title="Prtljazi">
                 <th>Cena </th>
                 <th>Informacije </th>
@@ -134,26 +134,26 @@
             </thead>
             <tbody>
                 <tr *ngFor="let lg of luggages">
-                    <div *ngIf="lg.airCompany == airCompany.airCompanyId">
-                        <td>{{lg.luggagePrice}}</td>
-                        <td>{{lg.luggageDescription}}</td>
-                        <td>
-                            <button type="button" class="btn-secondary" data-toggle="modal" data-target="#luggageUpdate" (click)="saveLuggageId(lg.luggageID)"></button>
+                        <td *ngIf="lg.airCompanyId == airCompany.airCompanyId">{{lg.luggagePrice}}</td>
+                        <td *ngIf="lg.airCompanyId == airCompany.airCompanyId">{{lg.luggageDescription}}</td>
+                        <td *ngIf="lg.airCompanyId == airCompany.airCompanyId">
+                            <button type="button" class="btn-secondary" data-toggle="modal" data-target="#luggageUpdate" (click)="saveLuggageId(lg.luggageID)">Izmeni</button>
                         </td>
-                        <td>
-                            <button type="button" class="btn-secondary" (click)="deleteLuggage(lg.luggageID)"></button>
+                        <td *ngIf="lg.airCompanyId == airCompany.airCompanyId">
+                            <button type="button" class="btn-secondary" (click)="deleteLuggage(lg.luggageID)">Obrisi</button>
                         </td>
-                        </div>
                 </tr>
+            </tbody>
+            <tfoot>
                 <tr>
                     <button type="button" class="btn btn-secondary"
                     data-toggle="modal" data-target="#luggageAdd">Dodaj prtljag</button>
                 </tr>
-            </tbody>
+            </tfoot>
         </table>              
     </div>
 </div>
-<br>/
+<br>
 <div class="bussiness-log">
     <h4>Poslovni izvestaj</h4><br/>
     <label>Ocena aviokompanije od strane korisnika: </label><br/>
@@ -165,8 +165,15 @@
             <e-series [dataSource]='chartData' type='Column' xName='raspon' yName=prodatih name='Prodate karte na dnevnom, nedeljnom i mesecnom nivou'></e-series>           
         </e-series-collection>
     </ejs-chart>
-
-    <label>Prihodi kompanije</label>
+    <label for="ticketsSoldDateId" class="col-sm-4 col-form-label">Godina prodatih karata: </label>
+    <input type="date" id="ticketsSoldDateId" class="form-control">
+    <button type="button" class="btn btn-secondary" (click)="changedGraphVal()">Potvrdi</button><br>
+    <label class="col-sm-4 col-form-label">Prihodi kompanije <b><i>{{Income}}</i></b></label><br>
+    <label for="incomeFrom" class="col-sm-4 col-form-label">Od: </label>
+    <input type="date" id="incomeFrom" class="form-control">
+    <label for="incomeTo" class="col-sm-4 col-form-label">Do: </label>
+    <input type="date" id="incomeTo" class="form-control">
+    <button type="button" (click)="calculateIncome()"class="btn-secondary">Potvrdi</button>
 </div>
 
 <div class="padmin-profile">

@@ -4,5 +4,5 @@ export class Luggage {
     luggageID: number;
     luggagePrice: number;
     luggageDescription: string;
-    airCompany: number
+    AirCompanyId: number
 }

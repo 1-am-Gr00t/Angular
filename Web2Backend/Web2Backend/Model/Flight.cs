@@ -25,6 +25,7 @@ namespace Web2Backend.Model
         [AllowNull]
         public int NewTicketPrice { get; set; }
 
+        public int AirCompanyId { get; set; }
         public AirCompany AirCompany { get; set; }
         public virtual ICollection<Seat> Seats { get; set; }
         public virtual ICollection<FlightDestinations> FlightDestinations { get; set; }//Presedanja

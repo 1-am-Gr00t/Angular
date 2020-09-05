@@ -15,6 +15,8 @@ namespace Web2Backend.Model
 
         public double LuggagePrice { get; set; }
         public String LuggageDescription { get; set; }
+
+        public int AirCompanyId { get; set; }
         public AirCompany AirCompany { get; set; }
 
     }

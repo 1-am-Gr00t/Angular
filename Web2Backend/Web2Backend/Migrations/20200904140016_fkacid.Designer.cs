@@ -10,8 +10,8 @@ using Web2Backend.Data;
 namespace Web2Backend.Migrations
 {
     [DbContext(typeof(FlightDataContext))]
-    [Migration("20200903155658_create")]
-    partial class create
+    [Migration("20200904140016_fkacid")]
+    partial class fkacid
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -115,7 +115,7 @@ namespace Web2Backend.Migrations
                     b.Property<int>("FlightID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("AirCompanyId")
+                    b.Property<int>("AirCompanyId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DepartureTime")
@@ -184,7 +184,7 @@ namespace Web2Backend.Migrations
                     b.Property<int>("LuggageID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("AirCompanyId")
+                    b.Property<int>("AirCompanyId")
                         .HasColumnType("int");
 
                     b.Property<string>("LuggageDescription")
@@ -400,7 +400,9 @@ namespace Web2Backend.Migrations
                 {
                     b.HasOne("Web2Backend.Model.AirCompany", "AirCompany")
                         .WithMany("Flights")
-                        .HasForeignKey("AirCompanyId");
+                        .HasForeignKey("AirCompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Web2Backend.Model.FlightAdmin", b =>
@@ -414,7 +416,9 @@ namespace Web2Backend.Migrations
                 {
                     b.HasOne("Web2Backend.Model.AirCompany", "AirCompany")
                         .WithMany("Luggage")
-                        .HasForeignKey("AirCompanyId");
+                        .HasForeignKey("AirCompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Web2Backend.Model.RACAdmin", b =>

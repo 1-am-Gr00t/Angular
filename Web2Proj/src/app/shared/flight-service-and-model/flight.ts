@@ -16,7 +16,8 @@ export class Flight {
     NumberOfChangeovers: number
     TicketDisctount: boolean
     NewTicketPrice: number
-    AirCompany: AirCompany
+    //From foreign keys
+    AirCompanyId: number
     ServiceGrades: ServiceGrade
    
 }

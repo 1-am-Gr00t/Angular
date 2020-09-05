@@ -15,6 +15,7 @@ namespace Web2Backend.Model
         public DateTime DateSold { get; set; }
 
         public int TicketPrice { get; set; }
+        public int AirCompanyId { get; set; }
         public AirCompany AirCompany { get; set; }
     }
 }

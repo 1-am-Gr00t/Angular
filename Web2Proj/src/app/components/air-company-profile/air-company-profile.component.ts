@@ -13,6 +13,7 @@ import { GoogleMap, MapMarker } from '@angular/google-maps';
 import { Destination } from 'src/app/entities/destination';
 import { FlightDestinations } from 'src/app/entities/flightDestinations';
 import { Luggage } from 'src/app/entities/luggage';
+import { SoldTicket } from 'src/app/entities/sold-ticket';
 
 @Component({
   selector: 'app-air-company-profile',
@@ -36,6 +37,7 @@ export class AirCompanyProfileComponent implements OnInit {
   readonly luggagesUrl = "Luggages";
   readonly gradesUrl = "ServiceGrades";
   readonly seatsUrl = "Seats";
+  readonly flightAdmingUrl = "FlightAdmins";
 
   ////#region  To be populated on init
   serviceGrades = [];
@@ -46,13 +48,19 @@ export class AirCompanyProfileComponent implements OnInit {
   flightDestinations = [];
   airCompany: AirCompany;
   flightAdmin : FlightAdmin;
+  Income: number;
   ////#endregion
 
+  //#endregion helper variables
   flight: Flight; //new flight from flight form
   idFligh: number;
   destChangeovers = []; //flight form presedanja
   luggageToUpdateId: number;
-  
+  dayAvg = 0;
+  weekAvg = 0;
+  monthAvg = 0;   
+  //#endregion
+
 //#region chart properties
   title: string;
   chartData: Object[];
@@ -67,6 +75,7 @@ export class AirCompanyProfileComponent implements OnInit {
    this.flight = new Flight();
    this.airCompany = new AirCompany();
    this.airCompany.airCompanyId = 1;//test purpise
+      
   }
 
   allGETmethods(){
@@ -106,22 +115,7 @@ export class AirCompanyProfileComponent implements OnInit {
 
   ngOnInit(): void {
    this.allGETmethods();     
-    //#region chart
-
-    this.chartData = [
-      { raspon: 'Dnevno', prodatih: 20 },
-      { raspon: 'Nedeljno', prodatih: 800 },
-      { raspon: 'Mesecno', prodatih: 3000 }
-    ];
-    this.title = "Prodate karte";
-    this.XAxis = {
-      title: 'Raspon',
-      valueType: 'Category'
-    }
-    this.YAxis = {
-      title: 'Prodatih'
-    }
-    //#endregion
+   this.soldTicketsGraph();
     //#region gmap marker
     /*this.marker.label = {color : 'red', text: "Markerk label"};
     this.marker.position = {
@@ -135,7 +129,61 @@ export class AirCompanyProfileComponent implements OnInit {
     this.markers.push(this.marker);*/
     //#endregion
   } 
+  changedGraphVal(){
+
+    var date = new Date();
+    date = (<HTMLInputElement> document.getElementById("ticketsSoldDateId")).valueAsDate;
+    var yearNu = date.getFullYear();
+
+    var ticketsSoldYear = 0;
+
+    for(let ticket of this.soldTickets){
+      if(ticket.airCompanyId != this.airCompany.airCompanyId) continue;     
+      let dateSold = ticket.dateSold;
+
+      let year = parseInt(dateSold[0]+dateSold[1]+dateSold[2]+dateSold[3]);
+      
+      if(yearNu ==  year){
+        ticketsSoldYear+=1;
+      }
+    }
   
+    if(yearNu%4 != 0)     //dal je prestupna
+    this.dayAvg = ticketsSoldYear / 366;
+    else
+     this.dayAvg = ticketsSoldYear / 365;  
+
+     this.weekAvg = ticketsSoldYear / 52;//weeks  
+     this.monthAvg = ticketsSoldYear / 12;//months  
+
+     this.chartData = [
+      { raspon: 'Dnevno', prodatih: this.dayAvg },
+      { raspon: 'Nedeljno', prodatih: this.weekAvg },
+      { raspon: 'Mesecno', prodatih: this.monthAvg }
+    ];
+  }
+  
+  soldTicketsGraph(){
+ //#region chart
+    
+    this.chartData = [
+      { raspon: 'Dnevno', prodatih: this.dayAvg },
+      { raspon: 'Nedeljno', prodatih: this.weekAvg },
+      { raspon: 'Mesecno', prodatih: this.monthAvg }
+    ];
+    this.title = "Prodate karte";
+    this.XAxis = {
+      title: 'Raspon',
+      valueType: 'Category'
+    }
+    this.YAxis = {
+      title: 'Prodatih'
+    }
+    //#endregion
+  }
+
+  //#region  submitted forms
+
   onFlightSubmit(f: NgForm){
     //POST to DB--why u no come here
     //#region flight service - POST
@@ -143,7 +191,13 @@ export class AirCompanyProfileComponent implements OnInit {
     .subscribe(flajt => this.flights.push(flajt));
     //#endregion    
   }
+  AddLuggage(f: NgForm){
 
+  }
+  onFlightDel(f: NgForm){
+  }  
+  updateLuggageForm(f: NgForm){}
+  ////#endregion
   editFlightInfo(){
     let flightId = (<HTMLInputElement> document.getElementById("flightId")).value;
     let departure = (<HTMLInputElement> document.getElementById("departure")).value;
@@ -169,7 +223,7 @@ export class AirCompanyProfileComponent implements OnInit {
     this.flight.TicketPrice = parseInt(ticketPrice);
     this.flight.TravelLength = parseInt(travelLength);
     this.flight.NewTicketPrice = parseInt(ticketDiscount)
-
+    this.flight.AirCompanyId = this.airCompany.airCompanyId;
     //post to flightDest table
     for (let changeover of this.destChangeovers) {
       let FlightDestination = new FlightDestinations();
@@ -205,7 +259,7 @@ export class AirCompanyProfileComponent implements OnInit {
     this.flightForm.reset();
     this.destChangeovers = [];
     }
-  
+
   editFlightAdminProfile(){
     let name = (<HTMLInputElement> document.getElementById("padmin-name")).value;
     let lastname = (<HTMLInputElement> document.getElementById("padmin-lastname")).value;
@@ -213,6 +267,18 @@ export class AirCompanyProfileComponent implements OnInit {
     let city = (<HTMLInputElement> document.getElementById("padmin-city")).value;
     let phoneNumber = (<HTMLInputElement> document.getElementById("padmin-phoneNumber")).value;   
     //PUT to DB
+
+    var previousEmail = this.flightAdmin.Email;
+
+    this.flightAdmin.Name = name;
+    this.flightAdmin.LastName = lastname;
+    this.flightAdmin.Email = email;
+    this.flightAdmin.City = city;
+    this.flightAdmin.PhoneNumber = phoneNumber;
+
+    this._stringIdService.putItem(this.flightAdmingUrl, this.flightAdmin, previousEmail)
+    .subscribe();
+
     this.allGETmethods();
   }
 
@@ -223,6 +289,7 @@ export class AirCompanyProfileComponent implements OnInit {
     this._stringIdService.postItem(this.destUrl, D)
     .subscribe(dest => this.destinations.push(dest));
     
+    this.allGETmethods();     
   }
 
   RemoveDestinations(dest: string){
@@ -243,11 +310,7 @@ export class AirCompanyProfileComponent implements OnInit {
     .subscribe();
     this.allGETmethods();
   }
-
-  onFlightDel(f: NgForm){
-    this.allGETmethods();
-  }  
-
+  
   addChangeovers(changeover){
     this.destChangeovers.push(changeover);
 
@@ -260,22 +323,23 @@ export class AirCompanyProfileComponent implements OnInit {
     this.flightForm.reset();
     this.destChangeovers = [];
   }
-  AddLuggage(f: NgForm){
-
-  }
+  
   AddLuggageToDB(){
     let id = (<HTMLInputElement> document.getElementById("luggageIdAdd")).value;
     let price = (<HTMLInputElement> document.getElementById("luggagePriceAdd")).value;
     let info = (<HTMLInputElement> document.getElementById("luggageInfoAdd")).value;
     
     var luggage = new Luggage();
-    luggage.airCompany = this.airCompany.airCompanyId;
+    luggage.AirCompanyId = this.airCompany.airCompanyId;
     luggage.luggageID = parseInt(id);
     luggage.luggagePrice = parseInt(price);
     luggage.luggageDescription = info;
     
     this._integerIdService.postItem(this.luggagesUrl, luggage)
     .subscribe(lugedz => this.luggages.push(lugedz));    
+
+    this.allGETmethods();     
+
   }
   saveLuggageId(id: number){
     this.luggageToUpdateId = id;
@@ -283,7 +347,7 @@ export class AirCompanyProfileComponent implements OnInit {
   updateLuggage(){
     var lg = new Luggage();
     lg.luggageID = this.luggageToUpdateId;
-    lg.airCompany = this.airCompany.airCompanyId;
+    lg.AirCompanyId = this.airCompany.airCompanyId;
 
     let price = (<HTMLInputElement> document.getElementById("luggagePriceUpdate")).value;
     let info = (<HTMLInputElement> document.getElementById("luggageInfoUpdate")).value;
@@ -293,10 +357,30 @@ export class AirCompanyProfileComponent implements OnInit {
 
     this._integerIdService.putItem(this.luggagesUrl, lg, lg.luggageID)
     .subscribe();
+
+    this.allGETmethods();     
+
   }
   deleteLuggage(luggageId: number){
     this._integerIdService.deleteItem(this.luggagesUrl, luggageId)
     .subscribe();
+
+    this.allGETmethods();     
+  }  
+  calculateIncome(){
+    let dateFro = (<HTMLInputElement> document.getElementById("incomeFrom")).valueAsDate;
+    let dateTo = (<HTMLInputElement> document.getElementById("incomeTo")).valueAsDate;
+
+    var income = 0;
+    for(let ticket of this.soldTickets){
+      if(ticket.airCompanyId != this.airCompany.airCompanyId) continue;
+
+      var date = new Date(ticket.dateSold);
+
+      if(date >= dateFro && date <= dateTo)
+        income += ticket.ticketPrice;
+    }
+
+    this.Income = income;
   }
-  updateLuggageForm(f: NgForm){}
 }
