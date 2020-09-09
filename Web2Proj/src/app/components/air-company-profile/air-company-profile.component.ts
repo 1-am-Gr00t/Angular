@@ -16,6 +16,7 @@ import { Luggage } from 'src/app/entities/luggage';
 import { SoldTicket } from 'src/app/entities/sold-ticket';
 import { Seat, SeatState } from 'src/app/entities/seat';
 import { concat } from 'rxjs';
+import { SharedData } from 'src/app/services/shared-data';
 
 @Component({
   selector: 'app-air-company-profile',
@@ -77,7 +78,7 @@ export class AirCompanyProfileComponent implements OnInit {
   markers: Array<MapMarker>;
   marker: MapMarker;*/
   constructor(private _flightService: FlightService, private _stringIdService: StringIdService,
-    private _integerIdService: IntegerIdService) {
+    private _integerIdService: IntegerIdService, private _sharedData: SharedData) {
     this.flight = new Flight();
     this.airCompany = new AirCompany();
     this.airCompany.airCompanyId = 1;//test purpise
@@ -125,6 +126,7 @@ export class AirCompanyProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    //this._sharedData.currFAdmin.subscribe(fadmin => this.flightAdmin = fadmin);
    this.allGETmethods();     
    this.soldTicketsGraph();
     //#region gmap marker
