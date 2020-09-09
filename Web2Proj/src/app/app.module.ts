@@ -29,7 +29,10 @@ import { RegisterProfileComponent } from './components/register-profile/register
 import { VehicleComponent } from './components/vehicle/vehicle.component';
 import { RACProfileComponent } from './components/rac-profile/rac-profile.component';
 import { RACAdminProfileComponent } from './components/rac-admin-profile/rac-admin-profile.component';
-import { PasswordChangeComponent } from './components/password-change/password-change.component'
+import { PasswordChangeComponent } from './components/password-change/password-change.component';
+import { UserFlightsComponent } from './user-flights/user-flights.component';
+import { UserRacComponent } from './components/user-rac/user-rac.component';
+import { UserFriendsComponent } from './components/user-friends/user-friends.component'
 
 @NgModule({
   declarations: [
@@ -50,6 +53,9 @@ import { PasswordChangeComponent } from './components/password-change/password-c
     RACProfileComponent,
     RACAdminProfileComponent,
     PasswordChangeComponent,
+    UserFlightsComponent,
+    UserRacComponent,
+    UserFriendsComponent,
   ],
   imports: [
     BrowserModule,

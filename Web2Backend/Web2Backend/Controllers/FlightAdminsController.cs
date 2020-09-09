@@ -48,10 +48,10 @@ namespace Web2Backend.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutFlightAdmin(string id, FlightAdmin flightAdmin)
         {
-            if (id != flightAdmin.Email)
-            {
-                return BadRequest();
-            }
+            //if (id != flightAdmin.Email)
+            //{
+            //    return BadRequest();
+            //}
 
             _context.Entry(flightAdmin).State = EntityState.Modified;
 

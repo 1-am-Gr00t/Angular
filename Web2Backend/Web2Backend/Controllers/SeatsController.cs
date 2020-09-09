@@ -29,10 +29,10 @@ namespace Web2Backend.Controllers
         }
 
         // GET: api/Seats/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Seat>> GetSeat(string id)
+        [HttpGet("{id1}+{id2}")]
+        public async Task<ActionResult<Seat>> GetSeat(string id1, int id2)
         {
-            var seat = await _context.Seats.FindAsync(id);
+            var seat = await _context.Seats.FindAsync(id1, id2);
 
             if (seat == null)
             {
@@ -45,10 +45,14 @@ namespace Web2Backend.Controllers
         // PUT: api/Seats/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutSeat(string id, Seat seat)
+        [HttpPut("{id1}+{id2}")]
+        public async Task<IActionResult> PutSeat(string id1, int id2, Seat seat)
         {
-            if (id != seat.SeatID)
+            if (id1 != seat.SeatID)
+            {
+                return BadRequest();
+            }
+            if(id2 != seat.FlightID)
             {
                 return BadRequest();
             }
@@ -61,7 +65,7 @@ namespace Web2Backend.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!SeatExists(id))
+                if (!SeatExists(id1, id2))
                 {
                     return NotFound();
                 }
@@ -87,7 +91,7 @@ namespace Web2Backend.Controllers
             }
             catch (DbUpdateException)
             {
-                if (SeatExists(seat.SeatID))
+                if (SeatExists(seat.SeatID, seat.FlightID))
                 {
                     return Conflict();
                 }
@@ -97,14 +101,14 @@ namespace Web2Backend.Controllers
                 }
             }
 
-            return CreatedAtAction("GetSeat", new { id = seat.SeatID }, seat);
+            return CreatedAtAction("GetSeat", new { id = seat.SeatID + "+" + seat.FlightID }, seat);
         }
 
         // DELETE: api/Seats/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Seat>> DeleteSeat(string id)
+        [HttpDelete("{id1}+{id2}")]
+        public async Task<ActionResult<Seat>> DeleteSeat(string id1, int id2)
         {
-            var seat = await _context.Seats.FindAsync(id);
+            var seat = await _context.Seats.FindAsync(id1,id2);
             if (seat == null)
             {
                 return NotFound();
@@ -116,9 +120,9 @@ namespace Web2Backend.Controllers
             return seat;
         }
 
-        private bool SeatExists(string id)
+        private bool SeatExists(string id1, int id2)
         {
-            return _context.Seats.Any(e => e.SeatID == id);
+            return _context.Seats.Any(e => e.SeatID == id1 && e.FlightID == id2);
         }
     }
 }
