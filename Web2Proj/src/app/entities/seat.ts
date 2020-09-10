@@ -1,12 +1,11 @@
 import { Flight } from '../shared/flight-service-and-model/flight';
 
 export class Seat {
-    SeatID: String;
-    SeatAvailability: SeatState
-    FlightID: number;
-    Flight: Flight;
+    seatID: string;
+    seatAvailability: SeatState
+    flightID: number;
 }
-enum SeatState{
+export enum SeatState{
     Unavailable,
     Available,
     Reserved,

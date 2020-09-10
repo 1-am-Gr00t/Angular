@@ -14,13 +14,16 @@ import { Destination } from 'src/app/entities/destination';
 import { FlightDestinations } from 'src/app/entities/flightDestinations';
 import { Luggage } from 'src/app/entities/luggage';
 import { SoldTicket } from 'src/app/entities/sold-ticket';
+import { Seat, SeatState } from 'src/app/entities/seat';
+import { concat } from 'rxjs';
+import { SharedData } from 'src/app/services/shared-data';
 
 @Component({
   selector: 'app-air-company-profile',
   templateUrl: './air-company-profile.component.html',
   styleUrls: ['./air-company-profile.component.css']
 })
-export class AirCompanyProfileComponent implements OnInit {
+export class AirCompanyProfileComponent implements OnInit {  
   
   @ViewChild('flightForm') flightForm: NgForm;
   @ViewChild('flightFormDel') flightFormDel: NgForm;
@@ -29,6 +32,7 @@ export class AirCompanyProfileComponent implements OnInit {
   @ViewChild('addDestFrom') addDestForm: NgForm;
   @ViewChild('luggageFormAdd') luggageFormAdd: NgForm;
   @ViewChild('luggageUpdateForm') luggageUpdateForm: NgForm;
+  @ViewChild('flightAdminFormAdd') flightAdminFormAdd: NgForm;
 
   readonly destUrl = "Destinations";
   readonly flightDestUrl = "FlightDestinations";
@@ -46,6 +50,7 @@ export class AirCompanyProfileComponent implements OnInit {
   flights = [];
   destinations = [];
   flightDestinations = [];
+  seats = [];
   airCompany: AirCompany;
   flightAdmin : FlightAdmin;
   Income: number;
@@ -53,12 +58,14 @@ export class AirCompanyProfileComponent implements OnInit {
 
   //#endregion helper variables
   flight: Flight; //new flight from flight form
-  idFligh: number;
+  idFlight: number;
   destChangeovers = []; //flight form presedanja
   luggageToUpdateId: number;
   dayAvg = 0;
   weekAvg = 0;
   monthAvg = 0;   
+  seatNumbers: string[] = ["1", "2", "3", "4", "5"];
+  seatLetters: string[] = ["A", "B", "C", "D", "E", "F"];
   //#endregion
 
 //#region chart properties
@@ -71,11 +78,12 @@ export class AirCompanyProfileComponent implements OnInit {
   markers: Array<MapMarker>;
   marker: MapMarker;*/
   constructor(private _flightService: FlightService, private _stringIdService: StringIdService,
-    private _integerIdService: IntegerIdService) {
-   this.flight = new Flight();
-   this.airCompany = new AirCompany();
-   this.airCompany.airCompanyId = 1;//test purpise
-      
+    private _integerIdService: IntegerIdService, private _sharedData: SharedData) {
+    this.flight = new Flight();
+    this.airCompany = new AirCompany();
+    this.airCompany.airCompanyId = 1;//test purpise
+    this.flightAdmin = new FlightAdmin();
+    this.flightAdmin.Email = "ad@awd.com";
   }
 
   allGETmethods(){
@@ -110,10 +118,15 @@ export class AirCompanyProfileComponent implements OnInit {
     this._integerIdService.getItems(this.gradesUrl)
     .subscribe((data: any) => {
       this.serviceGrades = data;
-    });    
+    });
+    this._stringIdService.getItems(this.seatsUrl)
+    .subscribe((data: any) => {
+      this.seats = data;
+    });        
   }
 
   ngOnInit(): void {
+    //this._sharedData.currFAdmin.subscribe(fadmin => this.flightAdmin = fadmin);
    this.allGETmethods();     
    this.soldTicketsGraph();
     //#region gmap marker
@@ -197,6 +210,7 @@ export class AirCompanyProfileComponent implements OnInit {
   onFlightDel(f: NgForm){
   }  
   updateLuggageForm(f: NgForm){}
+  EditAdminFlight(f: NgForm){}
   ////#endregion
   editFlightInfo(){
     let flightId = (<HTMLInputElement> document.getElementById("flightId")).value;
@@ -206,7 +220,7 @@ export class AirCompanyProfileComponent implements OnInit {
     let ticketPrice = (<HTMLInputElement> document.getElementById("ticketPrice")).value;
     let travelLength = (<HTMLInputElement> document.getElementById("travelLength")).value;
     let discount =  (<HTMLInputElement> document.getElementById("discount"));
-
+    //document.getElementById("myCheck").disabled = true;
     let ticketDiscount = "-1";
     if(discount.checked){
       this.flight.TicketDisctount = true;
@@ -249,6 +263,8 @@ export class AirCompanyProfileComponent implements OnInit {
     if(!exists){
       this._flightService.postFlight(this.flight)
       .subscribe(flajt => this.flights.push(flajt));
+
+      this.generateBasicSeats(this.flight.FlightID);
     }      
     
     //post changeovers to table 
@@ -259,27 +275,63 @@ export class AirCompanyProfileComponent implements OnInit {
     this.flightForm.reset();
     this.destChangeovers = [];
     }
+  passflightId(flightId){
+    this.idFlight = flightId;
 
+    for (let s of this.seats) {
+        if(s.flightID != this.idFlight) continue;
+
+        if(s.seatAvailability == SeatState.Reserved){
+          (<HTMLInputElement>document.getElementById(s.seatID)).disabled = true;
+        }
+        if(s.seatAvailability == SeatState.Available){
+          (<HTMLInputElement>document.getElementById(s.seatID)).checked = false;
+        }
+        if(s.seatAvailability == SeatState.Unavailable){
+          (<HTMLInputElement>document.getElementById(s.seatID)).checked = true;
+        }      
+    }
+  }
   editFlightAdminProfile(){
-    let name = (<HTMLInputElement> document.getElementById("padmin-name")).value;
-    let lastname = (<HTMLInputElement> document.getElementById("padmin-lastname")).value;
-    let email = (<HTMLInputElement> document.getElementById("padmin-email")).value;
-    let city = (<HTMLInputElement> document.getElementById("padmin-city")).value;
-    let phoneNumber = (<HTMLInputElement> document.getElementById("padmin-phoneNumber")).value;   
+    let name = (<HTMLInputElement> document.getElementById("padminName")).value;
+    let lastname = (<HTMLInputElement> document.getElementById("padminLastname")).value;
+    let email = (<HTMLInputElement> document.getElementById("padminEmail")).value;
+    let city = (<HTMLInputElement> document.getElementById("padminCity")).value;
+    let phoneNumber = (<HTMLInputElement> document.getElementById("padminPhoneNumber")).value;   
     //PUT to DB
 
-    var previousEmail = this.flightAdmin.Email;
+    if(name!="")
+      this.flightAdmin.Name = name;
+      
+    if(lastname!="")
+      this.flightAdmin.LastName = lastname;
+    
+    if(email!="")
+      this.flightAdmin.Email = email;
+    
+    if(city!="")
+      this.flightAdmin.City = city;
+    
+    if(phoneNumber!="")
+      this.flightAdmin.PhoneNumber = phoneNumber;
 
-    this.flightAdmin.Name = name;
-    this.flightAdmin.LastName = lastname;
-    this.flightAdmin.Email = email;
-    this.flightAdmin.City = city;
-    this.flightAdmin.PhoneNumber = phoneNumber;
-
-    this._stringIdService.putItem(this.flightAdmingUrl, this.flightAdmin, previousEmail)
+    this._stringIdService.putItem(this.flightAdmingUrl, this.flightAdmin,  this.flightAdmin.Email)
     .subscribe();
-
+    
     this.allGETmethods();
+  }
+  generateBasicSeats(FlightID: number) {
+    for (var i in this.seatNumbers) {
+      for (let j in this.seatLetters) {
+        let seat = new Seat();
+        seat.flightID = FlightID;
+        seat.seatID = this.seatNumbers[i] + this.seatLetters[j];
+        seat.seatAvailability = SeatState.Available;
+
+        this._stringIdService.postItem(this.seatsUrl, seat)
+        .subscribe(sit => this.seats.push(sit));
+      }
+    }      
   }
 
   AddDestinations(){
@@ -304,9 +356,9 @@ export class AirCompanyProfileComponent implements OnInit {
 
   DeleteFlight(){
     let flightId = (<HTMLInputElement> document.getElementById("flightIdDel")).value;
-    this.idFligh = parseInt(flightId);
+    let idFlight = parseInt(flightId);
 
-    this._flightService.deleteFligh(this.idFligh)
+    this._flightService.deleteFligh(idFlight)
     .subscribe();
     this.allGETmethods();
   }
@@ -383,4 +435,27 @@ export class AirCompanyProfileComponent implements OnInit {
 
     this.Income = income;
   }
+  updateSeats(){
+    for (let s of this.seats) {     
+
+        if(s.flightID != this.idFlight) continue;
+        
+        if((<HTMLInputElement>document.getElementById(s.seatID)).disabled == true) continue;    
+        let seat = new Seat();    
+          if((<HTMLInputElement>document.getElementById(s.seatID)).checked){            
+            seat.flightID = this.idFlight;
+            seat.seatID = s.seatID;
+            seat.seatAvailability = SeatState.Unavailable;            
+          }
+          else{
+            seat.flightID = this.idFlight;
+            seat.seatID = s.seatID;
+            seat.seatAvailability = SeatState.Available;           
+          }
+          this._stringIdService.putItem1String1IntId(this.seatsUrl, seat, seat.seatID, seat.flightID)
+            .subscribe();
+        } 
+        this.allGETmethods();
+     }
+                
 }

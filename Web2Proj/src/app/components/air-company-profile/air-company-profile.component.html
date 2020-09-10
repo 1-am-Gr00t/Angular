@@ -65,6 +65,7 @@
                     <th scope="col">Cena karte na popustu</th>                    
                     <th scope="col">Broj presedanja</th>
                     <th scope="col">Presedanja</th>
+                    <th scope="col">sedista</th>
                 </tr>
             </thead>
             <tbody>
@@ -83,6 +84,10 @@
                                 {{fd.destinationId}}
                                 </div>                                               
                             </ng-container>                       
+                    </td>
+                    <td *ngIf="flight.airCompanyId==airCompany.airCompanyId">
+                        <button type="button" class="btn btn-secondary"
+                        data-toggle="modal" data-target="#editSeats" (click)="passflightId(flight.flightID)">Uredi sedista</button>
                     </td>
                 </tr>                
             </tbody>
@@ -178,35 +183,200 @@
 
 <div class="padmin-profile">
     <h4>Profil admina aviokompanije</h4>
-    <!--form id="padmin-form"-->
+    <form id="padmin-form" (ngSubmit)='flightAdminFormAdd.form.valid && EditAdminFlight(flightAdminFormAdd)' #flightAdminFormAdd="ngForm">
         <div class="row" >
-            <label for="padmin-name"><b>Ime:</b></label>
-            <input type="text" id="padmin-name">
+            <label for="padminName"><b>Ime:</b></label>
+            <input type="text" id="padminName" name="padminName" ngModel #padminName="ngModel">
         </div>
         <div class="row">
-            <label for="padmin-lastname"><b>Prezime:</b></label>
-            <input type="text" id="padmin-lastname">
+            <label for="padminLastname"><b>Prezime:</b></label>
+            <input type="text" id="padminLastname" name="padminLastname" ngModel #padminLastname="ngModel">
         </div>
         <div class="row">
-            <label for="padmin-email"><b>Email:</b></label>
-            <input type="text"  id="padmin-email">
+            <label for="padminEmail"><b>Email:</b></label>
+            <input type="text"  id="padminEmail" name="padminEmail" ngModel #padminEmail="ngModel">
         </div>
         <div class="row">
-            <label for="padmin-city"><b>Grad:</b></label>
-            <input type="text"  id="padmin-city">
+            <label for="padminCity"><b>Grad:</b></label>
+            <input type="text"  id="padminCity" name="padminCity" ngModel #padminCity="ngModel">
         </div>
         <div class="row">
-            <label for="padmin-phoneNumber"><b>Broj telefona:</b></label>
-            <input type="text" id="padmin-phoneNumber">
+            <label for="padminPhoneNumber"><b>Broj telefona:</b></label>
+            <input type="text" id="padminPhoneNumber" name="padminPhoneNumber" ngModel #padminPhoneNumber="ngModel">
         </div> 
         <div>
-            <button type="submit" (click)="editFlightAdminProfile()">Sačuvaj izmene</button>
+            <button type="submit" (click)="editFlightAdminProfile()" class="btn btn-primary">Sačuvaj izmene</button>
             
         </div>
-    <!--/form-->
+    </form>
     
 </div>
 <!----------------------POPUT WINDOWS-------------------------------->
+<div class="modal fade" id="editSeats" aria-labelledby="editSeats" aria-hidden="true"  role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editSeats">Izmena podataka</h5>
+            </div>
+            <div class="modal-body">           
+                    <div class="seat-booking">
+                        <ol class="cabin fuselage">
+                            <li class="row-1">
+                                <ol class="seats">
+                                    <li class="seat">
+                                        <input type="checkbox"id="1A"/>
+                                        <label class="label-seat" for="1A">1A</label>
+                                    </li>
+                                    <li class="seat">
+                                        <input type="checkbox"id="1B">
+                                        <label class="label-seat"  for="1B">1B</label>
+                                    </li>
+                                    <li class="seat">
+                                        <input type="checkbox"id="1C"/>
+                                        <label class="label-seat"  for="1C">1C</label>
+                                    </li>
+                                    <div class=passageway></div>
+                                    <li class="seat">
+                                        <input type="checkbox"id="1D"/>
+                                        <label  class="label-seat" for="1D">1D</label>
+                                    </li>
+                                    <li class="seat">
+                                        <input type="checkbox"id="1E"/>
+                                        <label  class="label-seat" for="1E">1E</label>
+                                    </li>
+                                    <li class="seat">
+                                        <input type="checkbox"id="1F"/>
+                                        <label  class="label-seat" for="1F">1F</label>
+                                    </li>             
+                                </ol>
+                            </li>
+                            <li class="row-2">
+                                <ol class="seats">
+                                    <li class="seat">
+                                        <input type="checkbox"id="2A"/>
+                                        <label class="label-seat"  for="2A">2A</label>
+                                    </li>
+                                    <li class="seat">
+                                        <input type="checkbox"id="2B"/>
+                                        <label class="label-seat"  for="2B">2B</label>
+                                    </li>
+                                    <li class="seat">
+                                        <input type="checkbox"id="2C"/>
+                                        <label class="label-seat"  for="2C">2C</label>
+                                    </li>
+                                    <div class=passageway></div>
+                                    <li class="seat">
+                                        <input type="checkbox"id="2D"/>
+                                        <label class="label-seat"  for="2D">2D</label>
+                                    </li>
+                                    <li class="seat">
+                                        <input type="checkbox"id="2E"/>
+                                        <label class="label-seat"  for="2E">2E</label>
+                                    </li>
+                                    <li class="seat">
+                                        <input type="checkbox"id="2F"/>
+                                        <label class="label-seat"  for="2F">2F</label>
+                                    </li>                 
+                                </ol>
+                            </li>
+                            <li class="row-3">
+                                <ol class="seats">
+                                    <li class="seat">
+                                        <input type="checkbox"id="3A"/>
+                                        <label class="label-seat"  for="3A">3A</label>
+                                    </li>
+                                    <li class="seat">
+                                        <input type="checkbox"id="3B"/>
+                                        <label class="label-seat"  for="3B">3B</label>
+                                    </li>
+                                    <li class="seat">
+                                        <input type="checkbox"id="3C"/>
+                                        <label class="label-seat"  for="3C">3C</label>
+                                    </li>
+                                    <div class=passageway></div>
+                                    <li class="seat">
+                                        <input type="checkbox"id="3D"/>
+                                        <label  class="label-seat" for="3D">3D</label>
+                                    </li>
+                                    <li class="seat">
+                                        <input type="checkbox"id="3E"/>
+                                        <label  class="label-seat" for="3E">3E</label>
+                                    </li>
+                                    <li class="seat">
+                                        <input type="checkbox"id="3F"/>
+                                        <label  class="label-seat" for="3F">3F</label>
+                                    </li>                     
+                                </ol>
+                            </li>       
+                            <li class="row-4">
+                                <ol class="seats">
+                                    <li class="seat">
+                                        <input type="checkbox"id="4A"/>
+                                        <label class="label-seat"  for="4A">4A</label>
+                                    </li>
+                                    <li class="seat">
+                                        <input type="checkbox"id="4B"/>
+                                        <label class="label-seat"  for="4B">4B</label>
+                                    </li>
+                                    <li class="seat">
+                                        <input type="checkbox"id="4C"/>
+                                        <label class="label-seat"  for="4C">4C</label>
+                                    </li>
+                                    <div class=passageway></div>
+                                    <li class="seat">
+                                        <input type="checkbox"id="4D"/>
+                                        <label class="label-seat"  for="4D">4D</label>
+                                    </li>
+                                    <li class="seat">
+                                        <input type="checkbox"id="4E"/>
+                                        <label class="label-seat"  for="4E">4E</label>
+                                    </li>
+                                    <li class="seat">
+                                        <input type="checkbox"id="4F"/>
+                                        <label class="label-seat"  for="4F">4F</label>
+                                    </li>                 
+                                </ol>
+                            </li>
+                            <li class="row-5">
+                                <ol class="seats">
+                                    <li class="seat">
+                                        <input type="checkbox"id="5A"/>
+                                        <label class="label-seat"  for="5A">5A</label>
+                                    </li>
+                                    <li class="seat">
+                                        <input type="checkbox"id="5B"/>
+                                        <label class="label-seat"  for="5B">5B</label>
+                                    </li>
+                                    <li class="seat">
+                                        <input type="checkbox"id="5C"/>
+                                        <label class="label-seat"  for="5C">5C</label>
+                                    </li>
+                                    <div class=passageway></div>
+                                    <li class="seat">
+                                        <input type="checkbox"id="5D"/>
+                                        <label class="label-seat"  for="5D">5D</label>
+                                    </li>
+                                    <li class="seat">
+                                        <input type="checkbox"id="5E"/>
+                                        <label class="label-seat"  for="5E">5E</label>
+                                    </li>
+                                    <li class="seat">
+                                        <input type="checkbox"id="5F"/>
+                                        <label class="label-seat"  for="5F">5F</label>
+                                    </li>             
+                                </ol>
+                            </li>
+                        </ol>
+                    </div>                    
+                <div class="modal-footer">
+                <button type="button"  class="btn btn-primary" data-dismiss="modal">Odustani</button>
+                <button type="submit"  class="btn btn-success" data-dismiss="modal" (click)="updateSeats()">Sačuvaj izmene</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div class="modal fade" id="luggageUpdate" aria-labelledby="luggageUpdate" aria-hidden="true"  role="dialog">
     <div class="modal-dialog" role="document">
@@ -243,8 +413,6 @@
         </div>
     </div>
 </div>
-
-
 
 <div class="modal fade" id="luggageAdd" aria-labelledby="luggageAdd" aria-hidden="true"  role="dialog">
     <div class="modal-dialog" role="document">
@@ -290,9 +458,6 @@
         </div>
     </div>
 </div>
-
-
-
 
 <div class="modal fade" id="flightRemove" aria-labelledby="flightRemove" aria-hidden="true"  role="dialog">
     <div class="modal-dialog" role="document">
@@ -437,5 +602,6 @@
         <div>
     </div>
 </div>
+
 
 
