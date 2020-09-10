@@ -10,14 +10,14 @@ using Web2Backend.Data;
 namespace Web2Backend.Migrations
 {
     [DbContext(typeof(FlightDataContext))]
-    [Migration("20200904140016_fkacid")]
-    partial class fkacid
+    [Migration("20200909145817_M1")]
+    partial class M1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.7")
+                .HasAnnotation("ProductVersion", "3.1.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -203,7 +203,9 @@ namespace Web2Backend.Migrations
             modelBuilder.Entity("Web2Backend.Model.RACAdmin", b =>
                 {
                     b.Property<int>("ID")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("RACID")
                         .HasColumnType("int");
@@ -224,7 +226,9 @@ namespace Web2Backend.Migrations
             modelBuilder.Entity("Web2Backend.Model.RACService", b =>
                 {
                     b.Property<int>("RACID")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
@@ -320,7 +324,7 @@ namespace Web2Backend.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AirCompanyId")
+                    b.Property<int>("AirCompanyId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateSold")
@@ -339,7 +343,9 @@ namespace Web2Backend.Migrations
             modelBuilder.Entity("Web2Backend.Model.Vehicle", b =>
                 {
                     b.Property<int>("ID")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("RACID")
                         .HasColumnType("int");
@@ -461,7 +467,9 @@ namespace Web2Backend.Migrations
                 {
                     b.HasOne("Web2Backend.Model.AirCompany", "AirCompany")
                         .WithMany("SoldTickets")
-                        .HasForeignKey("AirCompanyId");
+                        .HasForeignKey("AirCompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Web2Backend.Model.Vehicle", b =>

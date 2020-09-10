@@ -23,9 +23,13 @@
                 </tr>
             </thead>
             <tbody>
-                    <app-vehicle *ngFor="let vozilo of rac.vehicles"
-                            [vehicle] = "vozilo">
-                        </app-vehicle>
+                <td *ngFor="let vozilo of rac.vehicles">
+                    <app-vehicle [vehicle] = "vozilo"></app-vehicle>
+                    <div>
+                        <button (click)="MarkID(vozilo.id)"class="button" data-toggle="modal" 
+                        data-target="#ChangeVehicle">Change Vehicle</button>
+                        <button class="button">Reserve Vehicle</button>
+                    </div>
                         <!--div class="row" >
                             <b>Naziv: </b> {{vozilo.naziv}}
                         </div>
@@ -43,7 +47,8 @@
                         </div>
                         <div class="row">
                             <b>Cena za dan: </b> {{vozilo.cenaZaDan}} (u dinarima)
-                        </div-->               
+                        </div-->  
+                    </td>             
             </tbody>
         </table>
         <!--table class = "Admins">
@@ -61,6 +66,42 @@
         </table-->
     </div>
 </div>
+
+<div id="ChangeVehicle" aria-labelledby="ChangeVehicle" aria-hidden="true" class="modal fade" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="profileEdit">Izmena podataka vozila</h5>
+          </div>
+            <div class="modal-body">
+                <table>
+                    <div class="row" >
+                        <b>Naziv: </b> 
+                        <!-- #name="ngModel" [class.is-invalid]="name.invalid" -->
+                        <input type="text" id="promeniNaziv" />
+                    </div>
+                    <div class="row">
+                        <b>Marka: </b> <input type="text" id="promeniMarku"/>
+                    </div>
+                    <div class="row">
+                        <b>Godina Proizvodnje: </b> <input type="text" id="promeniGod"/>
+                    </div>
+                    <div class="row">
+                        <b>Tip vozila: </b> <input type="text" id="promeniTip"/>
+                    </div>
+                    <div class="row">
+                        <b>Cena za dan: </b> <input type="text" id="promeniCenu"/> (u dinarima)
+                    </div>
+                    <div aria-errormessage="errorMessage">
+                    </div>
+                </table>
+                <div>
+                    <button type="button"  class="btn btn-primary" data-dismiss="modal">Odustani</button>
+                    <button type="submit" class="btn btn-success" data-dismiss="modal" (click)="ChangeVehicle()">Sačuvaj izmene</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 <!--
 <div class="bussiness-log">

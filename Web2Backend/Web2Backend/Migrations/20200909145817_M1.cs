@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Web2Backend.Migrations
 {
-    public partial class create : Migration
+    public partial class M1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -52,7 +52,8 @@ namespace Web2Backend.Migrations
                 name: "RACServices",
                 columns: table => new
                 {
-                    RACID = table.Column<int>(nullable: false),
+                    RACID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     Address = table.Column<string>(nullable: true)
@@ -121,7 +122,7 @@ namespace Web2Backend.Migrations
                     NumberOfChangeovers = table.Column<int>(nullable: false),
                     TicketDisctount = table.Column<bool>(nullable: false),
                     NewTicketPrice = table.Column<int>(nullable: false),
-                    AirCompanyId = table.Column<int>(nullable: true)
+                    AirCompanyId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -131,7 +132,7 @@ namespace Web2Backend.Migrations
                         column: x => x.AirCompanyId,
                         principalTable: "AirCompanies",
                         principalColumn: "AirCompanyId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -141,7 +142,7 @@ namespace Web2Backend.Migrations
                     LuggageID = table.Column<int>(nullable: false),
                     LuggagePrice = table.Column<double>(nullable: false),
                     LuggageDescription = table.Column<string>(nullable: true),
-                    AirCompanyId = table.Column<int>(nullable: true)
+                    AirCompanyId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -151,7 +152,7 @@ namespace Web2Backend.Migrations
                         column: x => x.AirCompanyId,
                         principalTable: "AirCompanies",
                         principalColumn: "AirCompanyId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -162,7 +163,7 @@ namespace Web2Backend.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DateSold = table.Column<DateTime>(nullable: false),
                     TicketPrice = table.Column<int>(nullable: false),
-                    AirCompanyId = table.Column<int>(nullable: true)
+                    AirCompanyId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -172,14 +173,15 @@ namespace Web2Backend.Migrations
                         column: x => x.AirCompanyId,
                         principalTable: "AirCompanies",
                         principalColumn: "AirCompanyId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "RACAdmins",
                 columns: table => new
                 {
-                    ID = table.Column<int>(nullable: false),
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     RACID = table.Column<int>(nullable: false),
                     email = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true)
@@ -199,7 +201,8 @@ namespace Web2Backend.Migrations
                 name: "Vehicles",
                 columns: table => new
                 {
-                    ID = table.Column<int>(nullable: false),
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     RACID = table.Column<int>(nullable: false),
                     Naziv = table.Column<string>(nullable: true),
                     Marka = table.Column<string>(nullable: true),

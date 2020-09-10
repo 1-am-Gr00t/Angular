@@ -1,9 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Threading.Tasks;
 using Web2Backend.JoiningTableModels;
 using Web2Backend.Model;
 
@@ -39,6 +34,10 @@ namespace Web2Backend.Data
             modelBuilder.Entity<RegisteredUser>().HasKey(ru => new { ru.Email });
             modelBuilder.Entity<Friends>().HasKey(id => new { id.User1, id.User2 });
             modelBuilder.Entity<RACAdmin>().HasKey(racA => new { racA.ID, racA.RACID});
+
+            //modelBuilder.Entity<RACService>().HasMany<Vehicle>(rac => rac.Vehicles);
+           // modelBuilder.Entity<RACService>().HasMany<RACAdmin>(rac => rac.RACAdmins);
+
             modelBuilder.Entity<Vehicle>().HasKey(v => new { v.ID, v.RACID });
             modelBuilder.Entity<DateReserved>().HasKey(dr => new { dr.VehicleID, dr.VehicleRACID });
 

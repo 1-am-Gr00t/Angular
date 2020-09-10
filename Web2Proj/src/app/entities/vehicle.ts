@@ -1,8 +1,8 @@
 import { DateTime } from '@syncfusion/ej2-angular-charts';
 
 export class Vehicle {
-    ID: number;
-    RACID: number;
+    id: number;
+    racid: number;
     datesReserved: DateTime[];
 
     naziv: string;

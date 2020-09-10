@@ -9,6 +9,7 @@ namespace Web2Backend.Model
 {
     public class RACAdmin
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
         public int RACID { get; set; }
         public virtual RACService RAC { get; set; }

@@ -10,7 +10,7 @@ namespace Web2Backend.Model
     public class RACService
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int RACID { get; set; }
 
         public string Name { get; set; }

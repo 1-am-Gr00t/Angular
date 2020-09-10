@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,8 +8,10 @@ namespace Web2Backend.Model
 {
     public class Vehicle
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
 
+        //[ForeignKey("RACService")]
         public int RACID { get; set; }
         public virtual RACService RAC { get; set; }
 

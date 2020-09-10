@@ -31,6 +31,7 @@ import { RACProfileComponent } from './components/rac-profile/rac-profile.compon
 import { RACAdminProfileComponent } from './components/rac-admin-profile/rac-admin-profile.component';
 import { PasswordChangeComponent } from './components/password-change/password-change.component'
 
+
 @NgModule({
   declarations: [
     AppComponent,

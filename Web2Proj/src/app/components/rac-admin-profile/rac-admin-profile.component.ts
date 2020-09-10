@@ -30,8 +30,8 @@ export class RACAdminProfileComponent implements OnInit {
     this.testVehicle0 = new Vehicle();
     this.testVehicle1 = new Vehicle();
 
-    this.testVehicle1.ID = 1;
-    this.testVehicle1.ID = 2;
+    this.testVehicle1.id = 1;
+    this.testVehicle1.id = 2;
 
     this.admin.RAC.vehicles = [this.testVehicle0, this.testVehicle1];
     
