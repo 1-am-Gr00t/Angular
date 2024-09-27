@@ -1,0 +1,36 @@
+<div class="vehicle"> 
+   
+    <div class="row" >
+        <b>Mail: </b> {{admin.email}}
+    </div>
+    <br/><br/>
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">{{admin.RAC.name}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <div class="row">
+                    <b>O nama: </b> {{admin.RAC.description}}
+                </div>
+                <div class="row">
+                    <b>Adresa kompanije: </b> {{admin.RAC.address}}
+                </div>
+                Vozila
+                <div class="row" *ngFor="let vozilo of admin.RAC.vehicles">
+                    <div class="row">
+                        <b>ID: </b> {{vozilo.ID}}<br/>
+                    </div>
+                    <button>Promeni detalje</button>
+                </div>
+            </tr>                
+        </tbody>
+    </table>
+    <div class="row" class="btn">
+        <button click = "ChangePassword()">Change password</button>
+    </div>
+    
+<!--button>Click</button-->
+</div>

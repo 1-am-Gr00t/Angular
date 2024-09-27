@@ -1,6 +1,7 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1, 
+
+  "version": 1,
   "newProjectRoot": "projects",
   "projects": {
     "Web2Proj": {
@@ -62,7 +63,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "Web2Proj:build"
+            "browserTarget": "Web2Proj:build",
+            "proxyConfig": "src/proxy.conf.json"
           },
           "configurations": {
             "production": {
@@ -119,6 +121,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "Web2Proj"
+    }
+  },
+  "defaultProject": "Web2Proj",
+  "cli": {
+    "analytics": false
+  }
 }

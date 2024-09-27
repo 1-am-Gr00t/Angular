@@ -10,12 +10,20 @@ import { RentCarComponent } from './components/flightBookingSteps/rent-car/rent-
 import { SuccessfulReservationComponent } from './components/flightBookingSteps/successful-reservation/successful-reservation.component';
 
 import { AirCompanyProfileComponent} from './components/air-company-profile/air-company-profile.component';
+import { LogInPageComponent } from './components/log-in-page/log-in-page.component';
+import { RegisterProfileComponent } from "./components/register-profile/register-profile.component";
 
 
 const routes: Routes = [
   {
     path: "user-profile",
     component: UserProfileComponent
+  },{
+    path: "log-in-profile",
+    component: LogInPageComponent
+  },{
+    path: "regiister-profile",
+    component: RegisterProfileComponent
   },
   {
     path: "user-home-page",

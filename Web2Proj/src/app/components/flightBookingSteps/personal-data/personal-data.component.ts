@@ -11,5 +11,7 @@ export class PersonalDataComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  SendInvite(): void{
+    
+  }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Flight } from './flight';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 
@@ -8,22 +8,26 @@ import { catchError, retry } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class FlightService {
-
+  
   flight: Flight;
-  flights: Flight[];
 
-  readonly rootURL = "http://localhost:4200"
+  readonly rootURL = "https://localhost:5001/api";
 
   constructor(private http: HttpClient) { }
 
   getFlights() : Observable<Flight[]>{
-    return this.http.get<Flight[]>(this.rootURL);
+    return this.http.get<Flight[]>(this.rootURL+"/flights")    
   }
 
-  postFlight(flight : Flight){
-    return this.http.post(this.rootURL, flight);
+  postFlight(flight : Flight) {
+    return this.http.post(this.rootURL+"/flights", flight);   
+  }  
+
+  putFlight(FlightID: number, flight: Flight) {
+    return this.http.put(this.rootURL+"/flights/" + FlightID, flight);
   }
- // postFlight(flight: Flight){
- //   return this.http.post(this.rootURL+'/')
- // }
+  
+  deleteFligh(FlightID: number){
+    return this.http.delete(this.rootURL+"/flights/" + FlightID);
+  }
 }

@@ -26,12 +26,13 @@
             <h5 class="modal-title" id="profileEdit">Izmena podataka</h5>
         </div>
         <div class="modal-body">           
-            <form [formGroup]="profileForm" id="user-form">              
+            <form (ngSubmit)='userForm.form.valid && onSubmit(userForm)' #userForm="ngForm">              
                 <div class="form-group row">
                   <label for="profileName" class="col-sm-4 col-form-label">Ime: </label>
                   <div class="col-sm-8">
-                    <input type="text" id="profileName" formCotrolName="profileName" class="form-control" placeholder="Unesi ime">
-                    <div *ngIf="profileForm.controls.profileName.invalid">
+                    <input type="text" id="profileName" name="profileName" class="form-control"
+                      ngModel required #profileName="ngModel">
+                    <div *ngIf="userForm.submitted && profileName.invalid">
                         Unesite svoje ime
                     </div>
                   </div>
@@ -40,8 +41,9 @@
                 <div class="form-group row">
                   <label for="lastname" class="col-sm-4 col-form-label">Prezime: </label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control" id="lastname" formCotrolName="profileLastName" placeholder="Unesite prezime">
-                    <div *ngIf="profileForm.controls.profileLastName.invalid">
+                    <input type="text" class="form-control" id="lastname" ngModel required
+                      name="lastname" #lastname="ngModel">
+                    <div *ngIf="userForm.submitted && lastname.invalid">
                       Unesite svoje prezime
                   </div>
                   </div>
@@ -50,8 +52,9 @@
                 <div class="form-group row">
                   <label for="email" class="col-sm-4 col-form-label">Email: </label>
                   <div class="col-sm-8">
-                      <input type="text" class="form-control" id="email" formCotrolName="profileEmail" placeholder="Unesite email">
-                      <div *ngIf="profileForm.controls.profileEmail.invalid">
+                      <input type="text" class="form-control" id="email" ngModel required
+                       name="email" #email="ngModel" >
+                      <div *ngIf="userForm.submitted && email.invalid">
                         Unesite svoj email
                       </div>
                     </div>
@@ -60,8 +63,9 @@
                 <div class="form-group row">
                     <label for="city" class="col-sm-4 col-form-label">Grad: </label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="city" formCotrolName="profileCityName" placeholder="Unesite grad">
-                        <div *ngIf="profileForm.controls.profileCityName.invalid">
+                        <input type="text" class="form-control" id="city" name="city" ngModel required
+                          #city="ngModel">
+                        <div *ngIf="userForm.submitted && city.invalid">
                           Unesite grad
                         </div>
                       </div>
@@ -70,18 +74,19 @@
                 <div class="form-group row">
                     <label for="phoneNumber" class="col-sm-4 col-form-label">Broj telefona: </label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="phoneNumber" formCotrolName="profilePhoneNumber" placeholder="Unesite broj telefona">
-                        <div *ngIf="profileForm.controls.phoneNumber.invalid">
+                        <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" ngModel required
+                          #phoneNumber="ngModel">
+                        <div *ngIf="userForm.submitted && phoneNumber.invalid">
                           Unesite broj telefona
                         </div>
                       </div>
                 </div>
             </form>
             <div class="modal-footer">
-              <button type="button"  class="btn btn-primary" data-dismiss="modal">Odustani</button>
-              <button type="submit" [disabled]="!profileForm.valid" class="btn btn-success" data-dismiss="modal" (click)="editProfileInfo()">Sačuvaj izmene</button>
+              <button type="button"  class="btn btn-primary" data-dismiss="modal" (click)="resetForm()">Odustani</button>
+              <button type="submit" [disabled]="!userForm.form.valid" class="btn btn-success" data-dismiss="modal" (click)="editProfileInfo()">Sačuvaj izmene</button>
             </div>
-          <div>
+          </div>
         </div>
       </div>
   </div> 

@@ -1,11 +1,12 @@
-/*import { Flight } from './flight';
+import { Flight } from 'src/app/shared/flight-service-and-model/flight';
+import { FlightAdmin } from './flightAdmin';
+import { SoldTicket } from './sold-ticket';
+import { Luggage } from './luggage';
 
 export class AirCompany{
-    flight: Flight;
-    description: string;
-    companyName: string;
+    airCompanyId: number;
+    name: string;
     address: string;
-    destinations: Array<string>;
-    ticketDiscounts: Array<number>
+    promoDescription: string;
+    meanGrade: number;    
 }
-*/

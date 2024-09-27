@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { RegUser } from "src/app/entities/regUser"
-import { FormGroup, FormControl } from '@angular/forms';
-
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs';
+import { SharedData } from 'src/app/services/shared-data';
+import {RegisteredUser} from 'src/app/entities/registeredUser'
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
@@ -9,42 +10,33 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class UserProfileComponent implements OnInit {
 
-  regUser: RegUser;
-  profileForm : FormGroup;
+ regUser: RegisteredUser;
+ @ViewChild('userForm') userProfileForm: NgForm;
 
-  constructor() {    
-    //for testing purposes    
-      this.regUser = new RegUser("AWD", "Dawd", "aw@gm.com", "NS", "26165");  
-    //this.regUser = regUser;  
-    
-  }
+  constructor(private user: SharedData) {}
 
   ngOnInit() {
-    this.initProfileForm();
+    this.user.currentUser.subscribe(valUser => this.regUser = valUser);    
   }
 
-  private initProfileForm(){
-    this.profileForm = new FormGroup({
-      'profileName': new FormControl('default course name'),
-      'profileLastName': new FormControl('default course description'),
-      'profileCityName': new FormControl('0')
-    });
-    
-  }  
 
-  onSubmit(){}
+  onSubmit(f: NgForm){
+    //POST into DB
+  }
 
   editProfileInfo(): void{
+
     let profileName = (<HTMLInputElement> document.getElementById("profileName")).value;
     let lastname = (<HTMLInputElement> document.getElementById("lastname")).value;
     let email = (<HTMLInputElement> document.getElementById("email")).value;
     let city = (<HTMLInputElement> document.getElementById("city")).value;
     let phoneNumber = (<HTMLInputElement> document.getElementById("phoneNumber")).value;
 
-    this.regUser.name = profileName;
-    this.regUser.lastname = lastname;
-    this.regUser.email = email;
-    this.regUser.city = city;
-    this.regUser.phoneNumber = phoneNumber;
+  
+    //PUT into DB
+  }
+
+  resetForm(){
+    this.userProfileForm.reset();
   }
 }

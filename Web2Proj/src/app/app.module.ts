@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule} from '@angular/forms';
+import { ReactiveFormsModule, FormsModule} from '@angular/forms';
 import { ChartModule } from '@syncfusion/ej2-angular-charts';
 import { DateFormatOptions } from '@syncfusion/ej2-base'
 import { CategoryService, DateTimeService, ScrollBarService, ColumnSeriesService, LineSeriesService, 
@@ -22,6 +22,18 @@ import { SuccessfulReservationComponent } from './components/flightBookingSteps/
 
 import { HttpClientModule } from "@angular/common/http";
 import { FlightService } from  './shared/flight-service-and-model/flight.service';
+import { GoogleMapsModule } from '@angular/google-maps';
+import { LogInPageComponent } from './components/log-in-page/log-in-page.component';
+import { SharedData } from './services/shared-data';
+import { RegisterProfileComponent } from './components/register-profile/register-profile.component';
+import { VehicleComponent } from './components/vehicle/vehicle.component';
+import { RACProfileComponent } from './components/rac-profile/rac-profile.component';
+import { RACAdminProfileComponent } from './components/rac-admin-profile/rac-admin-profile.component';
+import { PasswordChangeComponent } from './components/password-change/password-change.component';
+import { UserFlightsComponent } from './user-flights/user-flights.component';
+import { UserRacComponent } from './components/user-rac/user-rac.component';
+import { UserFriendsComponent } from './components/user-friends/user-friends.component'
+
 
 @NgModule({
   declarations: [
@@ -35,18 +47,29 @@ import { FlightService } from  './shared/flight-service-and-model/flight.service
     InviteFriendsComponent,
     PersonalDataComponent,
     RentCarComponent,
-    SuccessfulReservationComponent
+    SuccessfulReservationComponent,
+    LogInPageComponent,
+    RegisterProfileComponent,
+    VehicleComponent,
+    RACProfileComponent,
+    RACAdminProfileComponent,
+    PasswordChangeComponent,
+    UserFlightsComponent,
+    UserRacComponent,
+    UserFriendsComponent,
   ],
   imports: [
     BrowserModule,
-    ReactiveFormsModule,    
+    ReactiveFormsModule,
+    FormsModule,          
     AppRoutingModule,
     ChartModule,
-    HttpClientModule
+    HttpClientModule,
+    GoogleMapsModule
   ],
   providers: [CategoryService, DateTimeService, ScrollBarService, ColumnSeriesService, LineSeriesService, 
     ChartAnnotationService, RangeColumnSeriesService, StackingColumnSeriesService,LegendService, TooltipService,
-    FlightService,
+    FlightService, SharedData,
   ],
   bootstrap: [AppComponent]
 })
